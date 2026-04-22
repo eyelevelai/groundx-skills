@@ -1,0 +1,88 @@
+/*
+ * THICCCBOI font — the GroundX brand font.
+ *
+ * Self-hosted on the EyeLevel CDN. Import this file once from your app entry
+ * (e.g. in src/index.css or src/main.tsx) and every <Typography> and <body>
+ * element will pick it up via the theme.
+ */
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Thin.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Light.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Regular.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Medium.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-SemiBold.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Bold.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-ExtraBold.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Black.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "THICCCBOI";
+  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Thicccaf.woff2") format("woff2"),
+       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Thicccaf.ttf") format("truetype");
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}

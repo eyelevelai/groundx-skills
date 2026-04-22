@@ -1,0 +1,44 @@
+{
+  "name": "groundx-design",
+  "owner": {
+    "name": "Ben Fletcher",
+    "email": "benjamin.fletcher@eyelevel.ai"
+  },
+  "metadata": {
+    "description": "GroundX skills",
+    "version": "1.1.0"
+  },
+  "plugins": [
+    {
+      "name": "groundx-design",
+      "description": "GroundX brand + web UI skills. Bundles medium-agnostic design standards (palette, typography, logos, brand principles, cross-medium patterns) with a React/MUI web UI skill that translates those standards into drop-in TypeScript components for the groundx-ai-dashboard.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/groundx-design-standards",
+        "./skills/groundx-web-ui"
+      ]
+    },
+    {
+      "name": "groundx-presentations",
+      "description": "GroundX brand + slide deck skills. Bundles the medium-agnostic design standards with an HTML→PDF slide skill that renders 16:9 decks styled to match the dashboard. The slide build pipeline uses headless Chrome (Puppeteer) to produce a single deck.pdf from a folder of HTML files — the same palette, typography, and surface language as the web UI.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/groundx-design-standards",
+        "./skills/groundx-slides"
+      ]
+    },
+    {
+      "name": "groundx-all",
+      "description": "The complete GroundX skill bundle: design standards + web UI + slide decks. Install this plugin to get every GroundX-flavored medium at once — React components, slide decks, and the shared source of truth that keeps them visually consistent.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/groundx-design-standards",
+        "./skills/groundx-web-ui",
+        "./skills/groundx-slides"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,688 @@
+/* =============================================================
+   GroundX Slides — shared stylesheet
+   All palette tokens, typography, and layout classes live here.
+   Never hardcode a hex in a slide file. Reference var(--gx-*).
+   ============================================================= */
+
+@import url("https://cdn.eyelevel.ai/thicccboi/thicccboi.css");
+
+:root {
+  /* ── Brand palette (mirrors groundx-design-standards/colors.md) ──
+     Source of truth: groundx-design-standards/references/styleguide.html.
+     Hex values here must match the webflow-derived tokens exactly. */
+  --gx-navy:              #29335c;  /* primary-1 */
+  --gx-green:             #a1ec83;  /* primary-2 — primary CTA, accent */
+  --gx-cyan:              #c1e8ee;  /* primary-3 — secondary accent */
+  --gx-tint:              #eff9fb;  /* primary-4 — quiet section bg */
+  --gx-coral:             #f3663f;  /* primary-5 — label / highlight */
+  --gx-body-text:         #40496b;  /* text-color — paragraph body */
+  --gx-gray:              #f2f4f5;  /* alt section bg, input fill */
+  --gx-white:             #ffffff;
+  --gx-border:            rgba(41, 51, 92, 0.1);
+
+  /* Support palette (rare) */
+  --gx-blue:              #0b99ff;
+  --gx-error-red:         #f70d1a;
+  --gx-lighter-red:       #ff7f7f;
+  --gx-dark-grey:         #81879a;
+
+  /* Legacy aliases — retained so old pages build; prefer the names above.
+     The aqua alias maps to tint; pale-aqua to cyan; active-green to green. */
+  --gx-aqua:              var(--gx-tint);
+  --gx-pale-aqua:         var(--gx-cyan);
+  --gx-active-green:      var(--gx-green);
+  --gx-light-grey:        var(--gx-gray);
+
+  /* Surface-aware aliases */
+  --gx-eyebrow-on-light:  var(--gx-coral);
+  --gx-eyebrow-on-dark:   var(--gx-green);
+  --gx-body-on-light:     var(--gx-body-text);
+  --gx-body-on-dark:      rgba(255, 255, 255, 0.82);
+  --gx-muted-on-light:    rgba(64, 73, 107, 0.7);
+  --gx-muted-on-dark:     rgba(255, 255, 255, 0.65);
+
+  /* Radii / borders (webflow scale: 4 / 6 / 12 / 20 / 200) */
+  --gx-radius-sm:         4px;
+  --gx-radius-md:         6px;
+  --gx-radius-lg:         12px;
+  --gx-radius-card:       20px;
+  --gx-radius-pill:       200px;
+  --gx-radius-input:      6px;
+  --gx-border-hairline:   1px solid var(--gx-border);
+
+  /* Type */
+  --gx-font: "THICCCBOI", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+/* ── Base reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--gx-white); }
+body {
+  font-family: var(--gx-font);
+  color: var(--gx-body-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Slide container ──
+   Surface modifiers mirror the six canonical section backgrounds in the
+   design standards: white (default), gray, tint, cyan, green, navy. */
+.slide {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  padding: 80px;
+  background: var(--gx-white);
+  color: var(--gx-body-text);
+}
+.slide--gray  { background: var(--gx-gray); }
+.slide--tint  { background: var(--gx-tint); }
+.slide--cyan  { background: var(--gx-cyan); }
+.slide--green { background: var(--gx-green); }
+.slide--navy  { background: var(--gx-navy); color: var(--gx-white); }
+/* Legacy alias — old slide HTML uses slide--aqua; keep it rendering. */
+.slide--aqua  { background: var(--gx-tint); }
+
+/*
+ * Layout marker classes.
+ * These are semantic hooks on the .slide container identifying which layout
+ * archetype the slide is using. They are intentionally empty — layout work
+ * happens via inner classes (.three-card-grid, .split, .steps, etc.) so the
+ * same content can be reflowed inside any .slide without touching the outer
+ * classes. Keep them as selectors so layout-specific rules have a home when
+ * they're needed.
+ */
+.slide--cover,
+.slide--cta,
+.slide--section-break,
+.slide--hero-with-stats,
+.slide--split,
+.slide--three-card-grid,
+.slide--numbered-steps,
+.slide--display-stat,
+.slide--detail-grid-with-sidebar { /* layout marker */ }
+
+/* ── Common slide chrome (wordmark, tagline, slide number) ── */
+.slide-logo {
+  position: absolute;
+  top: 64px;
+  left: 80px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.slide-logo img { height: 48px; width: auto; display: block; }
+/* Smaller wordmark for content slides — keeps the chrome quiet so the
+   headline leads. Use .slide-logo--sm on content slides; leave the default
+   48px on cover, CTA, and section-break slides where the wordmark is a
+   brand moment rather than a footer-like mark. */
+.slide-logo--sm img { height: 36px; }
+.slide-logo .tagline {
+  font-size: 0.6875rem;          /* 11px */
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gx-muted-on-light);
+}
+.slide--navy .slide-logo .tagline { color: var(--gx-muted-on-dark); }
+
+.slide-number {
+  position: absolute;
+  bottom: 48px;
+  right: 80px;
+  font-size: 0.75rem;            /* 12px — chrome reads as a quiet marker */
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--gx-dark-grey);
+}
+.slide--navy .slide-number { color: rgba(255, 255, 255, 0.55); }
+
+/* ── Accent bar (thin brand gradient) ── */
+.accent-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(
+    90deg,
+    var(--gx-active-green) 0%,
+    var(--gx-pale-aqua) 50%,
+    var(--gx-coral) 100%
+  );
+}
+.accent-bar--top { top: 0; }
+.accent-bar--bottom { bottom: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   TYPE SYSTEM
+   A clean modular scale (~1.35× steps). One class per role.
+   Do NOT inline-override font-size, font-weight, or color in
+   slide HTML — if a new size is needed, add a class here first.
+
+   Weight ladder — kept deliberately narrow for a refined look:
+     400 — body, subhead
+     600 — eyebrows, labels, stat-labels (uppercase + tracked)
+     700 — all headlines (card → section)
+     800 — cover headline only (single "brand moment" per deck)
+
+   Spacing rhythm (4px base): 12 (eyebrow→headline) · 20 (headline→
+   body) · 24 (body→next). Gaps between major blocks are 48 / 72.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Eyebrow label ── */
+/* Eyebrows are written UPPERCASE in source HTML — see
+   groundx-design-standards/references/typography.md ALL-CAPS rule.
+   Do not `text-transform: uppercase` here. */
+.eyebrow {
+  font-size: 0.875rem;         /* 14px */
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gx-eyebrow-on-light);
+  line-height: 1;
+  margin: 0 0 12px 0;
+}
+.slide--navy .eyebrow { color: var(--gx-eyebrow-on-dark); }
+/* A white card nested inside a navy slide is still a light surface —
+   eyebrow, headline, and body inside the card all stay light-surface
+   colors. Navy-slide color rules bleed through otherwise. */
+.slide--navy .card:not(.card--navy) .eyebrow      { color: var(--gx-eyebrow-on-light); }
+.slide--navy .card:not(.card--navy) .headline-card { color: var(--gx-navy); }
+.slide--navy .card:not(.card--navy) .body,
+.slide--navy .card:not(.card--navy) .body-sm       { color: var(--gx-body-on-light); }
+
+/* ── Headlines ── */
+
+.headline-cover {
+  font-size: 7rem;             /* 112px */
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--gx-white);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.headline-section {
+  font-size: 5.5rem;           /* 88px */
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--gx-white);
+  margin: 0;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.headline-hero {
+  font-size: 4rem;             /* 64px */
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--gx-navy);
+  margin: 0 0 20px 0;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+.slide--navy .headline-hero { color: var(--gx-white); }
+
+/* Split-column headlines — proportioned to read as peers across two
+   equal columns. Balanced wrapping so both columns break cleanly. */
+.headline-split {
+  font-size: 2.75rem;          /* 44px */
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--gx-navy);
+  margin: 0 0 20px 0;
+  text-wrap: balance;
+  max-width: 14ch;
+}
+.slide--navy .headline-split { color: var(--gx-white); }
+
+/* Card-in-grid headline — fixed size since cards are fixed width. */
+.headline-card {
+  font-size: 1.75rem;          /* 28px */
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--gx-navy);
+  margin: 0 0 12px 0;
+  text-wrap: balance;
+}
+.slide--navy .headline-card { color: var(--gx-white); }
+
+/* ── Body copy ── */
+.body {
+  font-size: 1.5rem;           /* 24px */
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  margin: 0;
+  max-width: 38ch;
+}
+.slide--navy .body { color: var(--gx-body-on-dark); }
+
+.body-sm {
+  font-size: 1.25rem;          /* 20px */
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--gx-body-on-light);
+  margin: 0;
+}
+.slide--navy .body-sm { color: var(--gx-body-on-dark); }
+
+/* Subhead / lead paragraph — sits under the dominant headline.
+   Measured max-width in ch keeps lines readable regardless of canvas. */
+.subhead {
+  font-size: 1.5rem;           /* 24px */
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  max-width: 52ch;
+  margin: 0;
+}
+.slide--navy .subhead { color: var(--gx-body-on-dark); }
+
+/* Centered subhead variant (used under section-break headlines). */
+.subhead--center { text-align: center; max-width: 44ch; margin-left: auto; margin-right: auto; }
+
+/* ── Display stat ── */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  line-height: 1;
+}
+.stat .stat-numeral {
+  font-size: 5.5rem;           /* 88px — matches headline-section in rhythm */
+  font-weight: 800;
+  line-height: 1;
+  color: var(--gx-coral);
+  letter-spacing: -0.025em;
+}
+.slide--navy .stat .stat-numeral { color: var(--gx-active-green); }
+.stat .stat-label {
+  font-size: 0.875rem;         /* 14px */
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gx-muted-on-light);
+}
+.slide--navy .stat .stat-label { color: rgba(255, 255, 255, 0.7); }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 64px;
+  align-items: end;
+}
+
+/* Three-up cycle: GREEN → CYAN → CORAL (see standards colors.md rule 6).
+   Contrast-gated: cycling only applies on navy surfaces. On light canvases
+   the cycle colors fail contrast — especially cyan on tint — so stats fall
+   through to the surface-primary accent (coral). */
+.slide--navy .stat-row--cycle > .stat:nth-child(3n+1) .stat-numeral,
+.slide--navy .stat--green .stat-numeral {
+  color: var(--gx-green);
+}
+.slide--navy .stat-row--cycle > .stat:nth-child(3n+2) .stat-numeral,
+.slide--navy .stat--cyan .stat-numeral,
+.slide--navy .stat--aqua .stat-numeral {   /* legacy alias */
+  color: var(--gx-cyan);
+}
+.slide--navy .stat-row--cycle > .stat:nth-child(3n) .stat-numeral,
+.slide--navy .stat--coral .stat-numeral {
+  color: var(--gx-coral);
+}
+
+/* Full-slide display stat */
+.display-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  height: 100%;
+  text-align: center;
+}
+.display-stat .stat-numeral {
+  font-size: 13rem;            /* 208px */
+  letter-spacing: -0.03em;
+}
+.display-stat .stat-label {
+  font-size: 1.125rem;         /* 18px */
+  letter-spacing: 0.16em;
+}
+.display-stat__note {
+  color: var(--gx-muted-on-light);
+  margin-top: 16px;
+}
+.slide--navy .display-stat__note { color: var(--gx-muted-on-dark); }
+
+/* ── Card ──
+   Matches styleguide.html: 20px radius, 24px padding, 1px hairline border.
+   Slide cards use looser padding (40px) because slide canvases are larger;
+   the `.card--tight` modifier returns to the webflow 24px. */
+.card {
+  background: var(--gx-white);
+  border: var(--gx-border-hairline);
+  border-radius: var(--gx-radius-card);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card--tight { padding: 24px; }
+.card--gray  { background: var(--gx-gray); border-color: transparent; }
+.card--tint  { background: var(--gx-tint); border-color: transparent; }
+.card--green { background: var(--gx-green); border-color: transparent; color: var(--gx-navy); }
+.card--green .headline-card,
+.card--green .body-sm { color: var(--gx-navy); }
+/* Optional navy-tinted card for navy-on-navy layouts — a subtle tinted
+   fill with a hairline border so cards sit against the slide without
+   introducing a second surface color. Headline copy stays white. */
+.card--navy {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--gx-white);
+}
+.card--navy .headline-card,
+.card--navy .body-sm { color: var(--gx-white); }
+.card--navy .body-sm { color: rgba(255, 255, 255, 0.8); }
+
+/* ── Three-card grid ── */
+.three-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* Cycling eyebrows across three cards (see standards colors.md rule 6).
+   Only use this with .card--navy children — cyan on white is low-contrast.
+   Opt in by combining .three-card-grid--cycle on the grid AND .card--navy on each card. */
+.three-card-grid--cycle > .card--navy:nth-child(3n+1) .eyebrow { color: var(--gx-green); }
+.three-card-grid--cycle > .card--navy:nth-child(3n+2) .eyebrow { color: var(--gx-cyan); }
+.three-card-grid--cycle > .card--navy:nth-child(3n)   .eyebrow { color: var(--gx-coral); }
+
+/* ── Split problem/solution ──
+   Columns share a baseline: both start at the same y and flow top-down,
+   so eyebrows line up regardless of headline wrap. The whole split block
+   is vertically centered on the slide via the absolute-positioned wrapper
+   (use `.split` inside `.slide-centerblock`, or wrap with `.split-wrap`).
+*/
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;          /* lock both columns to the same top baseline */
+}
+.split--divider > *:first-child {
+  border-right: var(--gx-border-hairline);
+  padding-right: 80px;
+}
+.split__column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;                      /* spacing handled by type-scale margins */
+}
+
+/* Vertical-centering wrapper for a split block.
+   Absolutely positioned between chrome boundaries so content reads centered
+   without relying on `height: 100%` games inside the grid. */
+.split-wrap {
+  position: absolute;
+  left: 80px;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 40px 0;             /* never bump the chrome if content grows */
+}
+
+/* ── Numbered steps ── */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.step {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.step__numeral {
+  font-size: 4rem;             /* 64px */
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--gx-coral);
+}
+.slide--navy .step__numeral { color: var(--gx-active-green); }
+
+/* Three-up cycle for numbered steps (navy-only; see standards colors.md rule 6).
+   On light canvases the cycle fails contrast — steps fall through to
+   .step__numeral's default (coral). Four or five steps never cycle. */
+.slide--navy .steps--cycle > .step:nth-child(3n+1) .step__numeral,
+.slide--navy .step--green .step__numeral {
+  color: var(--gx-green);
+}
+.slide--navy .steps--cycle > .step:nth-child(3n+2) .step__numeral,
+.slide--navy .step--cyan .step__numeral,
+.slide--navy .step--aqua .step__numeral {   /* legacy alias */
+  color: var(--gx-cyan);
+}
+.slide--navy .steps--cycle > .step:nth-child(3n) .step__numeral,
+.slide--navy .step--coral .step__numeral {
+  color: var(--gx-coral);
+}
+.step__label {
+  font-size: 0.875rem;         /* 14px */
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gx-navy);
+  margin: 0 0 8px 0;
+}
+.slide--navy .step__label { color: var(--gx-active-green); }
+.step__body {
+  font-size: 1.5rem;           /* 24px */
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  margin: 0;
+  max-width: 52ch;
+}
+.slide--navy .step__body { color: var(--gx-body-on-dark); }
+
+/* ── Detail grid with sidebar ── */
+.detail-grid-sidebar {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  gap: 0;
+  height: 100%;
+}
+.detail-grid-sidebar__main {
+  padding-right: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.detail-grid-sidebar__sidebar {
+  background: var(--gx-navy);
+  color: var(--gx-white);
+  border-radius: var(--gx-radius-card);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  justify-content: center;
+}
+.detail-grid-sidebar__sidebar .stat .stat-numeral {
+  color: var(--gx-active-green);
+  font-size: 3.5rem;            /* 56px */
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.detail-grid-sidebar__sidebar .stat .stat-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;           /* 12px */
+  letter-spacing: 0.16em;
+}
+
+.detail-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 48px;
+}
+.detail-item .detail-item__label {
+  font-size: 0.875rem;          /* 14px */
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gx-coral);
+  margin: 0 0 8px 0;
+}
+.detail-item .detail-item__headline {
+  font-size: 1.5rem;            /* 24px */
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--gx-navy);
+  margin: 0 0 8px 0;
+}
+.detail-item .detail-item__body {
+  font-size: 1.125rem;          /* 18px */
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--gx-body-on-light);
+  margin: 0;
+}
+
+/* ── Pill ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 0.75rem;            /* 12px */
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  background: var(--gx-light-grey);
+  color: var(--gx-navy);
+}
+.pill--success { background: var(--gx-green);       color: var(--gx-navy); }
+.pill--cyan    { background: var(--gx-cyan);        color: var(--gx-navy); }
+.pill--navy    { background: var(--gx-navy);        color: var(--gx-white); }
+.pill--coral   { background: var(--gx-coral);       color: var(--gx-white); }
+.pill--error   { background: var(--gx-error-red);   color: var(--gx-white); }
+.pill--warning { background: var(--gx-lighter-red); color: var(--gx-white); }
+.pill--outline { background: transparent; border: 2px solid var(--gx-border); color: var(--gx-navy); }
+
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ── CTA buttons ──
+   Mirrors the button system in styleguide.html: pill shape (200px radius),
+   600-weight, 14–20px text. Primary CTA is GREEN (navy text); Coral is a
+   secondary highlight variant. Outline is transparent with a hairline.
+   Hover state applies an inset darkening shadow rather than changing bg. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  font-family: var(--gx-font);
+  font-size: 1rem;                 /* 16px — webflow base button */
+  font-weight: 600;
+  line-height: 1.75;               /* 28px */
+  border-radius: var(--gx-radius-pill);
+  border: 2px solid transparent;
+  background: var(--gx-green);
+  color: var(--gx-navy);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.cta--sm      { font-size: 0.875rem; line-height: 1.571; padding: 10px 20px; }
+.cta--lg      { font-size: 1.25rem;  line-height: 1.5;   padding: 19px 36px; }
+.cta--navy    { background: var(--gx-navy);  color: var(--gx-white); }
+.cta--white   { background: var(--gx-white); color: var(--gx-navy); border-color: var(--gx-border); }
+.cta--coral   { background: var(--gx-coral); color: var(--gx-white); }
+.cta--cyan    { background: var(--gx-cyan);  color: var(--gx-navy); }
+.cta--outline {
+  background: transparent;
+  border-color: var(--gx-border);
+  color: var(--gx-navy);
+}
+/* On a navy slide, the outline CTA inverts — transparent with white border. */
+.slide--navy .cta--outline {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--gx-white);
+}
+
+/* ── Layout helpers ── */
+.stack       { display: flex; flex-direction: column; }
+.stack-16    { display: flex; flex-direction: column; gap: 16px; }
+.stack-24    { display: flex; flex-direction: column; gap: 24px; }
+.stack-32    { display: flex; flex-direction: column; gap: 32px; }
+.stack-48    { display: flex; flex-direction: column; gap: 48px; }
+
+.hero-block  { display: flex; flex-direction: column; gap: 24px; max-width: 1400px; }
+
+/* Center-aligned (vertical) content block used on CTA and
+   similarly-composed one-block slides. Avoids inline position styles. */
+.slide-centerblock {
+  position: absolute;
+  left: 80px;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* CTA button row — pair of buttons, left-aligned, breathing room above. */
+.cta-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.cover-main  {
+  position: absolute;
+  left: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.cover-context {
+  position: absolute;
+  top: 80px;
+  right: 80px;
+  font-size: 0.875rem;           /* 14px */
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gx-active-green);
+}
+.cover-stats {
+  position: absolute;
+  left: 80px;
+  right: 80px;
+  bottom: 120px;
+}
+
+.section-break-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 200px;
+  text-align: center;
+}

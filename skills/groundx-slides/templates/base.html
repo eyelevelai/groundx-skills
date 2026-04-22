@@ -1,0 +1,54 @@
+<!doctype html>
+<!--
+  GroundX slide shell.
+  Copy this file for each new slide, rename to slides/NN-your-layout.html,
+  then replace the .slide__body with your content. Keep the outer structure.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>GroundX slide</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!--
+      Root slide container. Add one or more of:
+        .slide--aqua   pale aqua canvas
+        .slide--navy   full-bleed navy (dark slide)
+      Default (no modifier) is white.
+
+      Layout-specific class (pick one):
+        .slide--cover
+        .slide--section-break
+        .slide--hero-with-stats
+        .slide--split
+        .slide--three-card-grid
+        .slide--detail-grid-with-sidebar
+        .slide--numbered-steps
+        .slide--display-stat
+        .slide--cta
+    -->
+    <div class="slide slide--navy slide--cover">
+
+      <!-- Shared chrome: wordmark + tagline top-left, slide number bottom-right -->
+      <div class="slide-logo">
+        <img src="/assets/logos/groundx-ai-log.png" alt="GroundX" />
+        <span class="tagline">A VALANTOR COMPANY</span>
+      </div>
+      <div class="slide-number">01</div>
+
+      <!-- Optional thin brand accent bar (cover / cta only) -->
+      <div class="accent-bar accent-bar--bottom"></div>
+
+      <!-- Slide body -->
+      <div class="cover-context">WHITE PAPER · YOUR CONTEXT HERE</div>
+      <div class="cover-main">
+        <h1 class="headline-cover">Your deck title here</h1>
+        <p class="body" style="color: rgba(255,255,255,0.8); max-width: 1100px;">
+          A one or two sentence subhead that clarifies what this deck is about and who it's for.
+        </p>
+      </div>
+
+    </div>
+  </body>
+</html>

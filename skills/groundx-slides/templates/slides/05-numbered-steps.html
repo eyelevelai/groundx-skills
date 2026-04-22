@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Numbered steps</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="slide slide--aqua slide--numbered-steps">
+
+      <div class="slide-logo slide-logo--sm">
+        <img src="/assets/logos/groundX-logo-color.png" alt="GroundX" />
+      </div>
+      <div class="slide-number">05</div>
+
+      <div class="stack-24" style="margin-top: 120px; max-width: 1400px;">
+        <div class="eyebrow">HOW IT WORKS</div>
+        <h2 class="headline-hero">Three steps, two weeks to production.</h2>
+      </div>
+
+      <!-- steps--cycle: numerals cycle GREEN → PALE_AQUA → CORAL (colors.md rule 6).
+           For 4–5 steps, drop the --cycle modifier and numerals use the surface primary. -->
+      <div class="steps steps--cycle" style="margin-top: 72px;">
+        <div class="step">
+          <div class="step__numeral">1</div>
+          <div>
+            <div class="step__label">CONNECT</div>
+            <p class="step__body">
+              Point GroundX at a document source — S3, SharePoint, an API feed.
+              Ingestion starts immediately; no schema design required.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__numeral">2</div>
+          <div>
+            <div class="step__label">INGEST</div>
+            <p class="step__body">
+              Structural parsing runs in parallel across your corpus.
+              Tables, captions, and section hierarchies are preserved end-to-end.
+            </p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step__numeral">3</div>
+          <div>
+            <div class="step__label">RETRIEVE</div>
+            <p class="step__body">
+              A single API endpoint returns the structurally-aware chunks your
+              model needs. Drop it into an existing RAG stack in under an hour.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
