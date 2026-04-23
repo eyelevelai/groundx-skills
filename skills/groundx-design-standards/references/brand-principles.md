@@ -1,10 +1,10 @@
 # Brand Principles
 
-These are the invariants that make something feel like GroundX regardless of the medium. If you're staring at a new surface (a slide, a landing page, an email header, a doc cover) and you're not sure what to do, work from this list down.
+These are the invariants that make something feel like EyeLevel regardless of the medium. If you're staring at a new surface (a slide, a landing page, an email header, a doc cover) and you're not sure what to do, work from this list down.
 
 ## 1. Calm, not loud
 
-GroundX is a developer-facing product in a category (AI infrastructure, RAG tooling) that's full of neon gradients and dramatic hero pages. The brand deliberately goes the other way: quiet, composed, professional. A visitor should feel like they're looking at a well-engineered tool, not an event sponsorship.
+GroundX is a developer-facing product, created by EyeLevel, in a category (AI infrastructure, RAG tooling) that's full of neon gradients and dramatic hero pages. The brand deliberately goes the other way: quiet, composed, professional. A visitor should feel like they're looking at a well-engineered tool, not an event sponsorship.
 
 Practical consequences:
 
@@ -73,7 +73,7 @@ Rules:
 - **Never on an interior card.** This is a page/slide-level decorator — it defines an edge, not a surface.
 - **Never in-app.** Reserved for marketing-oriented surfaces: cover slides, white-paper front pages, landing pages. Dashboard UI does not use it.
 
-Use sparingly. The default for any GroundX surface is no gradient at all.
+Use sparingly. The default for any EyeLevel surface is no gradient at all.
 
 ## 11. Co-brand with Valantor honestly
 

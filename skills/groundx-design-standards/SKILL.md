@@ -1,11 +1,11 @@
 ---
 name: groundx-design-standards
-description: The medium-agnostic source of truth for the GroundX brand — palette, typography, logos, and visual principles. GroundX is a product built by EyeLevel, a Valantor company. Use this skill whenever producing anything that carries GroundX branding: web UI, slides, documents, marketing collateral, email templates, social assets, or any visual artifact that must look like GroundX. Also use when asked about "the GroundX palette", "the brand font", "which logo should I use", "brand guidelines", "what is the GroundX typeface", "primary CTA color", "is green or coral primary", "A VALANTOR COMPANY tagline", or when reviewing an artifact for brand consistency. This skill does NOT produce code or files on its own — it defines the invariants that medium-specific skills (groundx-web-ui, groundx-slides, etc.) enforce. When a medium-specific skill is available for the task at hand (React UI, HTML→PDF slides, Word doc), prefer that skill and let it route back here for the shared definitions.
+description: The medium-agnostic source of truth for the EyeLevel brand — palette, typography, logos, and visual principles. GroundX is a product built by EyeLevel, a Valantor company. Use this skill whenever producing anything that carries EyeLevel or GroundX branding: web UI, slides, documents, marketing collateral, email templates, social assets, or any visual artifact that must look like EyeLevel. Also use when asked about "the EyeLevel palette", "the GroundX palette", "the brand font", "which logo should I use", "brand guidelines", "what is the EyeLeve typeface", "what is the GroundX typeface", "primary CTA color", "is green or coral primary", "A VALANTOR COMPANY tagline", or when reviewing an artifact for brand consistency. This skill does NOT produce code or files on its own — it defines the invariants that medium-specific skills (groundx-web-ui, groundx-slides, etc.) enforce. When a medium-specific skill is available for the task at hand (React UI, HTML→PDF slides, Word doc), prefer that skill and let it route back here for the shared definitions.
 ---
 
-# GroundX Design Standards
+# EyeLevel Design Standards
 
-This skill is the single source of truth for the GroundX brand. It answers the questions every medium asks: *what color is that?* *which font?* *which logo?* *how flat are surfaces?* The answers live here so that a React page, a PowerPoint deck, and a Word memo all feel like the same company made them.
+This skill is the single source of truth for the EyeLevel brand **and** GroundX product. Consider both EyeLevel and GroundX to be synonyms for the same design standard. It answers the questions every medium asks: *what color is that?* *which font?* *which logo?* *how flat are surfaces?* The answers live here so that a React page, a PowerPoint deck, and a Word memo all feel like the same company made them.
 
 **This skill defines invariants, not implementations.** It doesn't know about MUI components or python-pptx slide masters. Medium-specific skills consume these invariants and translate them into their format.
 
@@ -31,7 +31,7 @@ Medium-specific skills should route to this skill's references from their own SK
 
 ## Brand relationship
 
-GroundX is the product. EyeLevel is the AI company that builds it. Valantor is the parent company. The brand's logo is an EyeLevel lockup with "A VALANTOR COMPANY" baked into the PNG — EyeLevel leads, Valantor co-signs, and the GroundX product name shows up inside the surface (headlines, body copy, product UI) rather than in the logo itself. The authoritative palette and typography are maintained in the Eyelevel webflow property; `references/styleguide.html` mirrors the live CSS.
+GroundX is a product. EyeLevel is an AI company that builds GroundX. Valantor is the parent company. The brand's logo is an EyeLevel lockup with "A VALANTOR COMPANY" baked into the PNG — EyeLevel leads, Valantor co-signs, and the GroundX product name shows up inside the surface (headlines, body copy, product UI) rather than in the logo itself. The authoritative palette and typography are maintained in the Eyelevel webflow property; `references/styleguide.html` mirrors the live CSS.
 
 ## Reference map
 

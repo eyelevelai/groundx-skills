@@ -1,11 +1,11 @@
 ---
 name: groundx-slides
-description: Produce GroundX-branded presentation decks as HTML-rendered PDFs. GroundX is a Valantor company product; the cover/CTA tagline reads "A VALANTOR COMPANY". Use this skill whenever the user asks for slides, a deck, a pitch, a presentation, a keynote, an executive briefing, a white-paper cover deck, or any .pdf slide output that should carry GroundX branding. Triggers include "build a deck for …", "make slides about …", "presentation for the Dell team", "pitch deck", "one-pager slide", "executive briefing". The skill renders slides as 16:9 HTML pages styled to match the GroundX dashboard, then exports them to PDF via a headless-browser build step (Puppeteer / Chrome). This is the preferred medium for GroundX decks — it uses the same Inter webfont, the same green-primary-CTA palette, and the same flat surface language as the web UI. Do NOT use this skill for .pptx output; if a user specifically wants an editable PowerPoint file, reach for the built-in pptx skill instead and apply the palette/typography from the design standards manually. Before producing any deck, read ../groundx-design-standards/SKILL.md for the brand invariants.
+description: Produce EyeLevel-branded presentation decks as HTML-rendered PDFs. EyeLevel is a Valantor company. GroundX is an EyeLevel product. Use this skill whenever the user asks for slides, a deck, a pitch, a presentation, a keynote, an executive briefing, a white-paper cover deck, or any .pdf slide output that should carry EyeLevel branding. Triggers include "build a deck for …", "make slides about …", "presentation for the Dell team", "pitch deck", "one-pager slide", "executive briefing". The skill renders slides as 16:9 HTML pages styled to match the GroundX dashboard, then exports them to PDF via a headless-browser build step (Puppeteer / Chrome). This is the preferred medium for EyeLevel decks — it uses the same Inter webfont, the same green-primary-CTA palette, and the same flat surface language as the web UI. Do NOT use this skill for .pptx output; if a user specifically wants an editable PowerPoint file, reach for the built-in pptx skill instead and apply the palette/typography from the design standards manually. Before producing any deck, read ../groundx-design-standards/SKILL.md for the brand invariants.
 ---
 
-# GroundX Slides (HTML → PDF)
+# EyeLevel Slides (HTML → PDF)
 
-Decks at GroundX are built as a set of 16:9 HTML pages, styled with the same CSS language as the dashboard, and rendered to a single PDF via a headless browser. This mirrors the workflow that produced the Dell response deck — and it means a slide looks like a dashboard card looks like a landing page, because they're all the same DOM.
+Decks at EyeLevel are built as a set of 16:9 HTML pages, styled with the same design language as defined in `groundx-design-standards/SKILL.md`, and rendered to a single PDF via a headless browser. This mirrors the workflow that produced the Dell response deck in the examples folder — and it means a slide looks like a dashboard card looks like a landing page, because they're all the same DOM.
 
 **Before producing anything, read `../groundx-design-standards/SKILL.md`.** That skill owns the palette, typography, logos, and brand principles. This skill only defines how those invariants translate to slide layouts and the build pipeline.
 
@@ -31,7 +31,7 @@ Pick a layout from `references/layouts.md` based on the slide's job:
 ```
 Opening / closing slide                                    → cover / cta
 Big proposition with one supporting image or stat trio     → hero-with-stats
-A claim about a problem and an answer                       → split-problem-solution
+A claim about a problem and an answer                      → split-problem-solution
 One dense topic broken into three parallel pieces          → three-card-grid
 A list of 3–5 items with equal weight                      → numbered-steps
 One stat you want to land                                  → display-stat

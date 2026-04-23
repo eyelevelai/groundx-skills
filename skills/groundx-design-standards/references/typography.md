@@ -1,6 +1,6 @@
 # Typography
 
-One typeface, one weight scale, one set of rules. Applied consistently across web, slides, print, and email, the typography does most of the work of looking like GroundX.
+One typeface, one weight scale, one set of rules. Applied consistently across web, slides, print, and email, the typography does most of the work of looking like EyeLevel.
 
 ## Typeface: Inter
 
