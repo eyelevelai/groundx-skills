@@ -136,7 +136,7 @@ The key correctness points in this script:
 
 ## Font loading caveat
 
-THICCCBOI is served from `cdn.eyelevel.ai`. In air-gapped environments, the font won't load, and Puppeteer's `document.fonts.ready` will still resolve (fallback counts as "ready"). If reproducibility offline matters, mirror the font files under `templates/fonts/` and change `styles.css` to `@font-face` from local paths. The `assets/fonts/` folder in the design-standards skill is where those files are expected to live.
+Inter is served from Google Fonts (`fonts.googleapis.com`). In air-gapped environments, the font won't load, and Puppeteer's `document.fonts.ready` will still resolve (fallback counts as "ready"). If reproducibility offline matters, download the Inter weights (400 / 600 / 700 / 800) from `rsms.me/inter` or the Google Fonts download bundle, drop them under `templates/fonts/`, and switch the `@import` in `styles.css` to local `@font-face` declarations.
 
 ## Preview while authoring
 

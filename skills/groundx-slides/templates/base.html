@@ -30,11 +30,11 @@
     -->
     <div class="slide slide--navy slide--cover">
 
-      <!-- Shared chrome: wordmark + tagline top-left, slide number bottom-right -->
-      <div class="slide-logo">
-        <img src="/assets/logos/groundx-ai-log.png" alt="GroundX" />
-        <span class="tagline">A VALANTOR COMPANY</span>
-      </div>
+      <!-- Shared chrome: EyeLevel + Valantor lockup (single PNG) top-left,
+           slide number bottom-right. The lockup's color-inverted variant
+           is applied automatically on navy / green / coral surfaces
+           via ancestor class — no `<img src>` swap required. -->
+      <div class="slide-logo" role="img" aria-label="EyeLevel, a Valantor company"></div>
       <div class="slide-number">01</div>
 
       <!-- Optional thin brand accent bar (cover / cta only) -->

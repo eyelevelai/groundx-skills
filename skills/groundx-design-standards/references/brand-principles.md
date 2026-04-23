@@ -40,9 +40,9 @@ There are no 2px borders, no dashed borders (except the drag-drop empty state), 
 
 ## 6. Type hierarchy through weight, not size jumps
 
-THICCCBOI ships a full weight range but the practical ladder is narrow: `400 / 600 / 700 / 800`. Use that range — not outsized type — to create hierarchy. A `600` label over a `400` body paragraph reads as a clear hierarchy at the same font size; a 32px body paragraph next to a 14px caption reads as a mess.
+Inter ships a full weight range but the practical ladder is narrow: `400 / 600 / 700 / 800`. Use that range — not outsized type — to create hierarchy. A `600` label over a `400` body paragraph reads as a clear hierarchy at the same font size; a 32px body paragraph next to a 14px caption reads as a mess.
 
-Body copy lives at 400; labels and CTAs at 600; headlines at 700; the cover-slide headline and display-stat numerals at 800. Weight 500 is indecisive — don't use it. Weight 900 is retired from the system (reads poster-heavy on THICCCBOI).
+Body copy lives at 400; labels and CTAs at 600; headlines at 700; the cover-slide headline and display-stat numerals at 800. Weight 500 is indecisive — don't use it. Weight 900 is retired from the system (reads poster-heavy at display sizes).
 
 ## 7. ALL-CAPS labels are literal
 
@@ -77,9 +77,11 @@ Use sparingly. The default for any GroundX surface is no gradient at all.
 
 ## 11. Co-brand with Valantor honestly
 
-GroundX is built by EyeLevel, an AI company acquired by Valantor. The parent-brand co-sign lives in the tagline: whenever the GroundX wordmark is the primary brand element on a page or slide, the "A VALANTOR COMPANY" tagline (`assets/logos/valantor-tagline.png`) should be present nearby — tucked under the wordmark, or to its right in small type. Don't hide it; don't over-emphasize it. It's a fact, rendered neutrally.
+GroundX is built by EyeLevel, an AI company acquired by Valantor. The parent-brand co-sign — "A VALANTOR COMPANY" — is **baked into the logo PNG itself**. There is no separate tagline asset to place, no `.tagline` class to drop next to the wordmark. Use the single EyeLevel lockup file that matches the surface (`eyelevel-logo-white.png` on dark, `eyelevel-logo-color.png` on light) and the co-sign comes with it.
 
-The EyeLevel name still appears in company-level contexts — author bylines, legal footers, the `eyelevel.ai` domain — but the tagline under the wordmark expresses the Valantor parent relationship, not the EyeLevel product relationship.
+Don't render "A VALANTOR COMPANY" as a standalone text element anywhere. Don't re-typeset it in Inter and pair it with the wordmark — the lockup's typography is fixed.
+
+The EyeLevel name still appears in company-level contexts — author bylines, legal footers, the `eyelevel.ai` domain — but the lockup under the wordmark expresses the Valantor parent relationship, not the EyeLevel product relationship.
 
 ## Don'ts
 

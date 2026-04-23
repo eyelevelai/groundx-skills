@@ -2,7 +2,7 @@
 
 A Claude Code plugin marketplace that teaches agents to follow the GroundX brand across mediums. One medium-agnostic source of truth plus a skill per medium, so a dashboard card, a pitch deck, and a white paper feel like the same company made them.
 
-> **Brand relationship.** GroundX is the product. It's built by EyeLevel, an AI company that joined the Valantor family. The primary wordmark is "groundX.ai"; the co-brand tagline under the wordmark reads "A VALANTOR COMPANY." Source-of-truth palette and typography tokens come from the Eyelevel webflow style guide — mirrored in `skills/groundx-design-standards/references/styleguide.html`.
+> **Brand relationship.** GroundX is the product. It's built by EyeLevel, an AI company that joined the Valantor family. The primary brand mark is the **EyeLevel + "A VALANTOR COMPANY" lockup** — shipped as a single PNG in dark-surface and light-surface variants. The Valantor co-sign is baked into the file, not rendered as a separate tagline. Source-of-truth palette and typography tokens come from the Eyelevel webflow style guide — mirrored in `skills/groundx-design-standards/references/styleguide.html`.
 
 ## The three skills
 
@@ -60,7 +60,7 @@ Each skill has its own `evals/evals.json` with test prompts and a file-sanity ch
 
 ## HTML → PDF, not .pptx
 
-The slides skill renders 16:9 HTML pages to a single `deck.pdf` via headless Chrome. That buys one typography system across mediums (THICCCBOI from the same webfont CDN as the dashboard), pixel-consistent palette tokens, and PRs that diff cleanly. The trade-off is a flat PDF, not an editable `.pptx` — if someone needs to edit in PowerPoint afterward, use the built-in `pptx` skill and apply the palette/typography from the standards skill manually.
+The slides skill renders 16:9 HTML pages to a single `deck.pdf` via headless Chrome. That buys one typography system across mediums (Inter from Google Fonts, same as the dashboard), pixel-consistent palette tokens, and PRs that diff cleanly. The trade-off is a flat PDF, not an editable `.pptx` — if someone needs to edit in PowerPoint afterward, use the built-in `pptx` skill and apply the palette/typography from the standards skill manually.
 
 ## What's deliberately not here
 

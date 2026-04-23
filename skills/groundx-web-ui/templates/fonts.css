@@ -1,88 +1,25 @@
 /*
- * THICCCBOI font — the GroundX brand font.
+ * Inter — the GroundX brand typeface across slides, dashboard, and web UI.
  *
- * Self-hosted on the EyeLevel CDN. Import this file once from your app entry
- * (e.g. in src/index.css or src/main.tsx) and every <Typography> and <body>
- * element will pick it up via the theme.
+ * Imported from Google Fonts so every build gets the same weights + optical
+ * settings. Import this file once from your app entry (e.g. src/index.css
+ * or src/main.tsx) and every <Typography> and <body> element will inherit
+ * it via the theme. Feature flags below match the slide template: ss01
+ * (single-story 'a'), cv11 (straight 'R'), cv01 (lowercase 'l' with tail).
  */
 
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Thin.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Thin.ttf") format("truetype");
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  /* Applied automatically by the ThemeProvider; exported here so apps that
+     don't use the theme still pick up the same OpenType tuning. */
+  --gx-font-feature-settings: "ss01", "cv11", "cv01";
 }
 
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Light.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Regular.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Medium.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Medium.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-SemiBold.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Bold.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-ExtraBold.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-ExtraBold.ttf") format("truetype");
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Black.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Black.ttf") format("truetype");
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "THICCCBOI";
-  src: url("https://cdn.eyelevel.ai/assets/THICCCBOI/webfonts/THICCCBOI-Thicccaf.woff2") format("woff2"),
-       url("https://cdn.eyelevel.ai/assets/THICCCBOI/ttf/THICCCBOI-Thicccaf.ttf") format("truetype");
-  font-weight: 950;
-  font-style: normal;
-  font-display: swap;
+body {
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-feature-settings: var(--gx-font-feature-settings);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }

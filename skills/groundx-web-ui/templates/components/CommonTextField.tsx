@@ -8,7 +8,7 @@
  * Corrections applied vs. the original:
  *   - Top margin is now toggleable via `dense` prop (was always forced to 16px).
  *   - Font size/weight explicitly set so the field doesn't rely on the global
- *     THICCCBOI override leaking into the native <input>.
+ *     Inter override leaking into the native <input>.
  */
 
 import TextField, { OutlinedTextFieldProps } from "@mui/material/TextField";

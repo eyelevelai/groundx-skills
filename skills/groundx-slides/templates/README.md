@@ -20,7 +20,7 @@ templates/
 ├── package.json         Dependencies + scripts
 ├── index.html           Thumbnail index (open at http://localhost:4173/)
 ├── assets/
-│   └── logos/           GroundX wordmarks copied from design-standards
+│   └── logos/           EyeLevel lockup (white + color variants) copied from design-standards
 └── slides/
     ├── 00-section-break.html
     ├── 01-cover.html
@@ -49,11 +49,11 @@ See `../references/layouts.md` for when to use each layout and what it looks lik
 - **No hex literals in the HTML.** Every color comes from `var(--gx-*)` in `styles.css`. If you need a new color, add it to `:root` there first and give it a semantic name.
 - **No `box-shadow`.** The single exception is the thin gradient accent bar, and that's already defined as `.accent-bar`.
 - **Eyebrows written as uppercase strings**, not `text-transform: uppercase`.
-- **Every slide has the wordmark (top-left) and slide number (bottom-right)**. Cover and CTA slides also have the "A VALANTOR COMPANY" tagline.
+- **Every slide has the `.slide-logo` lockup (top-left) and slide number (bottom-right)**, except the section break. "A VALANTOR COMPANY" is baked into the logo PNG — don't add it as a separate element.
 
 ## Fonts
 
-THICCCBOI loads from `cdn.eyelevel.ai`. Puppeteer waits for `document.fonts.ready` before printing each slide, so the PDF always ships with the right font. If you need offline rendering, copy THICCCBOI `.woff2` files into `fonts/` and swap the `@import` at the top of `styles.css` for a `@font-face` block pointing at local paths.
+Inter loads from Google Fonts (`fonts.googleapis.com`). Puppeteer waits for `document.fonts.ready` and explicitly primes weights 400 / 600 / 700 / 800 before printing each slide, so the PDF always ships with the right font. If you need offline rendering, download Inter from `rsms.me/inter`, drop the `.woff2` files into `fonts/`, and swap the `@import` at the top of `styles.css` for a `@font-face` block pointing at local paths.
 
 ## What this template is *not*
 

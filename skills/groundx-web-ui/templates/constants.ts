@@ -166,5 +166,10 @@ export const PREMIUM_GRADIENT_TO = "#ff8e53";
 // Typography
 // ──────────────────────────────────────────────────────────────────────────
 
-/** The GroundX brand font. Self-hosted at cdn.eyelevel.ai. */
-export const FONT_FAMILY = "THICCCBOI, sans-serif";
+/** The GroundX brand font. Served from Google Fonts (see fonts.css). */
+export const FONT_FAMILY =
+  '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+
+/** OpenType feature tuning — applied by fonts.css body rule, exported here
+ *  for use in inline `style` when a component needs to opt in explicitly. */
+export const FONT_FEATURE_SETTINGS = '"ss01", "cv11", "cv01"';

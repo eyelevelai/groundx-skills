@@ -108,7 +108,8 @@ Always use `theme.breakpoints.up('md')` / `theme.breakpoints.down('md')` rather 
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `FONT_FAMILY` | `"THICCCBOI, sans-serif"` | Reference when setting font on raw `<span>`/`<div>` elements; `<Typography>` inherits it from the theme automatically. |
+| `FONT_FAMILY` | `'"Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'` | Reference when setting font on raw `<span>`/`<div>` elements; `<Typography>` inherits it from the theme automatically. |
+| `FONT_FEATURE_SETTINGS` | `'"ss01", "cv11", "cv01"'` | Inter stylistic sets — applied globally on `body` via `fonts.css`; exported here for the rare component that resets inherited styles and needs to opt back in. |
 
 See `typography.md` for the full typography guide.
 

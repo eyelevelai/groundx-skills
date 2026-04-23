@@ -5,7 +5,7 @@
  *   1. `palette.primary.main` now points at CORAL_ORANGE (was an unused #1976d2).
  *   2. `palette.secondary.main` is set to MAIN_BLACK so `color="secondary"`
  *      gives you the navy accent without hex literals.
- *   3. Typography's default fontFamily is THICCCBOI at the theme root, so raw
+ *   3. Typography's default fontFamily is Inter at the theme root, so raw
  *      <span>/<div> text inherits the brand font (not only <Typography>).
  *   4. CssBaseline applies the font to `body` as a belt-and-suspenders backup.
  *   5. Component defaults for MuiCard, MuiPaper, MuiDivider, MuiTableCell, and
@@ -89,7 +89,7 @@ const theme = createTheme({
   },
 
   // ────────────────────────────────────────────────────────────────────────
-  // Typography — THICCCBOI everywhere, and an explicit variant ladder.
+  // Typography — Inter everywhere, and an explicit variant ladder.
   //
   // The web ladder is intentionally compressed relative to the slide ladder
   // (see groundx-slides/references/typography-slides.md). Display text on a

@@ -4,9 +4,9 @@
 
 ## Font wiring
 
-THICCCBOI is loaded from `cdn.eyelevel.ai` via `@font-face` declarations in `templates/fonts.css`. The `GxThemeProvider` imports that CSS once at app boot.
+Inter is loaded from Google Fonts via an `@import` in `templates/fonts.css`. The `GxThemeProvider` imports that CSS once at app boot.
 
-The theme applies `fontFamily: FONT_FAMILY` at `<body>` via `MuiCssBaseline`, so every text node — `<Typography>`, raw `<span>`, `<div>`, `<td>` — inherits THICCCBOI automatically.
+The theme applies `fontFamily: FONT_FAMILY` at `<body>` via `MuiCssBaseline`, so every text node — `<Typography>`, raw `<span>`, `<div>`, `<td>` — inherits Inter automatically. The OpenType feature tuning (`ss01`, `cv11`, `cv01`) is applied globally by `fonts.css` on `body`, so stylistic-set settings cascade to every text node without per-component configuration.
 
 ```tsx
 // src/main.tsx (already wired by GxThemeProvider)
@@ -90,7 +90,7 @@ See the standards skill's `typography.md` for why. The `overline` variant gives 
 
 ## Italic
 
-THICCCBOI doesn't ship italic. Don't use `<i>`, `<em>` with italic styling, `font-style: italic`, or `sx={{ fontStyle: "italic" }}`. For inline emphasis, use a weight bump (400 → 600) or color change.
+Inter ships italic styles, but the brand does not use them. Don't use `<i>`, `<em>` with italic styling, `font-style: italic`, or `sx={{ fontStyle: "italic" }}`. For inline emphasis, use a weight bump (400 → 600) or color change.
 
 ## Font-smoothing
 
@@ -103,7 +103,7 @@ body {
 }
 ```
 
-Don't override these per-component. If THICCCBOI is looking chunky on a particular screen, the fix is the weight choice, not the smoothing.
+Don't override these per-component. If Inter is looking chunky on a particular screen, the fix is the weight choice, not the smoothing.
 
 ## Letter-spacing for small uppercase labels
 

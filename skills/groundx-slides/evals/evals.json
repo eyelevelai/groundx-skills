@@ -9,7 +9,7 @@
       "rubric": {
         "must_use": [
           "slide--navy on slide 1 (cover), slide--aqua or default white on slide 2",
-          ".slide-logo with groundx-ai-log.png on the navy cover, groundX-logo-color.png on the light slide",
+          ".slide-logo (the CSS swaps eyelevel-logo-white.png in on the navy cover, eyelevel-logo-color.png on the light slide — the HTML is identical in both cases)",
           ".accent-bar accent-bar--bottom on the cover",
           ".cover-context for the 'WHITE PAPER · RESPONSE TO DELL' eyebrow",
           ".stat-row with exactly 3 .stat children on both slides",
@@ -44,7 +44,7 @@
           ".card uses the white surface (default) on navy, contrast comes from the surface, not a custom fill",
           ".eyebrow on each card (coral on light card = default .eyebrow)",
           ".headline-card and .body-sm typography classes on each card",
-          "Slide wordmark (groundx-ai-log.png) because the slide is navy",
+          "Slide-logo chrome present (CSS auto-swaps to eyelevel-logo-white.png because the slide is navy)",
           "slide-number bottom-right"
         ],
         "must_not_use": [
@@ -67,7 +67,7 @@
         "must_use": [
           "slide--navy slide--cta",
           ".accent-bar accent-bar--top",
-          ".slide-logo with groundx-ai-log.png + 'A VALANTOR COMPANY' tagline",
+          ".slide-logo chrome present (tagline is baked into the PNG — no separate .tagline element)",
           ".eyebrow (ACTIVE_GREEN on navy via CSS)",
           ".headline-cover (or size-reduced variant) for the main line",
           "Two .cta elements: primary default, secondary with .cta--outline modifier",
@@ -100,8 +100,8 @@
       "templates/build.mjs",
       "templates/package.json",
       "templates/index.html",
-      "templates/assets/logos/groundx-ai-log.png",
-      "templates/assets/logos/groundX-logo-color.png",
+      "templates/assets/logos/eyelevel-logo-white.png",
+      "templates/assets/logos/eyelevel-logo-color.png",
       "templates/slides/00-section-break.html",
       "templates/slides/01-cover.html",
       "templates/slides/02-hero-with-stats.html",
@@ -122,9 +122,9 @@
       "../groundx-design-standards/references/colors.md",
       "../groundx-design-standards/references/typography.md",
       "../groundx-design-standards/references/patterns.md",
-      "../groundx-design-standards/assets/logos/groundx-ai-log.png",
-      "../groundx-design-standards/assets/logos/groundX-logo-color.png"
+      "../groundx-design-standards/assets/logos/eyelevel-logo-white.png",
+      "../groundx-design-standards/assets/logos/eyelevel-logo-color.png"
     ]
   },
-  "how_to_run": "For each test prompt, run the agent in a session with both skills enabled, save the generated slide HTML files into a templates/ folder, then: (a) grep every generated .html for '#' + hex digit → every hit fails must_not_use #1; (b) grep for 'box-shadow' and 'text-transform' → every hit fails; (c) confirm the correct .slide-- modifier class appears on the .slide element; (d) confirm the stat counts in stat-row equal 3; (e) confirm the .slide-logo image src matches the expected logo variant (navy → groundx-ai-log, light → groundX-logo-color). For the pipeline itself, run `npm install && npm run build` from the generated templates folder and confirm out/deck.pdf is produced with the expected page count."
+  "how_to_run": "For each test prompt, run the agent in a session with both skills enabled, save the generated slide HTML files into a templates/ folder, then: (a) grep every generated .html for '#' + hex digit → every hit fails must_not_use #1; (b) grep for 'box-shadow' and 'text-transform' → every hit fails; (c) confirm the correct .slide-- modifier class appears on the .slide element; (d) confirm the stat counts in stat-row equal 3; (e) confirm every slide uses the single `<div class=\"slide-logo\" ...></div>` chrome and that the CSS swaps to `eyelevel-logo-white.png` on navy/green/coral surfaces and `eyelevel-logo-color.png` elsewhere. For the pipeline itself, run `npm install && npm run build` from the generated templates folder and confirm out/deck.pdf is produced with the expected page count."
 }

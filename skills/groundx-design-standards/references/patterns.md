@@ -67,7 +67,7 @@ A full-bleed navy section that closes a white paper, a landing page, or a deck. 
 Rules:
 
 - The panel takes the full width and at least 40% of the vertical space on the surface it closes.
-- The GroundX wordmark sits in a corner (top-left on slides, bottom-left on the web) with the "A VALANTOR COMPANY" tagline below it.
+- The EyeLevel lockup (with "A VALANTOR COMPANY" baked in) sits in a corner — top-left on slides, bottom-left on the web. No separate tagline element.
 - No illustration bleed, no hero image. The panel is color, type, and one or two CTAs.
 
 ## 6. Numbered steps row
@@ -104,14 +104,16 @@ A thin horizontal gradient bar that runs across the top or bottom edge of a mark
 
 Never used on in-app surfaces.
 
-## 9. Logo lockup + tagline
+## 9. Logo lockup
 
-When the GroundX wordmark is the primary brand element on a surface, it's paired with the "A VALANTOR COMPANY" tagline (`assets/logos/valantor-tagline.png`). The two together are a **lockup**:
+The EyeLevel lockup — wordmark + speech-bubble mark + "A VALANTOR COMPANY" co-sign — ships as a single PNG, in two surface variants:
 
-- Wordmark on top, tagline centered directly beneath, or
-- Wordmark on the left, tagline to its right at ~40% the wordmark's height, baseline-aligned to the wordmark's descender.
+- `eyelevel-logo-white.png` — for dark surfaces (navy, green, coral)
+- `eyelevel-logo-color.png` — for light surfaces (white, tint, cyan, gray)
 
-See `logos.md` for selection rules and `brand-principles.md` rule 11 for the co-branding principle.
+There are no smaller pieces. You don't typeset the tagline; it's baked into the raster. Treat the file as a single unit — scale proportionally, never crop, never recolor, never rebuild from parts.
+
+See `logos.md` for placement rules and `brand-principles.md` rule 11 for the co-branding principle.
 
 ## When to add a new pattern
 

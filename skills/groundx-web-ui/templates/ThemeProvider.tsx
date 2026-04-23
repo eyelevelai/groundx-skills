@@ -4,7 +4,7 @@
  * Responsibilities:
  *   1. Install the MUI theme (palette, typography, component defaults).
  *   2. Apply CssBaseline so <body> gets the brand font and background.
- *   3. Load the THICCCBOI @font-face declarations (via side-effect CSS import).
+ *   3. Load Inter from Google Fonts (via side-effect CSS import of fonts.css).
  *
  * Usage:
  *   import { GxThemeProvider } from "@/theme/ThemeProvider";

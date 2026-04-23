@@ -57,11 +57,11 @@ The 799px cases were clearly meant to be `md` (1100) — they pre-date the md bu
 
 **Is now**: always `fontSize="small" | "medium" | "large"`. If you need a specific size outside those tokens, the icon is probably playing a different role — consider if it should be an image or a hero graphic instead.
 
-## 8. THICCCBOI is applied at `<body>`, not only at `<Typography>`
+## 8. Inter is applied at `<body>`, not only at `<Typography>`
 
-**Was**: theme override forced `fontFamily: "THICCCBOI"` on `MuiTypography` only. Raw `<span>`/`<div>` text fell back to the system default, causing subtle inconsistencies in table cells and custom spans.
+**Was**: theme override forced `fontFamily: "THICCCBOI"` on `MuiTypography` only. Raw `<span>`/`<div>` text fell back to the system default, causing subtle inconsistencies in table cells and custom spans. (The typeface itself has since changed to Inter — see the historical note in `../../groundx-design-standards/references/typography.md`.)
 
-**Is now**: theme's `MuiCssBaseline` override applies `fontFamily: FONT_FAMILY` to `body`, so every text node inherits THICCCBOI unless explicitly overridden. `MuiTypography` retains the override as a belt-and-suspenders safeguard.
+**Is now**: theme's `MuiCssBaseline` override applies `fontFamily: FONT_FAMILY` to `body`, so every text node inherits Inter unless explicitly overridden. `MuiTypography` retains the override as a belt-and-suspenders safeguard.
 
 If you want to be explicit (e.g. inside a `styled()` that resets all inherited styles), import `FONT_FAMILY` from `constants.ts` and apply it directly.
 

@@ -43,8 +43,19 @@ async function renderSlide(browser, filename) {
   const url = `http://localhost:${PORT}/slides/${filename}`;
   await page.goto(url, { waitUntil: "networkidle0" });
 
-  // Wait for THICCCBOI (and any other webfonts) to finish loading before print.
-  await page.evaluate(() => document.fonts.ready);
+  // Wait for Inter (and any other webfonts) to finish loading, then force a
+  // layout pass. Google Fonts serves separate files per weight; if printing
+  // fires before the 700/800 weights resolve, headlines render in the
+  // system-ui fallback and the deck ships inconsistent.
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await Promise.all([
+      document.fonts.load("400 16px Inter"),
+      document.fonts.load("600 16px Inter"),
+      document.fonts.load("700 64px Inter"),
+      document.fonts.load("800 88px Inter"),
+    ]);
+  });
 
   const pdfBytes = await page.pdf({
     width: "1920px",
@@ -70,7 +81,11 @@ async function build() {
 
   console.log(`Building ${slides.length} slide${slides.length === 1 ? "" : "s"}…`);
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    args: ["--no-sandbox", "--disable-dev-shm-usage"],
+  });
   const mergedPdf = await PDFDocument.create();
 
   for (const filename of slides) {

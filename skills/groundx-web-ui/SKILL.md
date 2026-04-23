@@ -1,11 +1,11 @@
 ---
 name: groundx-web-ui
-description: Use this skill whenever writing, generating, or modifying front-end UI code for the GroundX dashboard — or any React / MUI / TypeScript interface that should match GroundX's look and feel. GroundX is a Valantor company product; its brand lives in the `groundx-design-standards` skill, which this skill translates into MUI tokens and components. Triggers on tasks that build pages, components, forms, modals, buttons, cards, tables, empty states, or any visible web UI, AND on requests to review or correct existing UI for brand consistency. Also triggers on keywords like "GroundX dashboard", "bucket", "ingest", "X-RAY", "CORAL", "GREEN primary CTA", "NAVY", "THICCCBOI", when the user references MUI (`@mui/material`), Emotion (`sx` / `styled()`), the repo at `groundx-ai-dashboard`, or files like `theme.ts`, `constants.ts`, `CommonSubmitButton`, `GxCard`. If the user asks for "a React component", "a form", "a page", "a modal", a "dashboard screen", or anything visual and doesn't name a different design system, default to this skill — matching GroundX's style is almost always the right answer. This skill depends on `groundx-design-standards` for brand invariants (palette, typography, logos). Do NOT use for HTML→PDF slides — use `groundx-slides` instead. Do NOT use for backend-only code, data pipeline work, or pure CLI tools with no UI.
+description: Use this skill whenever writing, generating, or modifying front-end UI code for the GroundX dashboard — or any React / MUI / TypeScript interface that should match GroundX's look and feel. GroundX is a Valantor company product; its brand lives in the `groundx-design-standards` skill, which this skill translates into MUI tokens and components. Triggers on tasks that build pages, components, forms, modals, buttons, cards, tables, empty states, or any visible web UI, AND on requests to review or correct existing UI for brand consistency. Also triggers on keywords like "GroundX dashboard", "bucket", "ingest", "X-RAY", "CORAL", "GREEN primary CTA", "NAVY", "Inter", when the user references MUI (`@mui/material`), Emotion (`sx` / `styled()`), the repo at `groundx-ai-dashboard`, or files like `theme.ts`, `constants.ts`, `CommonSubmitButton`, `GxCard`. If the user asks for "a React component", "a form", "a page", "a modal", a "dashboard screen", or anything visual and doesn't name a different design system, default to this skill — matching GroundX's style is almost always the right answer. This skill depends on `groundx-design-standards` for brand invariants (palette, typography, logos). Do NOT use for HTML→PDF slides — use `groundx-slides` instead. Do NOT use for backend-only code, data pipeline work, or pure CLI tools with no UI.
 ---
 
 # GroundX Web UI
 
-This skill makes any UI you generate drop-in compatible with the GroundX dashboard — a TypeScript + React + MUI v5 app using Emotion (`sx` / `styled()`) with a custom theme, the THICCCBOI webfont, and a small set of branded wrappers around MUI primitives.
+This skill makes any UI you generate drop-in compatible with the GroundX dashboard — a TypeScript + React + MUI v5 app using Emotion (`sx` / `styled()`) with a custom theme, the Inter webfont (via Google Fonts), and a small set of branded wrappers around MUI primitives.
 
 **Your job:** produce code that looks indistinguishable from the existing dashboard, using the theme tokens and canonical components in this skill. When the existing codebase has drift from these standards, the canonical answer is whichever *this skill* prescribes — see `references/corrections.md`.
 
@@ -14,7 +14,7 @@ This skill makes any UI you generate drop-in compatible with the GroundX dashboa
 **Before generating any visible code, read `../groundx-design-standards/SKILL.md`** (plus any of its references you need). That skill is the source of truth for:
 
 - The palette (hex values, semantic roles, which pairings are allowed)
-- Typography (THICCCBOI, weight scale, the ALL-CAPS-as-literal rule)
+- Typography (Inter, weight scale, the ALL-CAPS-as-literal rule)
 - Logos (which of the 4 files to use where)
 - Brand principles (flat surfaces, green primary CTA + coral accent, navy not black)
 
@@ -24,7 +24,7 @@ This skill translates those invariants into MUI theme tokens, TypeScript constan
 
 The standards skill has the full brand tour. The one-paragraph web version:
 
-Green `#a1ec83` (`GREEN`) is the primary CTA fill — submit buttons, success chips, the hover-go-state. Coral `#f3663f` (`CORAL`) is the secondary highlight accent — eyebrows, labels, occasional alt-CTA. Body text is `#40496b` (`BODY_TEXT`); headings are navy `#29335c` (`NAVY`) — never true black. Section canvases use White, Gray `#f2f4f5`, Tint `#eff9fb`, Cyan `#c1e8ee`, Green, or Navy; cards on top are white with a `1px solid rgba(41, 51, 92, 0.1)` (`BORDER`) hairline and `20px` border-radius (`BORDER_RADIUS_CARD`). Buttons and pills use `200px` radius (`BORDER_RADIUS_PILL`) — the full-pill shape. No drop shadows, no elevation. THICCCBOI is applied at `<body>` via `MuiCssBaseline`; weight ladder is 400 / 600 / 700 / 800. The primary breakpoint is `md = 1100px` — bumped from MUI's default 900 because that's where the sidebar collapses and bucket cards stack.
+Green `#a1ec83` (`GREEN`) is the primary CTA fill — submit buttons, success chips, the hover-go-state. Coral `#f3663f` (`CORAL`) is the secondary highlight accent — eyebrows, labels, occasional alt-CTA. Body text is `#40496b` (`BODY_TEXT`); headings are navy `#29335c` (`NAVY`) — never true black. Section canvases use White, Gray `#f2f4f5`, Tint `#eff9fb`, Cyan `#c1e8ee`, Green, or Navy; cards on top are white with a `1px solid rgba(41, 51, 92, 0.1)` (`BORDER`) hairline and `20px` border-radius (`BORDER_RADIUS_CARD`). Buttons and pills use `200px` radius (`BORDER_RADIUS_PILL`) — the full-pill shape. No drop shadows, no elevation. Inter is applied at `<body>` via `MuiCssBaseline`; weight ladder is 400 / 600 / 700 / 800. The primary breakpoint is `md = 1100px` — bumped from MUI's default 900 because that's where the sidebar collapses and bucket cards stack.
 
 ## What to read before writing code
 
@@ -67,7 +67,7 @@ The `templates/` directory contains drop-in files that can replace (or install a
 
 - `templates/constants.ts` — the canonical design tokens. Copy to `src/constants/index.ts`. Adds `ERROR_RED`, `DISABLED_GREY`, `NAV_ICON_GREY`, `ROW_SELECTED_BG`, `FONT_FAMILY` that weren't named before. Hex values come from the standards skill's `colors.md`.
 - `templates/theme.ts` — the corrected MUI theme. Copy to `src/theme.ts`. Fixes `palette.primary.main` (was an unused blue — now `CORAL_ORANGE`), applies `FONT_FAMILY` at `<body>` via `MuiCssBaseline`, sets `disableElevation: true` on buttons by default, sets `palette.divider = LIGHT_GREY_2`.
-- `templates/fonts.css` — all 9 THICCCBOI `@font-face` declarations pointing at `cdn.eyelevel.ai`, with `font-display: swap`.
+- `templates/fonts.css` — `@import` of Inter from Google Fonts plus the body-level `font-family` and OpenType feature settings (`ss01`, `cv11`, `cv01`).
 - `templates/ThemeProvider.tsx` — `GxThemeProvider` that wires the theme + `CssBaseline` + fonts.
 - `templates/components/*.tsx` — canonical versions of `GxCard`, `GxPill`, `GxSectionHeader`, `GxButtonGroup`, `GxUsageCard` (new), plus corrected rewrites of `CommonSubmitButton`, `CommonCancelButton`, `CommonTextField`.
 
@@ -104,7 +104,7 @@ Before you return generated code to the user, quickly verify:
 - [ ] Every breakpoint is `theme.breakpoints.*` or sx responsive syntax. No `@media (max-width: Xpx)` strings.
 - [ ] Buttons use the right wrapper: `CommonSubmitButton` / `CommonCancelButton` / `GxButtonGroup` / `GxPill` — see `references/buttons.md` decision tree.
 - [ ] Cards use `GxCard`, not MUI `<Card>` or inline `<Box sx={{ border, borderRadius, … }}>`.
-- [ ] Text doesn't set `fontFamily` explicitly unless it's inside a `styled()` that resets inherited styles. Everything inherits THICCCBOI from `<body>`.
+- [ ] Text doesn't set `fontFamily` explicitly unless it's inside a `styled()` that resets inherited styles. Everything inherits Inter from `<body>`.
 - [ ] Icons use `fontSize="small|medium|large"`, never a px value.
 - [ ] Interactive icons have `aria-label`; decorative icons have `aria-hidden="true"`.
 - [ ] No `boxShadow`, no `elevation` prop, no gradient backgrounds (unless it's the `gx-premium-button` variant).
@@ -130,7 +130,7 @@ groundx-web-ui/
 ├── templates/
 │   ├── constants.ts                ← drop-in src/constants/index.ts
 │   ├── theme.ts                    ← drop-in src/theme.ts
-│   ├── fonts.css                   ← THICCCBOI @font-face declarations
+│   ├── fonts.css                   ← Inter @import from Google Fonts + body font rules
 │   ├── ThemeProvider.tsx           ← GxThemeProvider wrapper
 │   └── components/                 ← 5 new Gx* + 3 corrected Common* components
 ├── examples/                       ← 4 worked pages (dashboard, bucket detail, form modal, empty state)

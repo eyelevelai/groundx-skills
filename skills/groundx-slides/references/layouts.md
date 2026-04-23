@@ -5,7 +5,7 @@ Eight canonical layouts. Each is a specific arrangement of patterns from `../../
 All eight layouts share the same outer chrome:
 
 - 1920×1080 white (or navy) background.
-- GroundX wordmark at top-left, 80px from the edge, ~48px tall. Paired with "A VALANTOR COMPANY" tagline to its right (small) on cover / CTA slides. On content slides the wordmark is smaller (~32px) and the tagline is omitted.
+- EyeLevel lockup at top-left, 80px from the edge, ~72px tall. One fixed size across every slide — no small/large variants. The lockup PNG has "A VALANTOR COMPANY" baked into it, so there is no separate tagline element. The CSS swaps `eyelevel-logo-white.png` in on navy / green / coral surfaces and `eyelevel-logo-color.png` on light surfaces — the HTML is identical either way (`<div class="slide-logo" …></div>`).
 - Slide number at bottom-right, 80px from edges, in `DARK_GREY` on light slides, white-60% on navy.
 - Optional thin gradient accent bar along the top or bottom edge — cover and CTA slides only.
 
@@ -13,7 +13,7 @@ All eight layouts share the same outer chrome:
 
 The first slide of every deck. Full-bleed navy (`#29335c`).
 
-- **Top-left:** GroundX wordmark (white+coral variant — `groundx-ai-log.png`) with "A VALANTOR COMPANY" tagline beneath.
+- **Top-left:** EyeLevel lockup (dark-surface variant — `eyelevel-logo-white.png`, auto-selected by the navy surface class).
 - **Top-right:** a brief context line in uppercase — e.g., `WHITE PAPER · RESPONSE TO DELL`, `PARTNER BRIEFING · Q2 2026`. Green (`#a1ec83`), 600 weight, small.
 - **Center-left:** the deck title. Weight 800, `.headline-cover` (112px), white, tight line-height. 1–8 words max.
 - **Center-left, below title:** 1–2 sentences of subtitle. White at 80% opacity, 400 weight, `.subhead` (24px). Left-aligned, same left edge as title.

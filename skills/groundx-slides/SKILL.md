@@ -1,6 +1,6 @@
 ---
 name: groundx-slides
-description: Produce GroundX-branded presentation decks as HTML-rendered PDFs. GroundX is a Valantor company product; the cover/CTA tagline reads "A VALANTOR COMPANY". Use this skill whenever the user asks for slides, a deck, a pitch, a presentation, a keynote, an executive briefing, a white-paper cover deck, or any .pdf slide output that should carry GroundX branding. Triggers include "build a deck for …", "make slides about …", "presentation for the Dell team", "pitch deck", "one-pager slide", "executive briefing". The skill renders slides as 16:9 HTML pages styled to match the GroundX dashboard, then exports them to PDF via a headless-browser build step (Puppeteer / Chrome). This is the preferred medium for GroundX decks — it uses the same THICCCBOI webfont, the same green-primary-CTA palette, and the same flat surface language as the web UI. Do NOT use this skill for .pptx output; if a user specifically wants an editable PowerPoint file, reach for the built-in pptx skill instead and apply the palette/typography from the design standards manually. Before producing any deck, read ../groundx-design-standards/SKILL.md for the brand invariants.
+description: Produce GroundX-branded presentation decks as HTML-rendered PDFs. GroundX is a Valantor company product; the cover/CTA tagline reads "A VALANTOR COMPANY". Use this skill whenever the user asks for slides, a deck, a pitch, a presentation, a keynote, an executive briefing, a white-paper cover deck, or any .pdf slide output that should carry GroundX branding. Triggers include "build a deck for …", "make slides about …", "presentation for the Dell team", "pitch deck", "one-pager slide", "executive briefing". The skill renders slides as 16:9 HTML pages styled to match the GroundX dashboard, then exports them to PDF via a headless-browser build step (Puppeteer / Chrome). This is the preferred medium for GroundX decks — it uses the same Inter webfont, the same green-primary-CTA palette, and the same flat surface language as the web UI. Do NOT use this skill for .pptx output; if a user specifically wants an editable PowerPoint file, reach for the built-in pptx skill instead and apply the palette/typography from the design standards manually. Before producing any deck, read ../groundx-design-standards/SKILL.md for the brand invariants.
 ---
 
 # GroundX Slides (HTML → PDF)
@@ -11,7 +11,7 @@ Decks at GroundX are built as a set of 16:9 HTML pages, styled with the same CSS
 
 ## Why HTML → PDF, not .pptx
 
-- **One typography system across mediums.** THICCCBOI renders from the same webfont CDN as the dashboard; no font-embedding gymnastics.
+- **One typography system across mediums.** Inter renders from the same Google Fonts source as the dashboard; no font-embedding gymnastics.
 - **Pixel-consistent palette.** Navy `#29335c` and Green `#a1ec83` are literally the same strings in `styles.css` as in the dashboard's `constants.ts` — no drift between mediums.
 - **Editable by developers, reviewable by designers.** HTML diffs cleanly in a PR; .pptx binary diffs do not.
 - **No PowerPoint-specific rendering quirks.** No surprise drop shadows, no "smart" text auto-scaling, no chart styling drift.
@@ -87,8 +87,8 @@ Before reporting a deck complete, verify:
 
 1. **Colors from tokens only.** No hex literal in an HTML file that isn't first defined as a CSS var in `styles.css` → the var name should match a token from `colors.md` (e.g., `--gx-coral`, `--gx-navy`). Grep for `#` followed by a hex digit in `.html` files — anything found is a violation.
 2. **Eyebrow color matches surface.** Coral eyebrows on light surfaces, active-green eyebrows on navy. Grep for `.eyebrow` class usage and confirm.
-3. **THICCCBOI is loaded.** `styles.css` references `cdn.eyelevel.ai` font URL, and the `<link>` is in `base.html`.
-4. **Logo present + paired with Valantor tagline.** Every cover and CTA slide has the GroundX wordmark lockup with the "A VALANTOR COMPANY" tagline nearby (see `../groundx-design-standards/references/logos.md`).
+3. **Inter is loaded.** `styles.css` imports Inter from Google Fonts (`fonts.googleapis.com`); `build.mjs` primes weights 400 / 600 / 700 / 800 before each slide is printed.
+4. **Logo lockup present.** Every slide except the section break has `<div class="slide-logo" …></div>` top-left. The CSS swaps to `eyelevel-logo-white.png` on navy/green/coral surfaces and `eyelevel-logo-color.png` elsewhere; "A VALANTOR COMPANY" is baked into both PNGs. No `.tagline` element (see `../groundx-design-standards/references/logos.md`).
 5. **No box-shadow, no MUI elevation, no gradient background.** Exception: the thin brand accent bar (see `patterns.md` pattern 8) on cover / CTA slides if used.
 6. **ALL-CAPS eyebrows are typed uppercase in the HTML source.** No `text-transform: uppercase` in CSS.
 7. **Slide dimensions:** every `.slide` element renders at 1920×1080. Test with Chrome devtools `Ctrl+Shift+M` → 1920×1080.

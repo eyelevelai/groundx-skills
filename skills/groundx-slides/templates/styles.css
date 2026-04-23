@@ -4,7 +4,11 @@
    Never hardcode a hex in a slide file. Reference var(--gx-*).
    ============================================================= */
 
-@import url("https://cdn.eyelevel.ai/thicccboi/thicccboi.css");
+/* Inter is the brand typeface across slides + dashboard + web UI. Chosen for
+   enterprise legibility at both 11px (chrome) and 288px (display-stat), with
+   designed weights across 400–800 and OpenType stylistic sets (ss01, cv11,
+   cv01) tuned globally on body. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
   /* ── Brand palette (mirrors groundx-design-standards/colors.md) ──
@@ -50,8 +54,13 @@
   --gx-radius-input:      6px;
   --gx-border-hairline:   1px solid var(--gx-border);
 
-  /* Type */
-  --gx-font: "THICCCBOI", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  /* Type — Inter across the whole brand. Stack degrades gracefully
+     to system UI if the webfont fails to load during PDF rendering. */
+  --gx-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Inter opentype features: ss01 lifts the single-story 'a', cv11 straight
+     'R', cv01 lowercase 'l' with tail — tuning for a cleaner, more
+     professional wordmark feel at display sizes. */
+  font-feature-settings: "ss01", "cv11", "cv01";
 }
 
 /* ── Base reset ── */
@@ -62,6 +71,8 @@ body {
   color: var(--gx-body-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11", "cv01";
+  text-rendering: optimizeLegibility;
 }
 
 /* ── Slide container ──
@@ -103,29 +114,28 @@ body {
 .slide--display-stat,
 .slide--detail-grid-with-sidebar { /* layout marker */ }
 
-/* ── Common slide chrome (wordmark, tagline, slide number) ── */
+/* ── Slide chrome: logo lockup + slide number ────────────────────────────
+   The brand lockup is a single PNG (EyeLevel wordmark + A VALANTOR COMPANY
+   baked in). Two files — one for dark surfaces (white lettering), one for
+   light surfaces (dark lettering + red Valantor tagline). Swap by ancestor
+   surface class; the aspect ratio is preserved via `contain`.
+
+   Fixed size across every slide — no `--sm` / `--lg` variants. The lockup
+   is already small relative to the headline tier (72px tall vs 64–88px
+   headlines) so it never competes for attention. */
 .slide-logo {
   position: absolute;
-  top: 64px;
+  top: 56px;
   left: 80px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  width: 220px;
+  height: 72px;
+  background: url("/assets/logos/eyelevel-logo-color.png") no-repeat left center / contain;
 }
-.slide-logo img { height: 48px; width: auto; display: block; }
-/* Smaller wordmark for content slides — keeps the chrome quiet so the
-   headline leads. Use .slide-logo--sm on content slides; leave the default
-   48px on cover, CTA, and section-break slides where the wordmark is a
-   brand moment rather than a footer-like mark. */
-.slide-logo--sm img { height: 36px; }
-.slide-logo .tagline {
-  font-size: 0.6875rem;          /* 11px */
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--gx-muted-on-light);
+.slide--navy .slide-logo,
+.slide--green .slide-logo,
+.slide--coral .slide-logo {
+  background-image: url("/assets/logos/eyelevel-logo-white.png");
 }
-.slide--navy .slide-logo .tagline { color: var(--gx-muted-on-dark); }
 
 .slide-number {
   position: absolute;
@@ -170,19 +180,55 @@ body {
    body) · 24 (body→next). Gaps between major blocks are 48 / 72.
    ───────────────────────────────────────────────────────────── */
 
-/* ── Eyebrow label ── */
-/* Eyebrows are written UPPERCASE in source HTML — see
+/* ── Label (unified section-label / eyebrow style) ──
+   Every uppercase "section label" on the slide uses this one size. Slide
+   eyebrows ("HOW IT WORKS"), card eyebrows ("SCALE", "SECURITY"), step
+   labels ("CONNECT"), day labels ("DAY 1-2"), and "PART TWO"-style
+   section-break eyebrows are all the same tier — they just change color by
+   surface. Unifying them kills the drift that used to scatter 14 / 16 / 22 /
+   32 across the deck.
+
+   Labels are written UPPERCASE in source HTML — see
    groundx-design-standards/references/typography.md ALL-CAPS rule.
-   Do not `text-transform: uppercase` here. */
-.eyebrow {
-  font-size: 0.875rem;         /* 14px */
+   Do not `text-transform: uppercase` here.
+
+   Three color variants, picked by context:
+     • coral   — the default (.eyebrow on light, .detail-item__label)
+     • green   — on a navy slide (.slide--navy .eyebrow)
+     • navy    — inside an active-green card or on a light surface with green
+                 numerals (.step__label)
+   All three tiers share the same size / weight / tracking / line-height. */
+.eyebrow,
+.step__label,
+.detail-item .detail-item__label {
+  font-size: 2rem;             /* 32px — unified label */
   font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--gx-eyebrow-on-light);
-  line-height: 1;
-  margin: 0 0 12px 0;
+  letter-spacing: 0.12em;
+  line-height: 1.1;
+  margin: 0 0 24px 0;
 }
-.slide--navy .eyebrow { color: var(--gx-eyebrow-on-dark); }
+
+/* Default label color on light surfaces. */
+.eyebrow,
+.detail-item .detail-item__label { color: var(--gx-eyebrow-on-light); }
+
+/* Step label sits on light OR navy; default to navy, flip on navy slides. */
+.step__label { color: var(--gx-navy); }
+
+/* Navy-slide color flip for every label tier. */
+.slide--navy .eyebrow,
+.slide--navy .step__label,
+.slide--navy .detail-item .detail-item__label { color: var(--gx-eyebrow-on-dark); }
+
+/* A white card nested on a navy slide is a light surface again — restore
+   coral label on the card even though the slide is navy. (Already handled
+   for .eyebrow below in the card-in-navy block, but we also restore
+   step__label and detail-item__label here for completeness.) */
+.slide--navy .card:not(.card--navy) .eyebrow,
+.slide--navy .card:not(.card--navy) .step__label,
+.slide--navy .card:not(.card--navy) .detail-item__label {
+  color: var(--gx-eyebrow-on-light);
+}
 /* A white card nested inside a navy slide is still a light surface —
    eyebrow, headline, and body inside the card all stay light-surface
    colors. Navy-slide color rules bleed through otherwise. */
@@ -193,8 +239,13 @@ body {
 
 /* ── Headlines ── */
 
+/* Cover title matches the section-break headline at 88px. Keeping the cover
+   and section-break at the same size gives the two "brand-moment" layouts a
+   shared scale so a deck doesn't jump between 112px and 88px display sizes
+   across adjacent slides. The cover's weight (800) is what keeps it distinct
+   from section-break's 700 — hierarchy through weight, not size. */
 .headline-cover {
-  font-size: 7rem;             /* 112px */
+  font-size: 5.5rem;           /* 88px — matches .headline-section */
   font-weight: 800;
   line-height: 1.0;
   letter-spacing: -0.025em;
@@ -218,16 +269,23 @@ body {
   font-size: 4rem;             /* 64px */
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   color: var(--gx-navy);
-  margin: 0 0 20px 0;
+  margin: 0 0 24px 0;
   text-wrap: balance;
-  max-width: 20ch;
+  /* No hard cap — let the headline stretch across the slide, balanced wrap
+     handles runt lines. Old 20ch cap forced weird early breaks and left
+     the right half of the slide empty. Layout-specific caps live on the
+     layout class (e.g., .slide--detail-grid-with-sidebar) where the column
+     is narrower than the full canvas. */
+  max-width: 32ch;
 }
 .slide--navy .headline-hero { color: var(--gx-white); }
 
 /* Split-column headlines — proportioned to read as peers across two
-   equal columns. Balanced wrapping so both columns break cleanly. */
+   equal columns. Balanced wrapping so both columns break cleanly.
+   max-width at 18ch ≈ half of the 1920 canvas at 44px, which lets
+   each column's headline breathe across two lines instead of three. */
 .headline-split {
   font-size: 2.75rem;          /* 44px */
   font-weight: 700;
@@ -236,18 +294,19 @@ body {
   color: var(--gx-navy);
   margin: 0 0 20px 0;
   text-wrap: balance;
-  max-width: 14ch;
+  max-width: 18ch;
 }
 .slide--navy .headline-split { color: var(--gx-white); }
 
-/* Card-in-grid headline — fixed size since cards are fixed width. */
+/* Card-in-grid headline — fixed size since cards are fixed width. Lifted
+   to 36px so it clearly outranks the 32px label that sits above it. */
 .headline-card {
-  font-size: 1.75rem;          /* 28px */
+  font-size: 2.25rem;          /* 36px */
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.005em;
   color: var(--gx-navy);
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
   text-wrap: balance;
 }
 .slide--navy .headline-card { color: var(--gx-white); }
@@ -287,6 +346,54 @@ body {
 /* Centered subhead variant (used under section-break headlines). */
 .subhead--center { text-align: center; max-width: 44ch; margin-left: auto; margin-right: auto; }
 
+/* ── Scoped subhead / body sizes by layout ──
+   The default body/subhead at 24px reads small next to the 88px section and
+   64px hero headlines. These layout-scoped overrides lift the lead paragraph
+   to roughly half its paired headline — consistent with the
+   "subhead ≈ half of headline" rhythm established on section-break and cover.
+
+   Scoping is on the outer `.slide--<layout>` class so the override applies
+   only where the typography is paired with the large headline; nested
+   `.card` bodies keep their own `.body-sm` sizing (see below). */
+.slide--section-break .subhead,
+.slide--section-break .subhead--center,
+.slide--cover .subhead {
+  font-size: 2.75rem;          /* 44px — half of 88 */
+  line-height: 1.3;
+  max-width: 42ch;
+  font-weight: 400;
+}
+.slide--section-break .subhead--center {
+  max-width: 36ch;
+}
+
+.slide--hero-with-stats .subhead,
+.slide--hero-with-stats .body,
+.slide--cta .subhead,
+.slide--cta .body {
+  font-size: 2rem;             /* 32px — half of 64 */
+  line-height: 1.4;
+  /* 62ch at 32px ≈ 1400px: subhead fills most of the slide width so the
+     right half doesn't sit empty. Kept below the 1760px content width so
+     lines still feel intentional rather than edge-bleeding. */
+  max-width: 62ch;
+}
+
+.slide--split .subhead,
+.slide--split .body {
+  font-size: 1.75rem;          /* 28px — sits between 44 headline and step body */
+  line-height: 1.4;
+  max-width: 28ch;
+}
+
+/* Card bodies inside a three-card grid share the unified "card-body" tier
+   (22px) with detail-item bodies. Cards are third-width; 22px keeps line
+   counts reasonable while staying bigger than the old 20px. */
+.slide--three-card-grid .card .body-sm {
+  font-size: 1.375rem;         /* 22px — unified with detail-item body */
+  line-height: 1.5;
+}
+
 /* ── Display stat ── */
 .stat {
   display: flex;
@@ -303,9 +410,9 @@ body {
 }
 .slide--navy .stat .stat-numeral { color: var(--gx-active-green); }
 .stat .stat-label {
-  font-size: 0.875rem;         /* 14px */
+  font-size: 1.375rem;         /* 22px — 1/4 of the 88px stat numeral */
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;       /* tracking eases slightly at larger size */
   color: var(--gx-muted-on-light);
 }
 .slide--navy .stat .stat-label { color: rgba(255, 255, 255, 0.7); }
@@ -346,16 +453,32 @@ body {
   text-align: center;
 }
 .display-stat .stat-numeral {
-  font-size: 13rem;            /* 208px */
-  letter-spacing: -0.03em;
+  font-size: 18rem;            /* 288px — larger so the display moment dominates
+                                  a 1080 canvas; a 240px numeral was getting
+                                  visually out-massed by long labels below it */
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--gx-navy);
 }
+.slide--navy .display-stat .stat-numeral { color: var(--gx-active-green); }
 .display-stat .stat-label {
-  font-size: 1.125rem;         /* 18px */
-  letter-spacing: 0.16em;
+  font-size: 2.5rem;           /* 40px — paired with 288 numeral via ~1:7 ratio
+                                  for display-stat (wider headlines read better
+                                  at a smaller label than the 3-up 1:4) */
+  letter-spacing: 0.14em;
+  color: var(--gx-muted-on-light);
+  /* Wrap long labels onto two balanced lines so the label doesn't visually
+     dominate the shorter numeral. */
+  max-width: 22ch;
+  text-wrap: balance;
+  text-align: center;
 }
 .display-stat__note {
+  font-size: 1.5rem;           /* 24px */
+  line-height: 1.5;
   color: var(--gx-muted-on-light);
-  margin-top: 16px;
+  margin-top: 24px;
+  max-width: 52ch;
 }
 .slide--navy .display-stat__note { color: var(--gx-muted-on-dark); }
 
@@ -438,16 +561,33 @@ body {
   padding: 40px 0;             /* never bump the chrome if content grows */
 }
 
-/* ── Numbered steps ── */
+/* ── Numbered steps ──
+   Horizontal 3-up by default: a row of steps fills the slide width so the
+   right half of the canvas stops looking empty. The numeral sits above each
+   label/body column — the vertical "1 / CONNECT / body" rhythm reads cleanly
+   at a glance. Use `.steps--stack` for 4-5 steps or copy-heavy bodies where
+   the vertical form reads better. */
 .steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 64px;
+  align-items: start;
+}
+.steps--stack {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 36px;
 }
-.step {
+.steps--stack .step {
   display: grid;
   grid-template-columns: 88px 1fr;
-  gap: 28px;
+  gap: 32px;
+  align-items: start;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   align-items: start;
 }
 .step__numeral {
@@ -475,36 +615,45 @@ body {
 .slide--navy .step--coral .step__numeral {
   color: var(--gx-coral);
 }
-.step__label {
-  font-size: 0.875rem;         /* 14px */
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--gx-navy);
-  margin: 0 0 8px 0;
-}
-.slide--navy .step__label { color: var(--gx-active-green); }
+/* .step__label size / weight / color handled by the unified label block
+   near the top of this file; it shares the 32px section-label tier. */
 .step__body {
-  font-size: 1.5rem;           /* 24px */
+  font-size: 1.5rem;           /* 24px — sits comfortably inside a 3-up column
+                                  width without runt lines. The stacked variant
+                                  (steps--stack) bumps to 28px via override. */
   font-weight: 400;
   line-height: 1.5;
   color: var(--gx-body-on-light);
   margin: 0;
-  max-width: 52ch;
+  max-width: 32ch;
+}
+.steps--stack .step__body {
+  font-size: 1.75rem;          /* 28px — paired with 64px numerals in stacked form */
+  max-width: 48ch;
 }
 .slide--navy .step__body { color: var(--gx-body-on-dark); }
 
 /* ── Detail grid with sidebar ── */
 .detail-grid-sidebar {
   display: grid;
-  grid-template-columns: 65% 35%;
+  grid-template-columns: 62% 38%;     /* give the main column a bit more breathing room
+                                         so "A working integration, not a slide." wraps clean */
   gap: 0;
   height: 100%;
 }
 .detail-grid-sidebar__main {
-  padding-right: 80px;
+  padding-right: 64px;
   display: flex;
   flex-direction: column;
   gap: 32px;
+}
+/* Main-column headline inside the detail-grid-sidebar layout lives in a
+   ~1120px column. Let it stretch wider than the default 32ch cap so the
+   headline reads as one intentional line instead of three runt lines.
+   Covers both heading-class variants that might appear in the main column. */
+.slide--detail-grid-with-sidebar .detail-grid-sidebar__main .headline-hero,
+.slide--detail-grid-with-sidebar .detail-grid-sidebar__main .headline-split {
+  max-width: none;
 }
 .detail-grid-sidebar__sidebar {
   background: var(--gx-navy);
@@ -516,16 +665,20 @@ body {
   gap: 48px;
   justify-content: center;
 }
+/* Sidebar stats share the standard 3-up rhythm: 88px numeral / 22px label.
+   The 1:4 numeral-to-label ratio is the canonical "metric" style and is
+   applied everywhere a numeral + label pair appears. */
 .detail-grid-sidebar__sidebar .stat .stat-numeral {
   color: var(--gx-active-green);
-  font-size: 3.5rem;            /* 56px */
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 5.5rem;            /* 88px — unified with cover / hero 3-up */
+  font-weight: 800;
+  letter-spacing: -0.025em;
 }
 .detail-grid-sidebar__sidebar .stat .stat-label {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.75rem;           /* 12px */
-  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.375rem;          /* 22px — 1/4 of 88 */
+  font-weight: 600;
+  letter-spacing: 0.12em;
 }
 
 .detail-items {
@@ -533,25 +686,21 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 40px 48px;
 }
-.detail-item .detail-item__label {
-  font-size: 0.875rem;          /* 14px */
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--gx-coral);
-  margin: 0 0 8px 0;
-}
+/* .detail-item__label size / weight / color handled by the unified label
+   block near the top of this file. Headline and body follow the unified
+   card tier (36 / 22). */
 .detail-item .detail-item__headline {
-  font-size: 1.5rem;            /* 24px */
+  font-size: 2.25rem;           /* 36px — exceeds the 32px label above it */
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: -0.005em;
   color: var(--gx-navy);
-  margin: 0 0 8px 0;
+  margin: 0 0 12px 0;
 }
 .detail-item .detail-item__body {
-  font-size: 1.125rem;          /* 18px */
+  font-size: 1.375rem;          /* 22px — matches card body */
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--gx-body-on-light);
   margin: 0;
 }
@@ -584,16 +733,21 @@ body {
    600-weight, 14–20px text. Primary CTA is GREEN (navy text); Coral is a
    secondary highlight variant. Outline is transparent with a hairline.
    Hover state applies an inset darkening shadow rather than changing bg. */
+/* Buttons sit one tier below the unified label size — 22px / 600. A slide
+   button is a call to action, not a section headline; it should be readable
+   from 10 feet but never outshout the hero copy next to it. Padding scales
+   with the type; `.cta--sm` and `.cta--lg` follow the same ladder. */
 .cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 14px 24px;
+  gap: 10px;
+  padding: 14px 32px;
   font-family: var(--gx-font);
-  font-size: 1rem;                 /* 16px — webflow base button */
+  font-size: 1.375rem;             /* 22px — one step below the label tier */
   font-weight: 600;
-  line-height: 1.75;               /* 28px */
+  line-height: 1.2;
+  letter-spacing: 0.08em;
   border-radius: var(--gx-radius-pill);
   border: 2px solid transparent;
   background: var(--gx-green);
@@ -601,8 +755,8 @@ body {
   text-decoration: none;
   white-space: nowrap;
 }
-.cta--sm      { font-size: 0.875rem; line-height: 1.571; padding: 10px 20px; }
-.cta--lg      { font-size: 1.25rem;  line-height: 1.5;   padding: 19px 36px; }
+.cta--sm      { font-size: 1.125rem; line-height: 1.2;  padding: 10px 24px; }
+.cta--lg      { font-size: 1.75rem;  line-height: 1.2;  padding: 20px 44px; }
 .cta--navy    { background: var(--gx-navy);  color: var(--gx-white); }
 .cta--white   { background: var(--gx-white); color: var(--gx-navy); border-color: var(--gx-border); }
 .cta--coral   { background: var(--gx-coral); color: var(--gx-white); }
