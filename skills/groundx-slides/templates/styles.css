@@ -1,67 +1,136 @@
 /* =============================================================
    GroundX Slides — shared stylesheet
-   All palette tokens, typography, and layout classes live here.
-   Never hardcode a hex in a slide file. Reference var(--gx-*).
+
+   ALL design tokens live in the generated :root block below,
+   between the BEGIN/END GENERATED TOKENS markers. Class rules
+   below reference the tokens via var(--gx-*). Never hardcode a
+   color, font-size, radius, or asset path in a slide file — and
+   never hardcode one below :root either; every literal value
+   belongs in the generated block.
+
+   The canonical source of truth for these tokens is
+   ../../groundx-design-standards/tokens.json (machine-readable)
+   with a narrative mirror in
+   ../../groundx-design-standards/references/tokens.md. To change
+   a value: edit tokens.json (and the matching row in tokens.md),
+   then run the generator — see the BEGIN/END comments below.
+   Hand-edits inside the generated block will be overwritten on
+   the next run.
    ============================================================= */
 
 /* Inter is the brand typeface across slides + dashboard + web UI. Chosen for
-   enterprise legibility at both 11px (chrome) and 288px (display-stat), with
-   designed weights across 400–800 and OpenType stylistic sets (ss01, cv11,
-   cv01) tuned globally on body. */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+   enterprise legibility at both 11px (chrome) and 288px (display-stat). The
+   brand weight ladder is 400 / 600 / 700 / 800 — weight 500 is "indecisive"
+   per brand rules, 900 is retired. OpenType stylistic sets (ss01, cv11, cv01)
+   are tuned globally on body. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
 
+/* BEGIN GENERATED TOKENS — do not edit by hand. */
+/* Regenerate via: (cd groundx-design-standards && node scripts/generate-mirrors.mjs) */
+/* Source of truth: groundx-design-standards/tokens.json */
 :root {
-  /* ── Brand palette (mirrors groundx-design-standards/colors.md) ──
-     Source of truth: groundx-design-standards/references/styleguide.html.
-     Hex values here must match the webflow-derived tokens exactly. */
-  --gx-navy:              #29335c;  /* primary-1 */
-  --gx-green:             #a1ec83;  /* primary-2 — primary CTA, accent */
-  --gx-cyan:              #c1e8ee;  /* primary-3 — secondary accent */
-  --gx-tint:              #eff9fb;  /* primary-4 — quiet section bg */
-  --gx-coral:             #f3663f;  /* primary-5 — label / highlight */
-  --gx-body-text:         #40496b;  /* text-color — paragraph body */
-  --gx-gray:              #f2f4f5;  /* alt section bg, input fill */
-  --gx-white:             #ffffff;
-  --gx-border:            rgba(41, 51, 92, 0.1);
 
-  /* Support palette (rare) */
-  --gx-blue:              #0b99ff;
-  --gx-error-red:         #f70d1a;
-  --gx-lighter-red:       #ff7f7f;
-  --gx-dark-grey:         #81879a;
+  /* ── Brand palette (tokens.md §1.1) ── */
+  --gx-navy:                       #29335c;
+  --gx-green:                      #a1ec83;
+  --gx-cyan:                       #c1e8ee;
+  --gx-tint:                       #eff9fb;
+  --gx-coral:                      #f3663f;
+  --gx-body-text:                  #40496b;
+  --gx-gray:                       #f2f4f5;
+  --gx-white:                      #ffffff;
+  --gx-border:                     rgba(41, 51, 92, 0.1);
 
-  /* Legacy aliases — retained so old pages build; prefer the names above.
-     The aqua alias maps to tint; pale-aqua to cyan; active-green to green. */
-  --gx-aqua:              var(--gx-tint);
-  --gx-pale-aqua:         var(--gx-cyan);
-  --gx-active-green:      var(--gx-green);
-  --gx-light-grey:        var(--gx-gray);
+  /* ── Support palette (tokens.md §1.2) ── */
+  --gx-error-red:                  #f70d1a;
+  --gx-lighter-red:                #ff7f7f;
+  --gx-blue:                       #0b99ff;
+  --gx-dark-grey:                  #81879a;
 
-  /* Surface-aware aliases */
-  --gx-eyebrow-on-light:  var(--gx-coral);
-  --gx-eyebrow-on-dark:   var(--gx-green);
-  --gx-body-on-light:     var(--gx-body-text);
-  --gx-body-on-dark:      rgba(255, 255, 255, 0.82);
-  --gx-muted-on-light:    rgba(64, 73, 107, 0.7);
-  --gx-muted-on-dark:     rgba(255, 255, 255, 0.65);
+  /* ── Surface-aware color aliases (§1.3) ── */
+  --gx-eyebrow-on-light:           var(--gx-coral);
+  --gx-eyebrow-on-dark:            var(--gx-green);
+  --gx-body-on-light:              var(--gx-body-text);
+  --gx-body-on-dark:               rgba(255, 255, 255, 0.82);
+  --gx-muted-on-light:             rgba(64, 73, 107, 0.7);
+  --gx-muted-on-dark:              rgba(255, 255, 255, 0.65);
 
-  /* Radii / borders (webflow scale: 4 / 6 / 12 / 20 / 200) */
-  --gx-radius-sm:         4px;
-  --gx-radius-md:         6px;
-  --gx-radius-lg:         12px;
-  --gx-radius-card:       20px;
-  --gx-radius-pill:       200px;
-  --gx-radius-input:      6px;
-  --gx-border-hairline:   1px solid var(--gx-border);
+  /* ── Legacy color aliases (§1.4) ── */
+  --gx-aqua:                       var(--gx-tint);
+  --gx-pale-aqua:                  var(--gx-cyan);
+  --gx-active-green:               var(--gx-green);
+  --gx-light-grey:                 var(--gx-gray);
 
-  /* Type — Inter across the whole brand. Stack degrades gracefully
-     to system UI if the webfont fails to load during PDF rendering. */
-  --gx-font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  /* Inter opentype features: ss01 lifts the single-story 'a', cv11 straight
-     'R', cv01 lowercase 'l' with tail — tuning for a cleaner, more
-     professional wordmark feel at display sizes. */
-  font-feature-settings: "ss01", "cv11", "cv01";
+  /* ── Typography — family & OpenType features ── */
+  --gx-font:                       "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --gx-font-features:              "ss01", "cv11", "cv01";
+
+  /* ── Typography — weight ladder (§2.2) ── */
+  --gx-weight-body:                400;
+  --gx-weight-label:               600;
+  --gx-weight-headline:            700;
+  --gx-weight-display:             800;
+
+  /* ── Typography — letter spacing ── */
+  --gx-track-label:                0.12em;
+  --gx-track-button:               0.04em;
+  --gx-track-chip:                 0.5px;
+  --gx-track-display-tight:        -0.01em;
+  --gx-track-heading-tight:        -0.005em;
+
+  /* ── Slide size scale (§3) ── */
+  --gx-size-chrome-sm:             0.75rem;
+  --gx-size-chrome-md:             0.875rem;
+  --gx-size-body-sm:               1.25rem;
+  --gx-size-body-card:             1.375rem;
+  --gx-size-body:                  1.5rem;
+  --gx-size-subhead-md:            1.75rem;
+  --gx-size-subhead-lg:            2rem;
+  --gx-size-subhead-xl:            2.75rem;
+  --gx-size-label:                 2rem;
+  --gx-size-headline-card:         2.25rem;
+  --gx-size-headline-split:        2.75rem;
+  --gx-size-headline-hero:         4rem;
+  --gx-size-headline-section:      5.5rem;
+  --gx-size-headline-cover:        5.5rem;
+  --gx-size-stat-numeral:          5.5rem;
+  --gx-size-stat-label:            1.375rem;
+  --gx-size-stat-numeral-display:  18rem;
+  --gx-size-stat-label-display:    2.5rem;
+  --gx-size-step-numeral:          4rem;
+  --gx-size-cta-sm:                1.125rem;
+  --gx-size-cta:                   1.375rem;
+  --gx-size-cta-lg:                1.75rem;
+
+  /* ── Radii (§5) ── */
+  --gx-radius-sm:                  4px;
+  --gx-radius-md:                  6px;
+  --gx-radius-lg:                  12px;
+  --gx-radius-card:                20px;
+  --gx-radius-pill:                200px;
+
+  /* ── Slide canvas (§6) ── */
+  --gx-slide-width:                1920px;
+  --gx-slide-height:               1080px;
+  --gx-slide-padding:              80px;
+  --gx-accent-bar-height:          8px;
+
+  /* ── Logo lockup (§7) ── */
+  --gx-logo-light:                 url("/assets/logos/eyelevel-logo-color.png");
+  --gx-logo-dark:                  url("/assets/logos/eyelevel-logo-white.png");
+  --gx-logo-width:                 220px;
+  --gx-logo-height:                72px;
+  --gx-logo-top:                   56px;
+  --gx-logo-left:                  80px;
+
+  /* ── CSS-only shorthands (composed from primitives above) ── */
+  /* Canonical hairline border. Use everywhere a 1px navy-at-10% edge is needed. */
+  --gx-border-hairline:            1px solid var(--gx-border);
+
+  /* Apply Inter OpenType features at the document root so children inherit. */
+  font-feature-settings: var(--gx-font-features);
 }
+/* END GENERATED TOKENS */
 
 /* ── Base reset ── */
 *, *::before, *::after { box-sizing: border-box; }
@@ -71,7 +140,7 @@ body {
   color: var(--gx-body-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "ss01", "cv11", "cv01";
+  font-feature-settings: var(--gx-font-features);
   text-rendering: optimizeLegibility;
 }
 
@@ -80,10 +149,10 @@ body {
    design standards: white (default), gray, tint, cyan, green, navy. */
 .slide {
   position: relative;
-  width: 1920px;
-  height: 1080px;
+  width: var(--gx-slide-width);
+  height: var(--gx-slide-height);
   overflow: hidden;
-  padding: 80px;
+  padding: var(--gx-slide-padding);
   background: var(--gx-white);
   color: var(--gx-body-text);
 }
@@ -125,25 +194,25 @@ body {
    headlines) so it never competes for attention. */
 .slide-logo {
   position: absolute;
-  top: 56px;
-  left: 80px;
-  width: 220px;
-  height: 72px;
-  background: url("/assets/logos/eyelevel-logo-color.png") no-repeat left center / contain;
+  top: var(--gx-logo-top);
+  left: var(--gx-logo-left);
+  width: var(--gx-logo-width);
+  height: var(--gx-logo-height);
+  background: var(--gx-logo-light) no-repeat left center / contain;
 }
 .slide--navy .slide-logo,
 .slide--green .slide-logo,
 .slide--coral .slide-logo {
-  background-image: url("/assets/logos/eyelevel-logo-white.png");
+  background-image: var(--gx-logo-dark);
 }
 
 .slide-number {
   position: absolute;
   bottom: 48px;
-  right: 80px;
-  font-size: 0.75rem;            /* 12px — chrome reads as a quiet marker */
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  right: var(--gx-slide-padding);
+  font-size: var(--gx-size-chrome-sm);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
   color: var(--gx-dark-grey);
 }
 .slide--navy .slide-number { color: rgba(255, 255, 255, 0.55); }
@@ -153,7 +222,7 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  height: 8px;
+  height: var(--gx-accent-bar-height);
   background: linear-gradient(
     90deg,
     var(--gx-active-green) 0%,
@@ -201,9 +270,9 @@ body {
 .eyebrow,
 .step__label,
 .detail-item .detail-item__label {
-  font-size: 2rem;             /* 32px — unified label */
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: var(--gx-size-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
   line-height: 1.1;
   margin: 0 0 24px 0;
 }
@@ -245,8 +314,8 @@ body {
    across adjacent slides. The cover's weight (800) is what keeps it distinct
    from section-break's 700 — hierarchy through weight, not size. */
 .headline-cover {
-  font-size: 5.5rem;           /* 88px — matches .headline-section */
-  font-weight: 800;
+  font-size: var(--gx-size-headline-cover);
+  font-weight: var(--gx-weight-display);
   line-height: 1.0;
   letter-spacing: -0.025em;
   color: var(--gx-white);
@@ -255,8 +324,8 @@ body {
 }
 
 .headline-section {
-  font-size: 5.5rem;           /* 88px */
-  font-weight: 700;
+  font-size: var(--gx-size-headline-section);
+  font-weight: var(--gx-weight-headline);
   line-height: 1.05;
   letter-spacing: -0.02em;
   color: var(--gx-white);
@@ -266,8 +335,8 @@ body {
 }
 
 .headline-hero {
-  font-size: 4rem;             /* 64px */
-  font-weight: 700;
+  font-size: var(--gx-size-headline-hero);
+  font-weight: var(--gx-weight-headline);
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--gx-navy);
@@ -287,8 +356,8 @@ body {
    max-width at 18ch ≈ half of the 1920 canvas at 44px, which lets
    each column's headline breathe across two lines instead of three. */
 .headline-split {
-  font-size: 2.75rem;          /* 44px */
-  font-weight: 700;
+  font-size: var(--gx-size-headline-split);
+  font-weight: var(--gx-weight-headline);
   line-height: 1.15;
   letter-spacing: -0.01em;
   color: var(--gx-navy);
@@ -301,8 +370,8 @@ body {
 /* Card-in-grid headline — fixed size since cards are fixed width. Lifted
    to 36px so it clearly outranks the 32px label that sits above it. */
 .headline-card {
-  font-size: 2.25rem;          /* 36px */
-  font-weight: 700;
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-headline);
   line-height: 1.2;
   letter-spacing: -0.005em;
   color: var(--gx-navy);
@@ -313,8 +382,8 @@ body {
 
 /* ── Body copy ── */
 .body {
-  font-size: 1.5rem;           /* 24px */
-  font-weight: 400;
+  font-size: var(--gx-size-body);
+  font-weight: var(--gx-weight-body);
   line-height: 1.5;
   color: var(--gx-body-on-light);
   margin: 0;
@@ -323,8 +392,8 @@ body {
 .slide--navy .body { color: var(--gx-body-on-dark); }
 
 .body-sm {
-  font-size: 1.25rem;          /* 20px */
-  font-weight: 400;
+  font-size: var(--gx-size-body-sm);
+  font-weight: var(--gx-weight-body);
   line-height: 1.55;
   color: var(--gx-body-on-light);
   margin: 0;
@@ -334,8 +403,8 @@ body {
 /* Subhead / lead paragraph — sits under the dominant headline.
    Measured max-width in ch keeps lines readable regardless of canvas. */
 .subhead {
-  font-size: 1.5rem;           /* 24px */
-  font-weight: 400;
+  font-size: var(--gx-size-body);
+  font-weight: var(--gx-weight-body);
   line-height: 1.5;
   color: var(--gx-body-on-light);
   max-width: 52ch;
@@ -358,10 +427,10 @@ body {
 .slide--section-break .subhead,
 .slide--section-break .subhead--center,
 .slide--cover .subhead {
-  font-size: 2.75rem;          /* 44px — half of 88 */
+  font-size: var(--gx-size-subhead-xl);
   line-height: 1.3;
   max-width: 42ch;
-  font-weight: 400;
+  font-weight: var(--gx-weight-body);
 }
 .slide--section-break .subhead--center {
   max-width: 36ch;
@@ -371,7 +440,7 @@ body {
 .slide--hero-with-stats .body,
 .slide--cta .subhead,
 .slide--cta .body {
-  font-size: 2rem;             /* 32px — half of 64 */
+  font-size: var(--gx-size-subhead-lg);
   line-height: 1.4;
   /* 62ch at 32px ≈ 1400px: subhead fills most of the slide width so the
      right half doesn't sit empty. Kept below the 1760px content width so
@@ -381,7 +450,7 @@ body {
 
 .slide--split .subhead,
 .slide--split .body {
-  font-size: 1.75rem;          /* 28px — sits between 44 headline and step body */
+  font-size: var(--gx-size-subhead-md);
   line-height: 1.4;
   max-width: 28ch;
 }
@@ -390,7 +459,7 @@ body {
    (22px) with detail-item bodies. Cards are third-width; 22px keeps line
    counts reasonable while staying bigger than the old 20px. */
 .slide--three-card-grid .card .body-sm {
-  font-size: 1.375rem;         /* 22px — unified with detail-item body */
+  font-size: var(--gx-size-body-card);
   line-height: 1.5;
 }
 
@@ -402,17 +471,17 @@ body {
   line-height: 1;
 }
 .stat .stat-numeral {
-  font-size: 5.5rem;           /* 88px — matches headline-section in rhythm */
-  font-weight: 800;
+  font-size: var(--gx-size-stat-numeral);
+  font-weight: var(--gx-weight-display);
   line-height: 1;
   color: var(--gx-coral);
   letter-spacing: -0.025em;
 }
 .slide--navy .stat .stat-numeral { color: var(--gx-active-green); }
 .stat .stat-label {
-  font-size: 1.375rem;         /* 22px — 1/4 of the 88px stat numeral */
-  font-weight: 600;
-  letter-spacing: 0.12em;       /* tracking eases slightly at larger size */
+  font-size: var(--gx-size-stat-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);     /* tracking eases slightly at larger size */
   color: var(--gx-muted-on-light);
 }
 .slide--navy .stat .stat-label { color: rgba(255, 255, 255, 0.7); }
@@ -453,18 +522,14 @@ body {
   text-align: center;
 }
 .display-stat .stat-numeral {
-  font-size: 18rem;            /* 288px — larger so the display moment dominates
-                                  a 1080 canvas; a 240px numeral was getting
-                                  visually out-massed by long labels below it */
-  font-weight: 800;
+  font-size: var(--gx-size-stat-numeral-display);
+  font-weight: var(--gx-weight-display);
   letter-spacing: -0.035em;
   color: var(--gx-navy);
 }
 .slide--navy .display-stat .stat-numeral { color: var(--gx-active-green); }
 .display-stat .stat-label {
-  font-size: 2.5rem;           /* 40px — paired with 288 numeral via ~1:7 ratio
-                                  for display-stat (wider headlines read better
-                                  at a smaller label than the 3-up 1:4) */
+  font-size: var(--gx-size-stat-label-display);
   letter-spacing: 0.14em;
   color: var(--gx-muted-on-light);
   /* Wrap long labels onto two balanced lines so the label doesn't visually
@@ -474,7 +539,7 @@ body {
   text-align: center;
 }
 .display-stat__note {
-  font-size: 1.5rem;           /* 24px */
+  font-size: var(--gx-size-body);
   line-height: 1.5;
   color: var(--gx-muted-on-light);
   margin-top: 24px;
@@ -554,8 +619,8 @@ body {
    without relying on `height: 100%` games inside the grid. */
 .split-wrap {
   position: absolute;
-  left: 80px;
-  right: 80px;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
   top: 50%;
   transform: translateY(-50%);
   padding: 40px 0;             /* never bump the chrome if content grows */
@@ -591,8 +656,8 @@ body {
   align-items: start;
 }
 .step__numeral {
-  font-size: 4rem;             /* 64px */
-  font-weight: 700;
+  font-size: var(--gx-size-step-numeral);
+  font-weight: var(--gx-weight-headline);
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--gx-coral);
@@ -618,17 +683,15 @@ body {
 /* .step__label size / weight / color handled by the unified label block
    near the top of this file; it shares the 32px section-label tier. */
 .step__body {
-  font-size: 1.5rem;           /* 24px — sits comfortably inside a 3-up column
-                                  width without runt lines. The stacked variant
-                                  (steps--stack) bumps to 28px via override. */
-  font-weight: 400;
+  font-size: var(--gx-size-body);
+  font-weight: var(--gx-weight-body);
   line-height: 1.5;
   color: var(--gx-body-on-light);
   margin: 0;
   max-width: 32ch;
 }
 .steps--stack .step__body {
-  font-size: 1.75rem;          /* 28px — paired with 64px numerals in stacked form */
+  font-size: var(--gx-size-subhead-md);  /* 28 — paired with 64px numerals in stacked form */
   max-width: 48ch;
 }
 .slide--navy .step__body { color: var(--gx-body-on-dark); }
@@ -670,15 +733,15 @@ body {
    applied everywhere a numeral + label pair appears. */
 .detail-grid-sidebar__sidebar .stat .stat-numeral {
   color: var(--gx-active-green);
-  font-size: 5.5rem;            /* 88px — unified with cover / hero 3-up */
-  font-weight: 800;
+  font-size: var(--gx-size-stat-numeral);
+  font-weight: var(--gx-weight-display);
   letter-spacing: -0.025em;
 }
 .detail-grid-sidebar__sidebar .stat .stat-label {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 1.375rem;          /* 22px — 1/4 of 88 */
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: var(--gx-size-stat-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
 }
 
 .detail-items {
@@ -690,16 +753,16 @@ body {
    block near the top of this file. Headline and body follow the unified
    card tier (36 / 22). */
 .detail-item .detail-item__headline {
-  font-size: 2.25rem;           /* 36px — exceeds the 32px label above it */
-  font-weight: 700;
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-headline);
   line-height: 1.25;
   letter-spacing: -0.005em;
   color: var(--gx-navy);
   margin: 0 0 12px 0;
 }
 .detail-item .detail-item__body {
-  font-size: 1.375rem;          /* 22px — matches card body */
-  font-weight: 400;
+  font-size: var(--gx-size-body-card);
+  font-weight: var(--gx-weight-body);
   line-height: 1.5;
   color: var(--gx-body-on-light);
   margin: 0;
@@ -710,9 +773,9 @@ body {
   display: inline-flex;
   align-items: center;
   padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 0.75rem;            /* 12px */
-  font-weight: 600;
+  border-radius: var(--gx-radius-pill);
+  font-size: var(--gx-size-chrome-sm);
+  font-weight: var(--gx-weight-label);
   letter-spacing: 0.08em;
   line-height: 1;
   background: var(--gx-light-grey);
@@ -744,8 +807,8 @@ body {
   gap: 10px;
   padding: 14px 32px;
   font-family: var(--gx-font);
-  font-size: 1.375rem;             /* 22px — one step below the label tier */
-  font-weight: 600;
+  font-size: var(--gx-size-cta);
+  font-weight: var(--gx-weight-label);
   line-height: 1.2;
   letter-spacing: 0.08em;
   border-radius: var(--gx-radius-pill);
@@ -755,8 +818,8 @@ body {
   text-decoration: none;
   white-space: nowrap;
 }
-.cta--sm      { font-size: 1.125rem; line-height: 1.2;  padding: 10px 24px; }
-.cta--lg      { font-size: 1.75rem;  line-height: 1.2;  padding: 20px 44px; }
+.cta--sm      { font-size: var(--gx-size-cta-sm); line-height: 1.2;  padding: 10px 24px; }
+.cta--lg      { font-size: var(--gx-size-cta-lg); line-height: 1.2;  padding: 20px 44px; }
 .cta--navy    { background: var(--gx-navy);  color: var(--gx-white); }
 .cta--white   { background: var(--gx-white); color: var(--gx-navy); border-color: var(--gx-border); }
 .cta--coral   { background: var(--gx-coral); color: var(--gx-white); }
@@ -785,8 +848,8 @@ body {
    similarly-composed one-block slides. Avoids inline position styles. */
 .slide-centerblock {
   position: absolute;
-  left: 80px;
-  right: 80px;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
   top: 50%;
   transform: translateY(-50%);
   max-width: 1500px;
@@ -805,7 +868,7 @@ body {
 
 .cover-main  {
   position: absolute;
-  left: 80px;
+  left: var(--gx-slide-padding);
   top: 50%;
   transform: translateY(-50%);
   max-width: 1500px;
@@ -815,17 +878,17 @@ body {
 }
 .cover-context {
   position: absolute;
-  top: 80px;
-  right: 80px;
-  font-size: 0.875rem;           /* 14px */
-  font-weight: 600;
+  top: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
+  font-size: var(--gx-size-chrome-md);
+  font-weight: var(--gx-weight-label);
   letter-spacing: 0.14em;
   color: var(--gx-active-green);
 }
 .cover-stats {
   position: absolute;
-  left: 80px;
-  right: 80px;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
   bottom: 120px;
 }
 

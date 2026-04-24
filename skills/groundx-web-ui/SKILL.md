@@ -65,8 +65,8 @@ Don't read every reference up front. Read the one that matches the question, the
 
 The `templates/` directory contains drop-in files that can replace (or install alongside) their counterparts in the dashboard repo:
 
-- `templates/constants.ts` — the canonical design tokens. Copy to `src/constants/index.ts`. Adds `ERROR_RED`, `DISABLED_GREY`, `NAV_ICON_GREY`, `ROW_SELECTED_BG`, `FONT_FAMILY` that weren't named before. Hex values come from the standards skill's `colors.md`.
-- `templates/theme.ts` — the corrected MUI theme. Copy to `src/theme.ts`. Fixes `palette.primary.main` (was an unused blue — now `CORAL_ORANGE`), applies `FONT_FAMILY` at `<body>` via `MuiCssBaseline`, sets `disableElevation: true` on buttons by default, sets `palette.divider = LIGHT_GREY_2`.
+- `templates/constants.ts` — a thin barrel that re-exports everything from `constants.generated.ts` (brand tokens, auto-generated from `../../groundx-design-standards/tokens.json`), `constants.chrome.ts` (hand-written dashboard-shell tokens — `drawerWidth`, `NAV_ICON_GREY`, `DISABLED_GREY`, `ROW_SELECTED_BG`, `WARNING_AMBER`, the premium-button gradient), and `constants.legacy.ts` (deprecated aliases — `CORAL_ORANGE`, `MAIN_BLACK`, `BORDER_RADIUS_3X`, etc.). Copy the whole set to `src/constants/` so `import { NAVY, PADDING, drawerWidth } from "@/constants"` keeps working. Never hand-edit `constants.generated.ts` — regenerate via the standards-skill script instead.
+- `templates/theme.ts` — the corrected MUI theme. Copy to `src/theme.ts`. Fixes `palette.primary.main` (was an unused blue — now `GREEN`), applies `FONT_FAMILY` at `<body>` via `MuiCssBaseline`, sets `disableElevation: true` on buttons by default, sets `palette.divider = BORDER`.
 - `templates/fonts.css` — `@import` of Inter from Google Fonts plus the body-level `font-family` and OpenType feature settings (`ss01`, `cv11`, `cv01`).
 - `templates/ThemeProvider.tsx` — `GxThemeProvider` that wires the theme + `CssBaseline` + fonts.
 - `templates/components/*.tsx` — canonical versions of `GxCard`, `GxPill`, `GxSectionHeader`, `GxButtonGroup`, `GxUsageCard` (new), plus corrected rewrites of `CommonSubmitButton`, `CommonCancelButton`, `CommonTextField`.
@@ -74,7 +74,7 @@ The `templates/` directory contains drop-in files that can replace (or install a
 For a **new component you're building now**, import from the dashboard's existing paths as if these templates were already installed:
 
 ```tsx
-import { CORAL_ORANGE, LIGHT_GREY_2, BORDER_RADIUS_3X, PADDING } from "@/constants";
+import { CORAL, BORDER, BORDER_RADIUS_CARD, PADDING } from "@/constants";
 import GxCard from "@/shared/components/GxCard";
 import GxPill from "@/shared/components/GxPill";
 import CommonSubmitButton from "@/shared/components/CommonSubmitButton";
@@ -86,7 +86,7 @@ If an import points to a component that doesn't exist in the repo yet, note that
 
 These appear in more than one reference. Internalize them:
 
-1. **No hex literals in component files.** Every color comes from a named token in `constants.ts`. If you need a new color, add it to the standards skill's `colors.md` first, then mirror it into `constants.ts`.
+1. **No hex literals in component files.** Every color comes from a named token imported from `@/constants` (the barrel). If you need a new brand color, add it to the standards skill's `tokens.json` and `references/tokens.md` first, then re-run `groundx-design-standards/scripts/generate-mirrors.mjs` — it will appear as a new export in `constants.generated.ts`. Dashboard-only chrome colors that aren't part of the brand palette go in `constants.chrome.ts` directly.
 2. **No hardcoded px breakpoints.** Use `theme.breakpoints.*` or sx responsive object syntax (`sx={{ p: { xs: 1, md: 5 } }}`).
 3. **No `boxShadow` on surfaces.** Flat is the style. If a surface needs emphasis, change its background.
 4. **No MUI `<Card>`.** Use `GxCard`. The existing codebase mixes them — replace `<Card>` when you see it.
@@ -99,8 +99,8 @@ These appear in more than one reference. Internalize them:
 
 Before you return generated code to the user, quickly verify:
 
-- [ ] Every color is a named constant from `constants.ts`. No `#` characters in your JSX or sx blocks.
-- [ ] Every radius is a token (`BORDER_RADIUS`, `BORDER_RADIUS_2X`, `BORDER_RADIUS_3X`, `BORDER_RADIUS_4X`, or `999` for pills).
+- [ ] Every color is a named constant imported from `@/constants`. No `#` characters in your JSX or sx blocks.
+- [ ] Every radius is a token (`BORDER_RADIUS_SM`, `BORDER_RADIUS`, `BORDER_RADIUS_2X`, `BORDER_RADIUS_CARD`, or `BORDER_RADIUS_PILL`).
 - [ ] Every breakpoint is `theme.breakpoints.*` or sx responsive syntax. No `@media (max-width: Xpx)` strings.
 - [ ] Buttons use the right wrapper: `CommonSubmitButton` / `CommonCancelButton` / `GxButtonGroup` / `GxPill` — see `references/buttons.md` decision tree.
 - [ ] Cards use `GxCard`, not MUI `<Card>` or inline `<Box sx={{ border, borderRadius, … }}>`.
@@ -128,7 +128,10 @@ groundx-web-ui/
 │   ├── icons.md                    ← MUI icons, custom SVGs, icon sizing
 │   └── corrections.md              ← 10 documented inconsistencies and their fixes
 ├── templates/
-│   ├── constants.ts                ← drop-in src/constants/index.ts
+│   ├── constants.ts                ← barrel: re-exports generated + chrome + legacy
+│   ├── constants.generated.ts      ← AUTO-GENERATED brand tokens from tokens.json
+│   ├── constants.chrome.ts         ← hand-written dashboard chrome (drawerWidth, NAV_ICON_GREY, etc.)
+│   ├── constants.legacy.ts         ← deprecated aliases (CORAL_ORANGE, MAIN_BLACK, etc.)
 │   ├── theme.ts                    ← drop-in src/theme.ts
 │   ├── fonts.css                   ← Inter @import from Google Fonts + body font rules
 │   ├── ThemeProvider.tsx           ← GxThemeProvider wrapper

@@ -7,12 +7,12 @@ description: Produce EyeLevel-branded presentation decks as HTML-rendered PDFs. 
 
 Decks at EyeLevel are built as a set of 16:9 HTML pages, styled with the same design language as defined in `groundx-design-standards/SKILL.md`, and rendered to a single PDF via a headless browser. This mirrors the workflow that produced the Dell response deck in the examples folder — and it means a slide looks like a dashboard card looks like a landing page, because they're all the same DOM.
 
-**Before producing anything, read `../groundx-design-standards/SKILL.md`.** That skill owns the palette, typography, logos, and brand principles. This skill only defines how those invariants translate to slide layouts and the build pipeline.
+**Before producing anything, read `../groundx-design-standards/SKILL.md` and `../groundx-design-standards/references/tokens.md`.** That skill owns the palette, typography, logos, and brand principles; `tokens.md` is the canonical source for every color, font size, weight, radius, logo filename, and canvas dimension used here. This skill only defines how those invariants translate to slide layouts and the build pipeline.
 
 ## Why HTML → PDF, not .pptx
 
 - **One typography system across mediums.** Inter renders from the same Google Fonts source as the dashboard; no font-embedding gymnastics.
-- **Pixel-consistent palette.** Navy `#29335c` and Green `#a1ec83` are literally the same strings in `styles.css` as in the dashboard's `constants.ts` — no drift between mediums.
+- **Pixel-consistent palette.** The CSS custom properties in `styles.css` `:root` are auto-generated from `../groundx-design-standards/tokens.json` (the machine-readable source of truth), the same file the dashboard's `constants.generated.ts` is generated from — no drift between mediums.
 - **Editable by developers, reviewable by designers.** HTML diffs cleanly in a PR; .pptx binary diffs do not.
 - **No PowerPoint-specific rendering quirks.** No surprise drop shadows, no "smart" text auto-scaling, no chart styling drift.
 
@@ -44,12 +44,21 @@ Layouts are built from the patterns in `../groundx-design-standards/references/p
 ## Reference map
 
 ```
+What hex / size / weight / radius / logo    → ../groundx-design-standards/references/tokens.md (narrative)
+filename / canvas dimension do I use?         ../groundx-design-standards/tokens.json     (machine source of truth)
+                                              (canonical values — always start here)
+
 What are the slide layouts?                 → references/layouts.md
-Typography sizes at 1920×1080?              → references/typography-slides.md
+Slide-specific typography rules              → references/typography-slides.md
+(unified label tier, 1:4 stat ratio,
+ layout-scoped subheads — sizes themselves
+ live in tokens.md § 3)
 How do I build + render to PDF?             → references/implementation.md
 How do I set up the project / dependencies? → references/implementation.md (§ Project setup)
 What's in the starter template?             → templates/README.md
 ```
+
+**Token flow.** Brand values live in two paired files in the design-standards skill: `tokens.json` (machine-readable source of truth, DTCG format) and `references/tokens.md` (human-readable narrative). A codegen script (`groundx-design-standards/scripts/generate-mirrors.mjs`) reads `tokens.json` and splices the CSS custom properties (`--gx-*`) into `templates/styles.css` between the `/* BEGIN GENERATED TOKENS */` and `/* END GENERATED TOKENS */` markers. Every class rule below the generated block references those vars via `var(--gx-*)`. To change a color, size, weight, radius, or logo path brand-wide: edit `tokens.json` + `tokens.md` first, re-run the generator, then rebuild the deck. Do not hand-edit anything between the generated-block markers — the next generator run will overwrite it. Do not introduce raw hex values, raw px sizes, or raw URL strings in `styles.css` outside the generated `:root` block, and never in slide HTML. CI verifies the mirror via `generate-mirrors.mjs`'s companion `verify-mirrors.mjs` script.
 
 ## Templates
 
@@ -85,13 +94,13 @@ Use these to pattern-match. If a user asks for a deck similar to the Dell respon
 
 Before reporting a deck complete, verify:
 
-1. **Colors from tokens only.** No hex literal in an HTML file that isn't first defined as a CSS var in `styles.css` → the var name should match a token from `colors.md` (e.g., `--gx-coral`, `--gx-navy`). Grep for `#` followed by a hex digit in `.html` files — anything found is a violation.
-2. **Eyebrow color matches surface.** Coral eyebrows on light surfaces, active-green eyebrows on navy. Grep for `.eyebrow` class usage and confirm.
+1. **All values come from tokens.** No hex literal, no raw px/rem size, no raw font-weight numeral, no raw logo URL, and no raw canvas dimension (1920/1080/80px) in HTML or in `styles.css` *outside* the generated `:root` block. Every such value is emitted once into the `/* BEGIN GENERATED TOKENS */ … /* END GENERATED TOKENS */` span by the codegen (sourced from `../groundx-design-standards/tokens.json`) and referenced from class rules via `var(--gx-*)`. Grep for `#` followed by a hex digit, `font-size:` / `font-weight:` with a literal number, and `url(` in both `.html` files and in `styles.css` class rules — anything outside the generated block is a violation.
+2. **Eyebrow color matches surface.** Coral eyebrows on light surfaces, green eyebrows on navy. Use the surface-aware aliases (`--gx-eyebrow-on-light`, `--gx-eyebrow-on-dark`) rather than naming the color directly. Grep for `.eyebrow` class usage and confirm.
 3. **Inter is loaded.** `styles.css` imports Inter from Google Fonts (`fonts.googleapis.com`); `build.mjs` primes weights 400 / 600 / 700 / 800 before each slide is printed.
-4. **Logo lockup present.** Every slide except the section break has `<div class="slide-logo" …></div>` top-left. The CSS swaps to `eyelevel-logo-white.png` on navy/green/coral surfaces and `eyelevel-logo-color.png` elsewhere; "A VALANTOR COMPANY" is baked into both PNGs. No `.tagline` element (see `../groundx-design-standards/references/logos.md`).
+4. **Logo lockup present.** Every slide except the section break has `<div class="slide-logo" …></div>` top-left. The CSS swaps via the `--gx-logo-light` / `--gx-logo-dark` tokens — light PNG on light surfaces, dark PNG on navy / green / coral. "A VALANTOR COMPANY" is baked into both PNGs. No `.tagline` element (see `../groundx-design-standards/references/logos.md`).
 5. **No box-shadow, no MUI elevation, no gradient background.** Exception: the thin brand accent bar (see `patterns.md` pattern 8) on cover / CTA slides if used.
 6. **ALL-CAPS eyebrows are typed uppercase in the HTML source.** No `text-transform: uppercase` in CSS.
-7. **Slide dimensions:** every `.slide` element renders at 1920×1080. Test with Chrome devtools `Ctrl+Shift+M` → 1920×1080.
+7. **Slide dimensions:** every `.slide` element renders at the canonical canvas (see `tokens.md` § 6). Test with Chrome devtools `Ctrl+Shift+M` at that viewport.
 8. **PDF builds clean.** `npm run build` produces `out/deck.pdf` with the expected page count and no console errors from Puppeteer.
 
 ## Skill directory map

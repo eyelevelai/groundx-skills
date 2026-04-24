@@ -1,36 +1,75 @@
 /**
  * GroundX MUI v5 theme — canonical, drop-in replacement for `src/theme.ts`.
  *
+ * Every color, radius, font size, weight, letter-spacing, and line-height in
+ * this file comes from a named constant imported from `./constants` (the
+ * barrel that re-exports `./constants.generated` — auto-generated from
+ * `../../groundx-design-standards/tokens.json` — plus `./constants.chrome`
+ * and `./constants.legacy`). If a brand-level value needs to change, edit
+ * `tokens.json` (and the narrative `tokens.md`) first, then re-run
+ * `../../groundx-design-standards/scripts/generate-mirrors.mjs`; this file
+ * picks it up for free.
+ *
  * Corrections applied vs. the original:
- *   1. `palette.primary.main` now points at CORAL_ORANGE (was an unused #1976d2).
- *   2. `palette.secondary.main` is set to MAIN_BLACK so `color="secondary"`
- *      gives you the navy accent without hex literals.
+ *   1. `palette.primary.main` now points at GREEN (was an unused #1976d2).
+ *      Primary CTA in the brand is green, per the brand principle "Primary CTA
+ *      is Green, not Coral" in `../../groundx-design-standards/references/colors.md`.
+ *   2. `palette.secondary.main` is set to NAVY so `color="secondary"` gives
+ *      you the navy accent without hex literals.
  *   3. Typography's default fontFamily is Inter at the theme root, so raw
  *      <span>/<div> text inherits the brand font (not only <Typography>).
  *   4. CssBaseline applies the font to `body` as a belt-and-suspenders backup.
  *   5. Component defaults for MuiCard, MuiPaper, MuiDivider, MuiTableCell, and
- *      MuiChip push the app's actual design choices (no elevation, 1px LIGHT_GREY_2
- *      borders, BORDER_RADIUS_3X rounding) into the theme so call sites can stop
- *      restating them in `sx`.
+ *      MuiChip push the app's actual design choices (no elevation, 1px BORDER
+ *      hairlines, BORDER_RADIUS_CARD rounding) into the theme so call sites
+ *      can stop restating them in `sx`.
  *   6. Explicit typography variant ladder (h1…h6, body1, body2, caption, overline,
  *      button) replaces MUI's default scale, which was too loud at the top (h1=96px)
- *      and too tight in the middle (body and h6 only 4px apart). See the
- *      typography block below for the rationale.
+ *      and too tight in the middle (body and h6 only 4px apart). Every variant
+ *      pulls its numbers from FONT_SIZE_*, FONT_WEIGHT_*, LINE_HEIGHT_*, and
+ *      LETTER_SPACING_* constants — no literals.
  */
 
 import { createTheme } from "@mui/material/styles";
 import {
-  ACTIVE_GREEN,
   BODY_TEXT,
-  CORAL_ORANGE,
+  BORDER,
+  BORDER_RADIUS_CARD,
+  CORAL,
+  CYAN,
   DARK_GREY,
   FONT_FAMILY,
-  LIGHT_GREY_2,
-  MAIN_BACKGROUND,
-  MAIN_BLACK,
-  PALE_AQUA,
+  FONT_SIZE_BODY,
+  FONT_SIZE_BODY_SM,
+  FONT_SIZE_CAPTION,
+  FONT_SIZE_H1,
+  FONT_SIZE_H2,
+  FONT_SIZE_H3,
+  FONT_SIZE_H4,
+  FONT_SIZE_H5,
+  FONT_SIZE_H6,
+  FONT_SIZE_LABEL,
+  FONT_WEIGHT_BODY,
+  FONT_WEIGHT_HEADLINE,
+  FONT_WEIGHT_LABEL,
+  GREEN,
+  LETTER_SPACING_BUTTON,
+  LETTER_SPACING_CHIP,
+  LETTER_SPACING_DISPLAY_TIGHT,
+  LETTER_SPACING_HEADING_TIGHT,
+  LETTER_SPACING_LABEL,
+  LINE_HEIGHT_BODY,
+  LINE_HEIGHT_CARD_HEADING,
+  LINE_HEIGHT_CARD_SUBHEAD,
+  LINE_HEIGHT_DISPLAY,
+  LINE_HEIGHT_HEADING,
+  LINE_HEIGHT_SECTION,
+  LINE_HEIGHT_SUBSECTION,
+  LINE_HEIGHT_TIGHT_BODY,
+  NAVY,
   PREMIUM_GRADIENT_FROM,
   PREMIUM_GRADIENT_TO,
+  TINT,
   WHITE,
 } from "./constants";
 
@@ -69,23 +108,23 @@ const theme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: CORAL_ORANGE,
-      dark: MAIN_BLACK,
+      main: GREEN,
+      dark: NAVY,
       contrastText: WHITE,
     },
     secondary: {
-      main: MAIN_BLACK,
+      main: NAVY,
       contrastText: WHITE,
     },
     background: {
-      default: MAIN_BACKGROUND,
+      default: TINT,
       paper: WHITE,
     },
     text: {
-      primary: MAIN_BLACK,
+      primary: NAVY,
       secondary: DARK_GREY,
     },
-    divider: LIGHT_GREY_2,
+    divider: BORDER,
   },
 
   // ────────────────────────────────────────────────────────────────────────
@@ -99,90 +138,91 @@ const theme = createTheme({
   // size jumps — consistent with brand principle #6 ("hierarchy through
   // weight, not size jumps").
   //
-  // Sizes are rem (root = 16px). Pixel values are shown for reference only.
+  // Every value below comes from a named constant that mirrors
+  // design-standards/tokens.md § 2 (typography) and § 4 (web size scale).
   // ────────────────────────────────────────────────────────────────────────
   typography: {
     fontFamily: FONT_FAMILY,
 
     // Display heading — page-level marketing moment (rare in-app).
     h1: {
-      fontSize: "2.5rem", // 40px
-      fontWeight: 700,
-      lineHeight: 1.1,
-      letterSpacing: "-0.01em",
-      color: MAIN_BLACK,
+      fontSize: FONT_SIZE_H1,
+      fontWeight: FONT_WEIGHT_HEADLINE,
+      lineHeight: LINE_HEIGHT_DISPLAY,
+      letterSpacing: LETTER_SPACING_DISPLAY_TIGHT,
+      color: NAVY,
     },
     // Page heading — the title of a dashboard route (e.g. "Buckets").
     h2: {
-      fontSize: "2rem", // 32px
-      fontWeight: 700,
-      lineHeight: 1.15,
-      letterSpacing: "-0.005em",
-      color: MAIN_BLACK,
+      fontSize: FONT_SIZE_H2,
+      fontWeight: FONT_WEIGHT_HEADLINE,
+      lineHeight: LINE_HEIGHT_HEADING,
+      letterSpacing: LETTER_SPACING_HEADING_TIGHT,
+      color: NAVY,
     },
     // Section heading — the top of a major card or region.
     h3: {
-      fontSize: "1.625rem", // 26px
-      fontWeight: 700,
-      lineHeight: 1.2,
-      color: MAIN_BLACK,
+      fontSize: FONT_SIZE_H3,
+      fontWeight: FONT_WEIGHT_HEADLINE,
+      lineHeight: LINE_HEIGHT_SECTION,
+      color: NAVY,
     },
     // Subsection — a second-level heading inside a section.
     h4: {
-      fontSize: "1.375rem", // 22px
-      fontWeight: 700,
-      lineHeight: 1.25,
-      color: MAIN_BLACK,
+      fontSize: FONT_SIZE_H4,
+      fontWeight: FONT_WEIGHT_HEADLINE,
+      lineHeight: LINE_HEIGHT_SUBSECTION,
+      color: NAVY,
     },
     // Card heading — the title of a GxCard.
     h5: {
-      fontSize: "1.125rem", // 18px
-      fontWeight: 700,
-      lineHeight: 1.3,
-      color: MAIN_BLACK,
+      fontSize: FONT_SIZE_H5,
+      fontWeight: FONT_WEIGHT_HEADLINE,
+      lineHeight: LINE_HEIGHT_CARD_HEADING,
+      color: NAVY,
     },
     // Card subhead — a small heading at body size; separated by weight.
     h6: {
-      fontSize: "1rem", // 16px
-      fontWeight: 700,
-      lineHeight: 1.4,
-      color: MAIN_BLACK,
+      fontSize: FONT_SIZE_H6,
+      fontWeight: FONT_WEIGHT_HEADLINE,
+      lineHeight: LINE_HEIGHT_CARD_SUBHEAD,
+      color: NAVY,
     },
     // Body — the default reading size for the dashboard.
     body1: {
-      fontSize: "1rem", // 16px
-      fontWeight: 400,
-      lineHeight: 1.6,
+      fontSize: FONT_SIZE_BODY,
+      fontWeight: FONT_WEIGHT_BODY,
+      lineHeight: LINE_HEIGHT_BODY,
       color: BODY_TEXT,
     },
     // Body-sm — secondary paragraphs, table rows.
     body2: {
-      fontSize: "0.875rem", // 14px
-      fontWeight: 400,
-      lineHeight: 1.5,
+      fontSize: FONT_SIZE_BODY_SM,
+      fontWeight: FONT_WEIGHT_BODY,
+      lineHeight: LINE_HEIGHT_TIGHT_BODY,
       color: BODY_TEXT,
     },
     // Metadata — timestamps, row counts, inline help.
     caption: {
-      fontSize: "0.8125rem", // 13px
-      fontWeight: 400,
-      lineHeight: 1.5,
+      fontSize: FONT_SIZE_CAPTION,
+      fontWeight: FONT_WEIGHT_BODY,
+      lineHeight: LINE_HEIGHT_TIGHT_BODY,
       color: DARK_GREY,
     },
     // Eyebrow / section label. Write the string uppercase; do NOT text-transform.
     overline: {
-      fontSize: "0.75rem", // 12px
-      fontWeight: 700,
-      lineHeight: 1.2,
-      letterSpacing: "0.12em",
+      fontSize: FONT_SIZE_LABEL,
+      fontWeight: FONT_WEIGHT_HEADLINE,
+      lineHeight: LINE_HEIGHT_SECTION,
+      letterSpacing: LETTER_SPACING_LABEL,
       textTransform: "none", // explicit: content is literal uppercase
     },
     // Button label — inherited by the button component's internal Typography.
     button: {
-      fontSize: "0.875rem", // 14px
-      fontWeight: 600,
+      fontSize: FONT_SIZE_BODY_SM,
+      fontWeight: FONT_WEIGHT_LABEL,
       lineHeight: 1,
-      letterSpacing: "0.04em",
+      letterSpacing: LETTER_SPACING_BUTTON,
       textTransform: "none", // CommonSubmitButton uppercases its own label
     },
   },
@@ -196,18 +236,19 @@ const theme = createTheme({
       styleOverrides: {
         body: {
           fontFamily: FONT_FAMILY,
-          backgroundColor: MAIN_BACKGROUND,
+          backgroundColor: TINT,
         },
       },
     },
 
-    // Surfaces — codify "flat white card with 1px LIGHT_GREY_2 border".
+    // Surfaces — codify "flat white card with 1px BORDER hairline,
+    // BORDER_RADIUS_CARD (20px) rounding."
     MuiCard: {
       defaultProps: { elevation: 0 },
       styleOverrides: {
         root: {
-          border: `1px solid ${LIGHT_GREY_2}`,
-          borderRadius: 18,
+          border: `1px solid ${BORDER}`,
+          borderRadius: BORDER_RADIUS_CARD,
           backgroundColor: WHITE,
           boxShadow: "none",
         },
@@ -224,7 +265,7 @@ const theme = createTheme({
     MuiDivider: {
       styleOverrides: {
         root: {
-          borderColor: LIGHT_GREY_2,
+          borderColor: BORDER,
         },
       },
     },
@@ -233,12 +274,12 @@ const theme = createTheme({
     MuiTableCell: {
       styleOverrides: {
         root: {
-          borderBottom: `1px solid ${LIGHT_GREY_2}`,
+          borderBottom: `1px solid ${BORDER}`,
           fontFamily: FONT_FAMILY,
         },
         head: {
-          fontWeight: 600,
-          color: MAIN_BLACK,
+          fontWeight: FONT_WEIGHT_LABEL,
+          color: NAVY,
         },
       },
     },
@@ -248,21 +289,21 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontFamily: FONT_FAMILY,
-          fontWeight: 600,
+          fontWeight: FONT_WEIGHT_LABEL,
           textTransform: "uppercase",
-          letterSpacing: "0.5px",
+          letterSpacing: LETTER_SPACING_CHIP,
         },
       },
     },
 
-    // Icon buttons — keep the pale-aqua-with-green-hover behaviour the app
+    // Icon buttons — keep the pale-cyan-with-green-hover behaviour the app
     // already relied on.
     MuiIconButton: {
       styleOverrides: {
         root: {
-          backgroundColor: PALE_AQUA,
+          backgroundColor: CYAN,
           "&:hover": {
-            backgroundColor: ACTIVE_GREEN,
+            backgroundColor: GREEN,
           },
         },
       },
@@ -281,9 +322,9 @@ const theme = createTheme({
           style: {
             padding: 8,
             color: WHITE,
-            fontWeight: 600,
+            fontWeight: FONT_WEIGHT_LABEL,
             position: "relative",
-            borderRadius: 20,
+            borderRadius: BORDER_RADIUS_CARD,
             backgroundColor: "transparent",
             zIndex: 1,
             "&:before": {
@@ -302,9 +343,9 @@ const theme = createTheme({
         {
           props: { variant: "gx-back-button" },
           style: {
-            color: CORAL_ORANGE,
+            color: CORAL,
             textTransform: "none",
-            fontWeight: 600,
+            fontWeight: FONT_WEIGHT_LABEL,
           },
         },
       ],

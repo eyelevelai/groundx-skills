@@ -14,29 +14,29 @@ Practical consequences:
 
 ## 2. Two accents, one primary — green, with coral as a highlight
 
-The primary CTA color is green `#a1ec83`. Every submit button, success chip, hover-go-state, and "active" affordance uses it. Green is the "alive / go" color and it carries the primary brand moment on every surface.
+The primary CTA color is `Green`. Every submit button, success chip, hover-go-state, and "active" affordance uses it. Green is the "alive / go" color and it carries the primary brand moment on every surface.
 
-Coral `#f3663f` is the *secondary* accent — eyebrows, highlight pills, the occasional alt-CTA on a surface where green would collide with nearby green (e.g., a green success chip already present). Coral is for calling-out, not for submitting.
+`Coral` is the *secondary* accent — eyebrows, highlight pills, the occasional alt-CTA on a surface where green would collide with nearby green (e.g., a green success chip already present). Coral is for calling-out, not for submitting.
 
 Don't invent a third accent. If you feel tempted to introduce blue or orange variants, use a neutral (white, gray, navy) instead.
 
 ## 3. Navy, not black
 
-Headings and dark surfaces use navy `#29335c`; body text uses a slightly-warmer navy `#40496b` (`BODY_TEXT`), tuned for reading. True black (`#000`) is never correct. The difference is subtle on a single element but cumulative across a page. A page rendered in `#000` reads "utilitarian software from 2004"; navy reads "considered".
+Headings and dark surfaces use `Navy`; body text uses `Body Text`, a slightly-warmer navy tuned for reading. True black (`#000`) is never correct. The difference is subtle on a single element but cumulative across a page. A page rendered in `#000` reads "utilitarian software from 2004"; navy reads "considered".
 
 If an export target can't reproduce navy faithfully (black-and-white print, some grayscale conversions), pick the next-darkest neutral rather than true black.
 
 ## 4. Section canvases, white surfaces
 
-GroundX uses six canonical section backgrounds — White, Gray (`#f2f4f5`), Tint (`#eff9fb`), Cyan (`#c1e8ee`), Green (`#a1ec83`), and Navy (`#29335c`). Cards on top of those sections are white (or green / navy for a feature card). You can tell a GroundX page from a screenshot thumbnail by this rhythm: calm surfaces alternating through the palette, never overlapping gradients.
+GroundX uses six canonical section backgrounds — White, Gray, Tint, Cyan, Green, and Navy (hex values in `tokens.md` § 1.1). Cards on top of those sections are white (or green / navy for a feature card). You can tell a GroundX page from a screenshot thumbnail by this rhythm: calm surfaces alternating through the palette, never overlapping gradients.
 
 Don't tint a surface to match its canvas (soft-tint cards on the tint canvas). Don't invent a new section background — pick one of the six.
 
 ## 5. Flat, hairline-bordered
 
-Every card, panel, input, and modal has the same treatment: white fill, `1px solid rgba(41, 51, 92, 0.1)` hairline border (the `--border` token, navy at 10%), `20px` corner radius for top-level cards (`6px` for inputs and nested inner surfaces, `12px` for dropdowns / toasts, `200px` for buttons + pills).
+Every card, panel, input, and modal has the same treatment: white fill, a `1px` hairline `Border` (navy at 10%), and a corner radius from the shared radius scale (`tokens.md` § 5) — the `card` radius for top-level cards, `input` for inputs and nested surfaces, `lg` for dropdowns / toasts, `pill` for buttons + pills.
 
-There are no 2px borders, no dashed borders (except the drag-drop empty state), no double borders, no gradient borders. The solid `#d9d9d9` hairline is deprecated — use the `--border` token.
+There are no 2px borders, no dashed borders (except the drag-drop empty state), no double borders, no gradient borders. The solid `#d9d9d9` hairline is deprecated — use the `Border` token.
 
 ## 6. Type hierarchy through weight, not size jumps
 
@@ -64,7 +64,7 @@ Color is never the only signal. A red pill says "Failed"; the pill also contains
 
 ## 10. Optional: a thin brand-gradient accent bar
 
-The one place a gradient is acceptable — beyond the single `gx-premium-button` CTA — is as a **thin horizontal accent bar** that runs across the top or bottom of a slide, a white-paper cover, or a marketing hero. The gradient moves left-to-right through the brand's three accent-adjacent colors: Green → Cyan → Coral (`#a1ec83` → `#c1e8ee` → `#f3663f`).
+The one place a gradient is acceptable — beyond the single `gx-premium-button` CTA — is as a **thin horizontal accent bar** that runs across the top or bottom of a slide, a white-paper cover, or a marketing hero. The gradient moves left-to-right through the brand's three accent-adjacent colors: Green → Cyan → Coral (values in `tokens.md` § 1.1).
 
 Rules:
 
@@ -86,8 +86,8 @@ The EyeLevel name still appears in company-level contexts — author bylines, le
 ## Don'ts
 
 - **Don't add a second accent** ("we need a blue for secondary CTAs"). Use neutral outlined buttons instead.
-- **Don't use true black.** Navy `#29335c` for headings, Body Text `#40496b` for paragraphs.
+- **Don't use true black.** `Navy` for headings, `Body Text` for paragraphs.
 - **Don't elevate surfaces.** No `box-shadow`, no PowerPoint default shape shadow, no Keynote inset glow.
 - **Don't size up to create hierarchy.** Use weight.
 - **Don't `text-transform: uppercase`** for section labels — write them uppercase.
-- **Don't mint new hexes locally.** New colors go into this skill's `references/colors.md`, not into a one-off component.
+- **Don't mint new hexes locally.** New colors go into this skill's `tokens.json` first (with a matching row in `references/tokens.md` § 1), then re-run `scripts/generate-mirrors.mjs` so medium skills pick them up. Never into a one-off component.

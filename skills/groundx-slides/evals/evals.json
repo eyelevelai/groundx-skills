@@ -13,7 +13,7 @@
           ".accent-bar accent-bar--bottom on the cover",
           ".cover-context for the 'WHITE PAPER · RESPONSE TO DELL' eyebrow",
           ".stat-row with exactly 3 .stat children on both slides",
-          "Eyebrow ACTIVE_GREEN on navy, CORAL on light (via surface-aware CSS var)",
+          "Eyebrow GREEN on navy, CORAL on light (via the --gx-eyebrow-on-light / --gx-eyebrow-on-dark surface-aware CSS vars)",
           "All color references via var(--gx-*) in inline styles; zero hex literals in HTML",
           "ALL-CAPS labels written uppercase (literal string), not via text-transform",
           "Slide container fixed at 1920×1080 via the .slide class"
@@ -68,14 +68,14 @@
           "slide--navy slide--cta",
           ".accent-bar accent-bar--top",
           ".slide-logo chrome present (tagline is baked into the PNG — no separate .tagline element)",
-          ".eyebrow (ACTIVE_GREEN on navy via CSS)",
+          ".eyebrow (GREEN on navy via the --gx-eyebrow-on-dark CSS var)",
           ".headline-cover (or size-reduced variant) for the main line",
           "Two .cta elements: primary default, secondary with .cta--outline modifier",
           "Slide number (e.g., '07' or final slide number) bottom-right"
         ],
         "must_not_use": [
           "A third CTA button — two max on a CTA slide",
-          "A filled secondary button in any other color (coral is primary; outline is secondary)",
+          "A filled secondary button in any other color (green is primary; outline is secondary)",
           "Hex literals",
           "An illustration or hero image behind the headline"
         ],

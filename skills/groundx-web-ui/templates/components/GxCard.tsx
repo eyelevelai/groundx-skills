@@ -1,12 +1,13 @@
 /**
  * GxCard — the canonical GroundX surface.
  *
- * The dashboard uses a flat white surface with a 1px LIGHT_GREY_2 border,
- * no shadow, and BORDER_RADIUS_3X rounding. Throughout the codebase this
- * was expressed inconsistently — sometimes via MUI `<Card>`, sometimes via
- * `<Box>` with an inline `sx` block. Always use this wrapper instead.
+ * The dashboard uses a flat white surface with a 1px BORDER hairline (10%
+ * navy), no shadow, and BORDER_RADIUS_CARD (20px) rounding. Throughout the
+ * codebase this was expressed inconsistently — sometimes via MUI `<Card>`,
+ * sometimes via `<Box>` with an inline `sx` block. Always use this wrapper
+ * instead.
  *
- * Pass a `radius` of "lg" (18px, default) for top-level cards, or "sm" (6px)
+ * Pass a `radius` of "lg" (20px, default) for top-level cards, or "sm" (6px)
  * for nested sub-surfaces like inner table wrappers.
  *
  * Pass `interactive` to get a subtle hover lift for clickable cards.
@@ -16,9 +17,9 @@ import { Box, BoxProps } from "@mui/material";
 import { forwardRef } from "react";
 
 import {
+  BORDER,
   BORDER_RADIUS,
-  BORDER_RADIUS_3X,
-  LIGHT_GREY_2,
+  BORDER_RADIUS_CARD,
   PADDING,
   WHITE,
 } from "../constants";
@@ -36,14 +37,14 @@ export const GxCard = forwardRef<HTMLDivElement, GxCardProps>(function GxCard(
   { radius = "lg", interactive = false, noPadding = false, sx, children, ...rest },
   ref,
 ) {
-  const borderRadius = radius === "lg" ? BORDER_RADIUS_3X : BORDER_RADIUS;
+  const borderRadius = radius === "lg" ? BORDER_RADIUS_CARD : BORDER_RADIUS;
 
   return (
     <Box
       ref={ref}
       sx={{
         backgroundColor: WHITE,
-        border: `1px solid ${LIGHT_GREY_2}`,
+        border: `1px solid ${BORDER}`,
         borderRadius,
         boxShadow: "none",
         padding: noPadding ? 0 : PADDING,

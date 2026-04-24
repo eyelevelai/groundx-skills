@@ -15,7 +15,12 @@
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
 
-import { MAIN_BLACK } from "../constants";
+import {
+  FONT_SIZE_BODY,
+  FONT_WEIGHT_LABEL,
+  LETTER_SPACING_CHIP,
+  NAVY,
+} from "../constants";
 
 export interface GxSectionHeaderProps {
   /** The section label. Passed literally — write it UPPERCASE in the caller. */
@@ -38,10 +43,10 @@ export function GxSectionHeader({ label, action }: GxSectionHeaderProps) {
       <Typography
         component="h2"
         sx={{
-          color: MAIN_BLACK,
-          fontWeight: 600,
-          fontSize: "1rem",
-          letterSpacing: "0.5px",
+          color: NAVY,
+          fontWeight: FONT_WEIGHT_LABEL,
+          fontSize: FONT_SIZE_BODY,
+          letterSpacing: LETTER_SPACING_CHIP,
           // We deliberately don't apply textTransform: "uppercase" here. The
           // codebase convention is to write "CONTENT" literally in JSX so that
           // translations and a11y tools can see the shouty casing.

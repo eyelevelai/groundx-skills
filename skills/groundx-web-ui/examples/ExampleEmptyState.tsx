@@ -11,7 +11,13 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { ReactNode, useState } from "react";
 
 import GxCard from "../templates/components/GxCard";
-import { CORAL_ORANGE, LIGHT_GREY_2, MAIN_BLACK } from "../templates/constants";
+import {
+  BORDER,
+  CORAL,
+  FONT_SIZE_BODY_SM,
+  FONT_WEIGHT_LABEL,
+  NAVY,
+} from "../templates/constants";
 
 export interface ExampleEmptyStateProps {
   /** Primary instruction. Defaults to "Drag files here". */
@@ -45,22 +51,22 @@ export function ExampleEmptyState({
       }}
       sx={{
         // Accent the border when dragging; everything else stays at rest.
-        borderColor: isDragging ? CORAL_ORANGE : LIGHT_GREY_2,
+        borderColor: isDragging ? CORAL : BORDER,
         borderStyle: isDragging ? "dashed" : "solid",
         transition: "border-color 120ms ease",
       }}
     >
       <Stack alignItems="center" spacing={1} sx={{ py: 3 }}>
-        <CloudUploadIcon sx={{ color: CORAL_ORANGE, fontSize: 32 }} />
-        <Typography sx={{ color: MAIN_BLACK, fontWeight: 500 }}>{label}</Typography>
+        <CloudUploadIcon sx={{ color: CORAL, fontSize: 32 }} />
+        <Typography sx={{ color: NAVY, fontWeight: FONT_WEIGHT_LABEL }}>{label}</Typography>
         {footer ?? (
-          <Box sx={{ color: MAIN_BLACK, fontSize: "0.85rem" }}>
+          <Box sx={{ color: NAVY, fontSize: FONT_SIZE_BODY_SM }}>
             or{" "}
-            <Link component="button" sx={{ color: CORAL_ORANGE, fontWeight: 600 }}>
+            <Link component="button" sx={{ color: CORAL, fontWeight: FONT_WEIGHT_LABEL }}>
               browse files
             </Link>{" "}
             or{" "}
-            <Link component="button" sx={{ color: CORAL_ORANGE, fontWeight: 600 }}>
+            <Link component="button" sx={{ color: CORAL, fontWeight: FONT_WEIGHT_LABEL }}>
               browse folders
             </Link>
           </Box>

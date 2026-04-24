@@ -1,24 +1,26 @@
 # Slide Layouts
 
-Eight canonical layouts. Each is a specific arrangement of patterns from `../../groundx-design-standards/references/patterns.md` onto a 1920×1080 canvas. Pick the one that matches the slide's job — don't invent new layouts for one-off slides.
+Eight canonical layouts. Each is a specific arrangement of patterns from `../../groundx-design-standards/references/patterns.md` onto the slide canvas (see `tokens.md` § 6 for dimensions). Pick the one that matches the slide's job — don't invent new layouts for one-off slides.
+
+> **Tokens:** every color, size, and canvas dimension this file names maps to a token in `../../groundx-design-standards/references/tokens.md` (narrative) / `tokens.json` (machine source of truth). The slide CSS reads the values from the generated `:root` block in `styles.css` (auto-emitted by `groundx-design-standards/scripts/generate-mirrors.mjs`); this file names classes and roles, not hex or px. When you see a class name here (e.g., `.headline-cover`), look up its size in `tokens.md` § 3.5.
 
 All eight layouts share the same outer chrome:
 
-- 1920×1080 white (or navy) background.
-- EyeLevel lockup at top-left, 80px from the edge, ~72px tall. One fixed size across every slide — no small/large variants. The lockup PNG has "A VALANTOR COMPANY" baked into it, so there is no separate tagline element. The CSS swaps `eyelevel-logo-white.png` in on navy / green / coral surfaces and `eyelevel-logo-color.png` on light surfaces — the HTML is identical either way (`<div class="slide-logo" …></div>`).
-- Slide number at bottom-right, 80px from edges, in `DARK_GREY` on light slides, white-60% on navy.
-- Optional thin gradient accent bar along the top or bottom edge — cover and CTA slides only.
+- Canvas: `var(--gx-slide-width) × var(--gx-slide-height)` with `var(--gx-slide-padding)` on every edge.
+- EyeLevel lockup at top-left, sized via `--gx-logo-width` / `--gx-logo-height`, offset from the top by `--gx-logo-top` and left edge by `--gx-logo-left`. The CSS picks `--gx-logo-dark` on navy / green / coral surfaces and `--gx-logo-light` elsewhere; the HTML (`<div class="slide-logo" …></div>`) is identical either way. "A VALANTOR COMPANY" is baked into each PNG — no separate tagline element.
+- Slide number at bottom-right, same padding offset as the logo. Color is `--gx-dark-grey` on light slides, `--gx-muted-on-dark` on navy.
+- Optional thin gradient accent bar along the top or bottom edge (height `--gx-accent-bar-height`) — cover and CTA slides only.
 
 ## 1. Cover (`cover`)
 
-The first slide of every deck. Full-bleed navy (`#29335c`).
+The first slide of every deck. Full-bleed navy (`--gx-navy`).
 
-- **Top-left:** EyeLevel lockup (dark-surface variant — `eyelevel-logo-white.png`, auto-selected by the navy surface class).
-- **Top-right:** a brief context line in uppercase — e.g., `WHITE PAPER · RESPONSE TO DELL`, `PARTNER BRIEFING · Q2 2026`. Green (`#a1ec83`), 600 weight, small.
-- **Center-left:** the deck title. Weight 800, `.headline-cover` (112px), white, tight line-height. 1–8 words max.
-- **Center-left, below title:** 1–2 sentences of subtitle. White at 80% opacity, 400 weight, `.subhead` (24px). Left-aligned, same left edge as title.
-- **Bottom-left:** optional display-stat trio across the bottom quarter of the slide — three stats in a row (see pattern #2). Numerals cycle Green → Cyan → Coral on navy; labels in white at 70% opacity.
-- **Bottom edge:** optional thin gradient accent bar (~8px tall, full width).
+- **Top-left:** EyeLevel lockup (dark-surface variant — resolved via `--gx-logo-dark` by the navy surface class).
+- **Top-right:** a brief context line in uppercase — e.g., `WHITE PAPER · RESPONSE TO DELL`, `PARTNER BRIEFING · Q2 2026`. Color `--gx-eyebrow-on-dark`, weight `--gx-weight-label`, size `--gx-size-chrome-md`.
+- **Center-left:** the deck title. Class `.headline-cover` (size `--gx-size-headline-cover`, weight `--gx-weight-display`), white, tight line-height. 1–8 words max. One brand moment per deck.
+- **Center-left, below title:** 1–2 sentences of subtitle. Color `--gx-body-on-dark`, weight `--gx-weight-body`, scoped to `--gx-size-subhead-xl` by the `.slide--cover` layout rule. Left-aligned, same left edge as title.
+- **Bottom-left:** optional display-stat trio across the bottom quarter of the slide — three stats in a row (see pattern #2). Numerals cycle `--gx-green` → `--gx-cyan` → `--gx-coral` on navy (see `colors.md` § 6); labels in `--gx-muted-on-dark`.
+- **Bottom edge:** optional thin gradient accent bar (`--gx-accent-bar-height`, full width).
 
 When to use: deck openings. Never used mid-deck.
 
@@ -26,10 +28,12 @@ When to use: deck openings. Never used mid-deck.
 
 Used between major parts of a long deck. Full-bleed navy, much simpler than a cover:
 
-- Centered green eyebrow (e.g., `PART TWO`) above a centered white headline (weight 700, `.headline-section` / 88px).
-- Optional single-sentence subhead beneath the headline, white at 70% opacity.
+- Centered green eyebrow (e.g., `PART TWO`) above a centered white headline. Class `.headline-section` (size `--gx-size-headline-section`, weight `--gx-weight-headline`).
+- Optional single-sentence subhead beneath the headline, color `--gx-muted-on-dark`.
 - No stats, no accent bar, no logo (the deck's established — no need to reintroduce).
 - Slide number still present bottom-right.
+
+Cover and section-break share one headline size; the only difference is weight (`--gx-weight-display` vs. `--gx-weight-headline`). Hierarchy through weight, not size.
 
 When to use: long decks (10+ slides) that have natural act breaks. Skip for short decks.
 
@@ -37,8 +41,8 @@ When to use: long decks (10+ slides) that have natural act breaks. Skip for shor
 
 A headline-driven content slide with a stat row underneath. Light (white, gray, or tint) background.
 
-- **Top-left:** coral eyebrow + navy headline (weight 700, `.headline-hero` / 64px) + 1–2 sentence subhead in Body Text.
-- **Bottom half:** a three-up row of display stats (pattern #2). Stats land on the same baseline; each stat+label pair occupies an equal column.
+- **Top-left:** `--gx-eyebrow-on-light` eyebrow + `--gx-navy` headline (class `.headline-hero`, size `--gx-size-headline-hero`, weight `--gx-weight-headline`) + 1–2 sentence subhead in `--gx-body-on-light` scoped to `--gx-size-subhead-lg`.
+- **Bottom half:** a three-up row of display stats (pattern #2). Numerals use `--gx-size-stat-numeral`, labels use `--gx-size-stat-label`. Stats land on the same baseline; each stat+label pair occupies an equal column.
 - Plenty of whitespace between the headline block and the stat row — this is a composed slide, not a packed one.
 
 When to use: slides that make a single strong proposition and back it with three numeric proof points. Common as slide 2 after the cover.
@@ -49,15 +53,15 @@ Two-column slide where each column frames a side of a comparison. Two variants:
 
 ### 4a. Light-light split
 
-Both columns on tint or white canvas. Headlines are both weight 700; contrast comes from the eyebrow and copy, not a weight fight.
+Both columns on tint or white canvas. Headlines are both `--gx-weight-headline`; contrast comes from the eyebrow and copy, not a weight fight.
 
-- **Left column (50%):** eyebrow `THE PROBLEM` (coral) + headline (navy) + body (Body Text). Optional supporting detail beneath.
-- **Right column (50%):** eyebrow `THE ANSWER` (coral) + headline (navy) + body. Optional supporting detail.
-- Hairline vertical divider (`var(--gx-border)`, 1px) between columns, centered on the slide.
+- **Left column (50%):** eyebrow `THE PROBLEM` (`--gx-eyebrow-on-light`) + headline (class `.headline-split`, `--gx-navy`) + body (`--gx-body-on-light`). Optional supporting detail beneath.
+- **Right column (50%):** eyebrow `THE ANSWER` (`--gx-eyebrow-on-light`) + headline + body. Optional supporting detail.
+- Hairline vertical divider (`--gx-border`, 1px) between columns, centered on the slide.
 
 ### 4b. Light-dark split
 
-Left column light (white / tint), right column navy full-bleed. The navy side has green eyebrows; the light side has coral eyebrows.
+Left column light (white / tint), right column navy full-bleed. The navy side has `--gx-eyebrow-on-dark` eyebrows; the light side has `--gx-eyebrow-on-light` eyebrows.
 
 - Use when the "answer" side needs visual weight the light side can't carry.
 - No divider needed — the color change does the job.
@@ -68,14 +72,13 @@ When to use: any before/after, problem/solution, current-state/future-state narr
 
 The three-card summary pattern (pattern #3) as a full slide.
 
-- Optional top block: coral eyebrow + navy headline (smaller than hero — weight 700, `.headline-split` / 44px) + one-sentence lead-in.
+- Optional top block: eyebrow + `.headline-split` (size `--gx-size-headline-split`) + one-sentence lead-in.
 - Three equal-width cards in a row beneath. Each card:
-  - 20px radius, 1px `var(--gx-border)` hairline, white fill, 32–40px padding.
-  - Coral eyebrow at the top of the card (e.g., `SCALE`, `SECURITY`, `SPEED`).
-  - Navy headline (`.headline-card` / 28px, weight 700).
-  - 2–3 sentences of body (Body Text, 400, `.body-sm` / 20px).
-  - Optional icon (coral, MUI-style, 48px) at the top-right of the card.
-- Gap between cards: 32px.
+  - `--gx-radius-card` corners, `1px solid var(--gx-border)` hairline, `--gx-white` fill.
+  - Eyebrow at the top of the card (e.g., `SCALE`, `SECURITY`, `SPEED`) — `--gx-size-label`, color `--gx-eyebrow-on-light`.
+  - Navy headline (class `.headline-card`, size `--gx-size-headline-card`, weight `--gx-weight-headline`).
+  - 2–3 sentences of body — size `--gx-size-body-card`, weight `--gx-weight-body`, color `--gx-body-on-light`.
+  - Optional icon (`--gx-coral`, MUI-style) at the top-right of the card.
 
 When to use: "three things you should know", "three capabilities", "three phases". Most-used layout for proposition-dense slides.
 
@@ -83,20 +86,19 @@ When to use: "three things you should know", "three capabilities", "three phases
 
 A two-column asymmetric slide: a main content block on the left, a navy stat sidebar on the right. This is the most information-dense layout in the system.
 
-- **Left column (~65%):** eyebrow + headline + a grid of 4–6 small items (each a mini eyebrow+headline+one sentence).
-- **Right column (~35%):** navy panel, full slide height, with 2–3 stacked display stats. Stats use green numerals, white labels.
+- **Left column (~65%):** eyebrow + headline + a grid of 4–6 small items (each a mini eyebrow+headline+one sentence — eyebrows share `--gx-size-label`, headlines use `.headline-card`, body uses `.detail-item__body` at `--gx-size-body-card`).
+- **Right column (~35%):** navy panel, full slide height, with 2–3 stacked display stats. Stats use the unified 3-up numeral/label tokens (`--gx-size-stat-numeral` / `--gx-size-stat-label`), green numerals, white labels.
 
 When to use: slides that need to say "here are the details, and here are the numbers that anchor them" — deep-dive capability slides, pricing+proof slides.
 
 ## 7. Numbered steps (`numbered-steps`)
 
-Pattern #6 as a full slide. Three to five vertically stacked rows, each with a large numeral on the left (coral on light, green on navy; three on navy cycle Green → Cyan → Coral) and a label + sentence on the right.
+Pattern #6 as a full slide. Three to five vertically stacked rows, each with a large numeral on the left (`--gx-coral` on light, `--gx-green` on navy; three on navy cycle green → cyan → coral) and a label + sentence on the right.
 
 - Top block: eyebrow (`NEXT STEPS`, `HOW IT WORKS`) + short headline.
 - Below: 3–5 numbered rows.
-  - Numeral: weight 800, `5rem`, flush-left.
-  - To the right of the numeral: label (uppercase, 600, `0.875rem`, 0.14em tracking) on top of body sentence (400, `.step__body` / 24px).
-  - Gap between rows: 48px.
+  - Numeral: class `.step__numeral`, size `--gx-size-step-numeral`, weight `--gx-weight-headline`, flush-left.
+  - To the right of the numeral: label (class `.step__label`, uppercase, `--gx-size-label`, weight `--gx-weight-label`, tracking `--gx-track-label`) on top of body sentence (class `.step__body`, `--gx-weight-body`, size per layout scope).
 
 When to use: process slides, onboarding slides, call-to-action slides.
 
@@ -104,9 +106,9 @@ When to use: process slides, onboarding slides, call-to-action slides.
 
 An entire slide dedicated to a single stat. The boldest move in the system; use sparingly.
 
-- Centered in the slide: one huge numeral (coral on light, green on navy), weight 800, `13rem` (208px).
-- Directly beneath: a single label, uppercase 600, `1.125rem`, 0.16em tracking.
-- Optional one-sentence caption below that, 400, `1.125rem`, muted.
+- Centered in the slide: one huge numeral (`--gx-coral` on light, `--gx-green` on navy), weight `--gx-weight-display`, size `--gx-size-stat-numeral-display`.
+- Directly beneath: a single label, uppercase `--gx-weight-label`, size `--gx-size-stat-label-display`, tracking slightly wider than default labels (captured in `styles.css` since the dominant numeral asks for more air).
+- Optional one-sentence caption below that, weight `--gx-weight-body`, muted color.
 - Nothing else on the slide. No other text, no image, no logo beyond the standard top-left wordmark.
 
 When to use: once per deck, at most. This is the "stop and read" slide — the moment the audience's heads come up. Overusing it burns its impact.

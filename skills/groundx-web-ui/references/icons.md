@@ -19,7 +19,7 @@ Common usage in the dashboard:
 | --- | --- |
 | `AddIcon` | "+ NEW BUCKET", "+ ADD CONTENT" pill CTAs |
 | `NavigateBeforeIcon` | Back button |
-| `ExpandMoreIcon` | Accordion expander (use `sx={{ color: CORAL_ORANGE }}`) |
+| `ExpandMoreIcon` | Accordion expander (use `sx={{ color: CORAL }}`) |
 | `ContentCopyIcon` | Copy bucket/document IDs |
 | `DownloadIcon` | File download in table rows |
 | `DeleteIcon` | Destructive actions |
@@ -62,13 +62,13 @@ Don't pass raw `fontSize: "16px"` or `fontSize: 20`. Stick to the named tokens s
 
 ## Color
 
-Icons inherit `currentColor` by default — they'll pick up the text color of their parent. To color an icon explicitly, pass `sx={{ color: CORAL_ORANGE }}` (or another token). Never use a hex literal.
+Icons inherit `currentColor` by default — they'll pick up the text color of their parent. To color an icon explicitly, pass `sx={{ color: CORAL }}` (or another token). Never use a hex literal.
 
-For the `ExpandMoreIcon` on accordions, the dashboard convention is `sx={{ color: CORAL_ORANGE }}` so the expander reads as a brand accent.
+For the `ExpandMoreIcon` on accordions, the dashboard convention is `sx={{ color: CORAL }}` so the expander reads as a brand accent.
 
 ## IconButton wrapper
 
-Use MUI `<IconButton>` for clickable icons. The theme override sets a `PALE_AQUA` background with `ACTIVE_GREEN` hover — works out of the box.
+Use MUI `<IconButton>` for clickable icons. The theme override sets a `CYAN` background with `GREEN` hover — works out of the box.
 
 ```tsx
 <IconButton size="small" aria-label="copy bucket id">

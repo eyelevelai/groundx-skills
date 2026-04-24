@@ -62,7 +62,7 @@ A full-bleed navy section that closes a white paper, a landing page, or a deck. 
 
 - A short, heavy-weight white headline ("Let's Build This Together", "Talk to the Team").
 - 1–2 supporting sentences in white at 80% opacity.
-- One to two CTA buttons: primary is green (`#a1ec83`) with navy text; optional secondary is a white outlined button. Coral is reserved for eyebrows / highlight accents, not the primary CTA.
+- One to two CTA buttons: primary is `Green` with navy text; optional secondary is a white outlined button. Coral is reserved for eyebrows / highlight accents, not the primary CTA.
 
 Rules:
 

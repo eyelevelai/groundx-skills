@@ -10,8 +10,8 @@
         "must_use": [
           "GxCard as the outer surface (not MUI Card or inline Box with border sx)",
           "GxSectionHeader for the 'API KEYS' row with the + NEW KEY action on the right",
-          "CommonSubmitButton with startIcon={<AddIcon />} and borderRadius: BORDER_RADIUS_4X for the pill CTA",
-          "Named constants from '@/constants' — CORAL_ORANGE, LIGHT_GREY_2, BORDER_RADIUS_3X, PADDING — no hex literals",
+          "CommonSubmitButton with startIcon={<AddIcon />} and borderRadius: BORDER_RADIUS_PILL for the pill CTA",
+          "Named constants from '@/constants' — CORAL, BORDER, BORDER_RADIUS_CARD, PADDING — no hex literals",
           "MUI IconButton with aria-label for copy and delete actions",
           "fontSize='small' on icons inside table rows",
           "Responsive behavior via theme.breakpoints or sx responsive objects"
@@ -37,7 +37,7 @@
       "prompt": "Generate a modal dialog for inviting a teammate to the workspace. Fields: email (required, must be valid email), role (dropdown with Admin / Editor / Viewer), optional personal message (textarea). Footer has Cancel + Send Invite buttons. Use Formik + Yup. Match the GroundX design system.",
       "rubric": {
         "must_use": [
-          "MUI <Dialog> with PaperProps={{ sx: { borderRadius: BORDER_RADIUS_3X } }}",
+          "MUI <Dialog> with PaperProps={{ sx: { borderRadius: BORDER_RADIUS_CARD } }}",
           "DialogTitle with a close IconButton (aria-label='close') as shown in examples/ExampleFormModal.tsx",
           "CommonTextField for email and message",
           "CommonCancelButton + CommonSubmitButton (in that order) in DialogActions",

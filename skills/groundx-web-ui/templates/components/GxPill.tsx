@@ -19,10 +19,17 @@ import { Box, ButtonBase } from "@mui/material";
 import { MouseEventHandler, ReactNode } from "react";
 
 import {
-  ACTIVE_GREEN,
-  CORAL_ORANGE,
+  BORDER_RADIUS_PILL,
+  CORAL,
   ERROR_RED,
-  MAIN_BLACK,
+  FONT_SIZE_LABEL,
+  FONT_SIZE_LABEL_DENSE,
+  FONT_WEIGHT_HEADLINE,
+  GREEN,
+  LETTER_SPACING_CHIP,
+  LINE_HEIGHT_CARD_SUBHEAD,
+  NAVY,
+  WARNING_AMBER,
   WHITE,
 } from "../constants";
 
@@ -40,11 +47,11 @@ const STYLES: Record<
   GxPillVariant,
   { bg: string; fg: string; border?: string }
 > = {
-  default: { bg: CORAL_ORANGE, fg: WHITE },
-  success: { bg: ACTIVE_GREEN, fg: MAIN_BLACK },
-  warning: { bg: "#FFB45C", fg: MAIN_BLACK },
+  default: { bg: CORAL, fg: WHITE },
+  success: { bg: GREEN, fg: NAVY },
+  warning: { bg: WARNING_AMBER, fg: NAVY },
   error: { bg: ERROR_RED, fg: WHITE },
-  info: { bg: MAIN_BLACK, fg: WHITE },
+  info: { bg: NAVY, fg: WHITE },
 };
 
 export function GxPill({
@@ -65,14 +72,14 @@ export function GxPill({
         justifyContent: "center",
         backgroundColor: bg,
         color: fg,
-        fontSize: dense ? "0.7rem" : "0.75rem",
-        fontWeight: 700,
-        letterSpacing: "0.5px",
+        fontSize: dense ? FONT_SIZE_LABEL_DENSE : FONT_SIZE_LABEL,
+        fontWeight: FONT_WEIGHT_HEADLINE,
+        letterSpacing: LETTER_SPACING_CHIP,
         textTransform: "uppercase",
         px: dense ? 1 : 1.25,
         py: dense ? 0.25 : 0.5,
-        borderRadius: 999, // fully pilled
-        lineHeight: 1.4,
+        borderRadius: BORDER_RADIUS_PILL, // fully pilled
+        lineHeight: LINE_HEIGHT_CARD_SUBHEAD,
         whiteSpace: "nowrap",
         ...(onClick && {
           cursor: "pointer",

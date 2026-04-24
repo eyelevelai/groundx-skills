@@ -2,7 +2,7 @@
 
 A Claude Code plugin marketplace that teaches agents to follow the GroundX brand across mediums. One medium-agnostic source of truth plus a skill per medium, so a dashboard card, a pitch deck, and a white paper feel like the same company made them.
 
-> **Brand relationship.** GroundX is the product. It's built by EyeLevel, an AI company that joined the Valantor family. The primary brand mark is the **EyeLevel + "A VALANTOR COMPANY" lockup** — shipped as a single PNG in dark-surface and light-surface variants. The Valantor co-sign is baked into the file, not rendered as a separate tagline. Source-of-truth palette and typography tokens come from the Eyelevel webflow style guide — mirrored in `skills/groundx-design-standards/references/styleguide.html`.
+> **Brand relationship.** GroundX is the product. It's built by EyeLevel, an AI company that joined the Valantor family. The primary brand mark is the **EyeLevel + "A VALANTOR COMPANY" lockup** — shipped as a single PNG in dark-surface and light-surface variants. The Valantor co-sign is baked into the file, not rendered as a separate tagline. Source-of-truth palette and typography tokens live in `skills/groundx-design-standards/tokens.json` (machine-readable, DTCG format) with a narrative mirror at `references/tokens.md`; the original Eyelevel webflow style guide is archived at `references/styleguide.html` for reference.
 
 ## The three skills
 
@@ -51,10 +51,12 @@ For brand guidance inside Replit AI (or Cursor, Continue, etc.), paste the conte
 ```
 .claude-plugin/marketplace.json     Plugin manifest
 skills/
-  groundx-design-standards/        SKILL.md + references/ + assets/ (logos, fonts)
+  groundx-design-standards/        SKILL.md + references/ + assets/ (logos, fonts) + tokens.json + scripts/
   groundx-web-ui/                  SKILL.md + references/ + templates/ + examples/ + evals/
   groundx-slides/                  SKILL.md + references/ + templates/ + examples/ + evals/
 ```
+
+The design-standards skill ships a `tokens.json` (machine-readable source of truth, DTCG format) plus `scripts/generate-mirrors.mjs` (emits the web-ui `constants.generated.ts` and splices the slides `styles.css` `:root` block) and `scripts/verify-mirrors.mjs` (drift check). Run the generator after any `tokens.json` edit; run the verifier to confirm both mirrors are in sync. `.github/workflows/verify-tokens.yml` runs the verifier on every push and pull request to `main`, so a PR that lands `tokens.json` changes without the regenerated mirrors fails the build.
 
 Each skill has its own `evals/evals.json` with test prompts and a file-sanity checklist.
 
@@ -64,7 +66,7 @@ The slides skill renders 16:9 HTML pages to a single `deck.pdf` via headless Chr
 
 ## What's deliberately not here
 
-No `boxShadow`, no `elevation`, no gradients except the premium-tier button and the thin brand accent bar on marketing surfaces. No hardcoded hex in components — everything flows through `constants.ts` or CSS variables. No second typeface. No true black — navy `#29335c`. Primary CTA is green `#a1ec83`, not coral. These aren't opinions to debate per-PR; they're the brand's shape. See `skills/groundx-design-standards/references/brand-principles.md` for why.
+No `boxShadow`, no `elevation`, no gradients except the premium-tier button and the thin brand accent bar on marketing surfaces. No hardcoded hex in components — everything flows from `tokens.json` through auto-generated mirrors (`constants.generated.ts` for web, the `:root` block in `styles.css` for slides), with a CI-checked drift detector (`scripts/verify-mirrors.mjs`) to keep mediums in lockstep. No second typeface. No true black — navy `#29335c`. Primary CTA is green `#a1ec83`, not coral. These aren't opinions to debate per-PR; they're the brand's shape. See `skills/groundx-design-standards/references/brand-principles.md` for why.
 
 ## License
 

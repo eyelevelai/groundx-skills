@@ -34,13 +34,15 @@ import GxCard from "../templates/components/GxCard";
 import GxSectionHeader from "../templates/components/GxSectionHeader";
 
 import {
-  BORDER_RADIUS_3X,
-  BORDER_RADIUS_4X,
-  CORAL_ORANGE,
-  LIGHT_GREY_2,
-  MAIN_BLACK,
+  BORDER,
+  BORDER_RADIUS_CARD,
+  BORDER_RADIUS_PILL,
+  CORAL,
+  FONT_WEIGHT_LABEL,
+  LETTER_SPACING_CHIP,
   MAIN_CONTENT_PADDING,
   MAIN_CONTENT_TOP_MARGIN,
+  NAVY,
   PADDING,
 } from "../templates/constants";
 
@@ -66,7 +68,9 @@ export function ExampleDashboardPage() {
         // theme.breakpoints — never hardcode @media (max-width: Xpx).
         marginTop: (t) => t.spacing(MAIN_CONTENT_TOP_MARGIN),
         padding: (t) => t.spacing(MAIN_CONTENT_PADDING),
-        [`@media (max-width: 1099px)`]: { padding: (t) => t.spacing(2) }, // prefer theme.breakpoints.down("md") in real code
+        [(t) => t.breakpoints.down("md")]: {
+          padding: (t) => t.spacing(2),
+        },
       }}
     >
       <Stack spacing={3}>
@@ -87,15 +91,19 @@ function TutorialCard() {
       defaultExpanded
       square
       sx={{
-        borderRadius: BORDER_RADIUS_3X,
+        borderRadius: BORDER_RADIUS_CARD,
         boxShadow: "none",
-        border: `1px solid ${LIGHT_GREY_2}`,
+        border: `1px solid ${BORDER}`,
         "&:before": { display: "none" }, // remove MUI's top border divider
       }}
     >
-      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: CORAL_ORANGE }} />}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: CORAL }} />}>
         <Typography
-          sx={{ color: MAIN_BLACK, fontWeight: 600, letterSpacing: "0.5px" }}
+          sx={{
+            color: NAVY,
+            fontWeight: FONT_WEIGHT_LABEL,
+            letterSpacing: LETTER_SPACING_CHIP,
+          }}
         >
           TUTORIAL
         </Typography>
@@ -107,7 +115,7 @@ function TutorialCard() {
           alignItems="flex-start"
         >
           <Box sx={{ flex: 1 }}>
-            <Typography component="ol" sx={{ pl: 2, color: MAIN_BLACK }}>
+            <Typography component="ol" sx={{ pl: 2, color: NAVY }}>
               <li>GroundX stores your content in buckets.</li>
               <li>Upload files in 10 formats.</li>
               <li>100MB per upload. 750 pages or 20MB per document.</li>
@@ -123,8 +131,8 @@ function TutorialCard() {
             controls
             sx={{
               width: { xs: "100%", sm: 320 },
-              borderRadius: BORDER_RADIUS_3X,
-              border: `1px solid ${LIGHT_GREY_2}`,
+              borderRadius: BORDER_RADIUS_CARD,
+              border: `1px solid ${BORDER}`,
             }}
           />
         </Stack>
@@ -146,7 +154,7 @@ function ContentSection({ buckets }: { buckets: Bucket[] }) {
           action={
             <CommonSubmitButton
               startIcon={<AddIcon />}
-              sx={{ borderRadius: BORDER_RADIUS_4X, px: 2.5 }}
+              sx={{ borderRadius: BORDER_RADIUS_PILL, px: 2.5 }}
             >
               New Bucket
             </CommonSubmitButton>
@@ -178,28 +186,28 @@ function BucketRow({ bucket }: { bucket: Bucket }) {
         sx={{
           width: { xs: "100%", md: 320 },
           backgroundColor: "background.paper",
-          border: `1px solid ${LIGHT_GREY_2}`,
+          border: `1px solid ${BORDER}`,
           p: PADDING,
           boxShadow: "none",
           borderRadius: {
-            xs: BORDER_RADIUS_3X,
-            md: `${BORDER_RADIUS_3X} 0 0 ${BORDER_RADIUS_3X}`,
+            xs: BORDER_RADIUS_CARD,
+            md: `${BORDER_RADIUS_CARD}px 0 0 ${BORDER_RADIUS_CARD}px`,
           },
         }}
       >
-        <Typography sx={{ color: CORAL_ORANGE, fontWeight: 600, mb: 1 }}>
+        <Typography sx={{ color: CORAL, fontWeight: FONT_WEIGHT_LABEL, mb: 1 }}>
           {bucket.name} ›
         </Typography>
-        <Typography variant="body2" sx={{ color: MAIN_BLACK, mb: 0.5 }}>
+        <Typography variant="body2" sx={{ color: NAVY, mb: 0.5 }}>
           <b>ID:</b> {bucket.id}
           <IconButton size="small" sx={{ ml: 0.5 }} aria-label="copy bucket id">
             <ContentCopyIcon fontSize="small" />
           </IconButton>
         </Typography>
-        <Typography variant="body2" sx={{ color: MAIN_BLACK, mb: 0.5 }}>
+        <Typography variant="body2" sx={{ color: NAVY, mb: 0.5 }}>
           <b>Files:</b> {bucket.files}
         </Typography>
-        <Typography variant="body2" sx={{ color: MAIN_BLACK, mb: 1.5 }}>
+        <Typography variant="body2" sx={{ color: NAVY, mb: 1.5 }}>
           <b>Tokens:</b> {bucket.tokens.toLocaleString()}
         </Typography>
         <GxButtonGroup variant="outlined" aria-label="bucket actions">
@@ -218,21 +226,21 @@ function BucketRow({ bucket }: { bucket: Bucket }) {
           justifyContent: "center",
           gap: 1,
           backgroundColor: "background.paper",
-          border: `1px solid ${LIGHT_GREY_2}`,
+          border: `1px solid ${BORDER}`,
           borderLeft: { md: "none" },
-          borderTop: { xs: "none", md: `1px solid ${LIGHT_GREY_2}` },
+          borderTop: { xs: "none", md: `1px solid ${BORDER}` },
           p: PADDING,
           minHeight: 120,
           borderRadius: {
-            xs: BORDER_RADIUS_3X,
-            md: `0 ${BORDER_RADIUS_3X} ${BORDER_RADIUS_3X} 0`,
+            xs: BORDER_RADIUS_CARD,
+            md: `0 ${BORDER_RADIUS_CARD}px ${BORDER_RADIUS_CARD}px 0`,
           },
         }}
       >
-        <Typography sx={{ color: MAIN_BLACK, fontWeight: 500 }}>
+        <Typography sx={{ color: NAVY, fontWeight: FONT_WEIGHT_LABEL }}>
           Drag files here
         </Typography>
-        <CloudUploadIcon sx={{ color: CORAL_ORANGE, fontSize: 28 }} />
+        <CloudUploadIcon sx={{ color: CORAL, fontSize: 28 }} />
       </Box>
     </Stack>
   );

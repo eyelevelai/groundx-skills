@@ -25,7 +25,12 @@ import CommonCancelButton from "../templates/components/CommonCancelButton";
 import CommonSubmitButton from "../templates/components/CommonSubmitButton";
 import CommonTextField from "../templates/components/CommonTextField";
 
-import { BORDER_RADIUS_3X, MAIN_BLACK } from "../templates/constants";
+import {
+  BORDER_RADIUS_CARD,
+  FONT_SIZE_H5,
+  FONT_WEIGHT_LABEL,
+  NAVY,
+} from "../templates/constants";
 
 interface ExampleFormModalProps {
   open: boolean;
@@ -45,10 +50,10 @@ export function ExampleFormModal({ open, onClose, onSubmit }: ExampleFormModalPr
       onClose={onClose}
       fullWidth
       maxWidth="sm"
-      PaperProps={{ sx: { borderRadius: BORDER_RADIUS_3X } }}
+      PaperProps={{ sx: { borderRadius: BORDER_RADIUS_CARD } }}
     >
       <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Typography sx={{ color: MAIN_BLACK, fontWeight: 600, fontSize: "1.05rem" }}>
+        <Typography sx={{ color: NAVY, fontWeight: FONT_WEIGHT_LABEL, fontSize: FONT_SIZE_H5 }}>
           Invite team member
         </Typography>
         <IconButton onClick={onClose} aria-label="close" size="small">

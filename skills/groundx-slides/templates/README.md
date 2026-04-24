@@ -46,7 +46,7 @@ See `../references/layouts.md` for when to use each layout and what it looks lik
 
 ## Style rules
 
-- **No hex literals in the HTML.** Every color comes from `var(--gx-*)` in `styles.css`. If you need a new color, add it to `:root` there first and give it a semantic name.
+- **No hex literals in the HTML.** Every color comes from `var(--gx-*)` in the generated `:root` block of `styles.css`. If you need a new color, add it to `../../groundx-design-standards/tokens.json` (and `tokens.md`) first with a semantic name, then re-run `node ../../groundx-design-standards/scripts/generate-mirrors.mjs` — the new `--gx-*` will appear in the generated block automatically. Don't hand-edit the generated block; the next run will overwrite it.
 - **No `box-shadow`.** The single exception is the thin gradient accent bar, and that's already defined as `.accent-bar`.
 - **Eyebrows written as uppercase strings**, not `text-transform: uppercase`.
 - **Every slide has the `.slide-logo` lockup (top-left) and slide number (bottom-right)**, except the section break. "A VALANTOR COMPANY" is baked into the logo PNG — don't add it as a separate element.

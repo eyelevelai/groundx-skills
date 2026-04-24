@@ -13,17 +13,43 @@ This skill is the single source of truth for the EyeLevel brand **and** GroundX 
 
 | Skill | Medium | What it uses from here |
 | --- | --- | --- |
-| `groundx-web-ui` | React + MUI + TypeScript | Palette → `constants.ts` hex values. Typography → CSS/theme. Logos → `public/assets/`. Principles → components and corrections. |
-| `groundx-slides` | HTML → PDF (16:9 rendered via headless Chrome) | Palette → CSS `:root` vars in `styles.css`. Typography → `@import` Inter from Google Fonts (same as the dashboard). Logos → static image placements. Principles → layout grid, chart styles. |
+| `groundx-web-ui` | React + MUI + TypeScript | Tokens → auto-generated `constants.generated.ts`, re-exported through `constants.ts` barrel. Typography → CSS/theme. Logos → `public/assets/`. Principles → components and corrections. |
+| `groundx-slides` | HTML → PDF (16:9 rendered via headless Chrome) | Tokens → auto-generated `:root` block in `styles.css` (spliced between `BEGIN/END GENERATED TOKENS` markers). Typography → `@import` Inter from Google Fonts (same as the dashboard). Logos → static image placements via `--gx-logo-*` tokens. Principles → layout grid, chart styles. |
 | Future skills (email, Word, marketing) | Various | Same. |
 
-Medium-specific skills should route to this skill's references from their own SKILL.md — *"Before producing anything, read `../groundx-design-standards/references/colors.md` and `../groundx-design-standards/references/typography.md`."*
+Medium-specific skills should route to this skill's references from their own SKILL.md — *"Before producing anything, read `../groundx-design-standards/references/tokens.md` and `../groundx-design-standards/references/brand-principles.md`."*
+
+### The token workflow
+
+The source of truth has two shapes:
+
+- **`tokens.json`** is the machine-readable authoritative file. DTCG-flavored; the codegen script reads from here.
+- **`references/tokens.md`** is the human-readable narrative — same values, annotated with roles, surface rules, and rationale. Keep it in sync with `tokens.json` by hand.
+
+Medium-specific mirrors are **auto-generated** from `tokens.json`, not hand-maintained. Running `scripts/generate-mirrors.mjs` writes:
+
+- `groundx-web-ui/templates/constants.generated.ts` (React/MUI exports)
+- the `:root` block of `groundx-slides/templates/styles.css` (spliced in between `BEGIN GENERATED TOKENS` / `END GENERATED TOKENS` markers)
+
+To change a value brand-wide:
+
+1. Edit `tokens.json`.
+2. Update the matching row in `references/tokens.md` so the narrative stays in sync.
+3. Run `node scripts/generate-mirrors.mjs`.
+4. Commit all four files together (`tokens.json`, `tokens.md`, the regenerated `constants.generated.ts`, and `styles.css`).
+5. Rebuild the medium's output (deck, web bundle) to verify.
+
+`scripts/verify-mirrors.mjs` regenerates in memory and diffs against disk — it's wired into CI via `.github/workflows/verify-tokens.yml`, which runs on every push and pull request to `main` and fails the build if a PR lands `tokens.json` changes without the regenerated mirrors (or hand-edits a generated file). Run it locally before pushing if you want to catch drift before CI does.
+
+Chrome-specific tokens that do not belong to the brand palette (dashboard `drawerWidth`, `NAV_ICON_GREY`, the premium-button gradient) stay hand-written in their medium skill — `groundx-web-ui/templates/constants.chrome.ts` — and are explicitly **not** in `tokens.json`. Deprecated web aliases live in `constants.legacy.ts`.
+
+No one should be hunting down a color in a component file or a slide layout — every consumer reads its values from a token, and every token traces back to `tokens.json`.
 
 ## Brand at a glance
 
-- **Primary CTA is green `#a1ec83`.** Every submit button, success chip, and hover-go-state. Coral `#f3663f` is the *secondary* highlight accent — eyebrows, labels, the occasional alt-CTA. Don't confuse the two.
-- **Text is navy, not black.** Headings `#29335c`; body `#40496b`. True black (`#000`) is wrong.
-- **Section canvases.** White, Gray `#f2f4f5`, Tint `#eff9fb`, Cyan `#c1e8ee`, Green `#a1ec83`, or Navy `#29335c`. Cards on top of these canvases are white.
+- **Primary CTA is Green.** Every submit button, success chip, and hover-go-state. Coral is the *secondary* highlight accent — eyebrows, labels, the occasional alt-CTA. Don't confuse the two. (Hex values for every color live in `references/tokens.md` § 1.)
+- **Text is navy, not black.** Headings use `Navy`; body uses `Body Text` (a slightly-warmer navy tuned for reading). True black (`#000`) is wrong.
+- **Section canvases.** White, Gray, Tint, Cyan, Green, or Navy. Cards on top of these canvases are white.
 - **Inter is the font.** Weight ladder is 400 / 600 / 700 / 800. Body is 400; labels and CTAs are 600; headlines are 700; cover + display-stat numerals are 800. Weight 900 is retired.
 - **Surfaces are flat.** White fill, `1px solid rgba(41, 51, 92, 0.1)` hairline border, `20px` corner radius for top-level cards. No drop shadows. Ever.
 - **ALL-CAPS is a shape, not a formatting rule.** Section labels like "TUTORIAL" / "CONTENT" / "YOUR BUCKETS" are written as literal uppercase strings, never produced via `text-transform`. This survives translation and rendering across mediums.
@@ -35,17 +61,31 @@ GroundX is a product. EyeLevel is an AI company that builds GroundX. Valantor is
 
 ## Reference map
 
-Read the one that matches your question; don't read all four unconditionally.
+Read the one that matches your question; don't read all five unconditionally.
 
 ```
-What color is …?                          → references/colors.md
-What font / weight / size / label rule?   → references/typography.md
+What is the canonical value of ___?       → references/tokens.md (narrative)
+  (hex, font, size, weight, radius, logo     tokens.json (machine)
+  filename, slide canvas, spacing unit)
+
+What are the rules for color use?         → references/colors.md
+  (primary CTA is green, eyebrow swap by
+  surface, three-up cycle, etc.)
+
+What are the rules for type use?          → references/typography.md
+  (weight over size, ALL-CAPS literal,
+  display-stat pattern, tracking, italics)
+
 Which logo, where does it go?             → references/logos.md
+
 What's the visual attitude overall?       → references/brand-principles.md
+
 What repeating layout / shape should I    → references/patterns.md
 use (eyebrow+headline, display stat,
 3-card grid, navy CTA panel)?
 ```
+
+The `tokens.md` file holds every **value**; the other four files hold the **rules** for how those values are applied. A question of the form "what hex is navy?" / "what px is the hero headline?" / "which file is the dark logo?" answers from `tokens.md` alone. A question of the form "why is the primary CTA green and not coral?" / "where should the tagline go?" answers from one of the other files.
 
 ## Assets
 
@@ -66,11 +106,11 @@ Medium-specific skills reference these by relative path: `../groundx-design-stan
 
 When a medium-specific skill has to translate a standard into its format, apply these tie-breakers:
 
-1. **Preserve hex values exactly.** `#a1ec83` is `#a1ec83` in every medium. No "close enough" RGB rounding, no color-managed profile swaps.
+1. **Preserve hex values exactly.** Whatever `tokens.md` § 1 says Green is, every medium renders that same string. No "close enough" RGB rounding, no color-managed profile swaps.
 2. **Preserve weight intent.** Inter's 600 is SemiBold; if a medium can only use semibold (`600`) vs. bold (`700`), pick the one closer to the specified weight.
 3. **Preserve the flat surface.** If a medium's default is elevated (Material shadows, PowerPoint's default shape fill+outline), override it. A surface that gains a shadow has lost the brand.
 4. **Preserve the ALL-CAPS-as-literal rule.** Labels are typed uppercase in the content, not transformed at render time.
-5. **Never introduce a new color to solve a contrast problem.** If coral on aqua isn't legible, put the coral on white (a surface) or use navy text on aqua. Don't mint `#E87A55`.
+5. **Never introduce a new color to solve a contrast problem.** If coral on aqua isn't legible, put the coral on white (a surface) or use navy text on aqua. Don't mint a new shade.
 
 ## What this skill does not define
 
@@ -83,7 +123,7 @@ When a medium-specific skill has to translate a standard into its format, apply 
 
 If a task genuinely requires something this skill doesn't answer — a new chart color ramp, a new surface tint, a new typographic scale for dense tables — resist introducing it locally in a medium-specific skill. Either:
 
-- Reuse an existing token from `references/colors.md` or `references/typography.md`, even if it's not a perfect fit.
-- Or **add the new definition here first**, then consume it from the medium-specific skill. That way the next medium you add inherits the same answer.
+- Reuse an existing token from `references/tokens.md`, even if it's not a perfect fit.
+- Or **add the new definition to `tokens.json` first** (and describe it in `tokens.md`), then re-run `scripts/generate-mirrors.mjs` so every medium skill inherits the new constant automatically.
 
-The brand stays consistent only as long as this file is the place new decisions land.
+The brand stays consistent only as long as `tokens.json` is the place new decisions land.

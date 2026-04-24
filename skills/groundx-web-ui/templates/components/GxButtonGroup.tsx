@@ -11,13 +11,15 @@ import { ButtonGroup, ButtonGroupProps, styled } from "@mui/material";
 
 import {
   BORDER_RADIUS_2X,
-  CORAL_ORANGE,
-  MAIN_BLACK,
+  CORAL,
+  FONT_WEIGHT_LABEL,
+  LETTER_SPACING_CHIP,
+  NAVY,
   WHITE,
 } from "../constants";
 
 export const GxButtonGroup = styled(ButtonGroup)<ButtonGroupProps>(() => ({
-  border: `1px solid ${MAIN_BLACK}`,
+  border: `1px solid ${NAVY}`,
   borderRadius: BORDER_RADIUS_2X,
   background: WHITE,
   boxShadow: "none",
@@ -28,18 +30,18 @@ export const GxButtonGroup = styled(ButtonGroup)<ButtonGroupProps>(() => ({
   "& .MuiButtonGroup-grouped": {
     border: "none",
     borderRadius: 0,
-    color: MAIN_BLACK,
-    fontWeight: 600,
+    color: NAVY,
+    fontWeight: FONT_WEIGHT_LABEL,
     textTransform: "uppercase",
-    letterSpacing: "0.5px",
+    letterSpacing: LETTER_SPACING_CHIP,
     padding: "6px 16px",
 
     "&:not(:last-of-type)": {
-      borderRight: `1px solid ${MAIN_BLACK}`,
+      borderRight: `1px solid ${NAVY}`,
     },
 
     "&:hover": {
-      backgroundColor: CORAL_ORANGE,
+      backgroundColor: CORAL,
       color: WHITE,
     },
   },

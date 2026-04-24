@@ -4,21 +4,21 @@ The dashboard codebase evolved organically, and there are patterns that drifted 
 
 This doc captures the decisions baked into the templates and reference files. Read it when you want to understand *why* the canonical answer looks different from the existing code.
 
-## 1. `primary.main` is coral, not blue
+## 1. `primary.main` is green, not blue
 
 **Was**: `palette.primary.main = "#1976d2"` — MUI's default blue, which wasn't referenced anywhere in the app but made any accidental `color="primary"` paint things blue.
 
-**Is now**: `palette.primary.main = CORAL_ORANGE`. A bare `<Button color="primary">` or `<Typography color="primary">` now paints coral, matching every other accent in the UI.
+**Is now**: `palette.primary.main = GREEN`. Primary CTA in the brand is green (see `../../groundx-design-standards/references/colors.md` § 1 "Primary CTA is Green, not Coral"), so a bare `<Button color="primary">` or `<Typography color="primary">` now paints with the same green `CommonSubmitButton` uses.
 
-If you see code that hard-codes `CORAL_ORANGE` where `color="primary"` or `theme.palette.primary.main` would work, consider simplifying during your PR.
+If you see code that hard-codes `GREEN` where `color="primary"` or `theme.palette.primary.main` would work, consider simplifying during your PR.
 
 ## 2. No hex literals in component files
 
 **Was**: `#F70D1A`, `#E8EAEE`, `#5a5a5b`, `rgb(79 53 197 / 10%)`, and friends scattered through `IngestFileStatus`, `TopDrawerNavLinks`, `SelectedBucketTable`, and elsewhere.
 
-**Is now**: all four of those values have named constants — `ERROR_RED`, `DISABLED_GREY`, `NAV_ICON_GREY`, `ROW_SELECTED_BG` — in `constants.ts`. Import and use them.
+**Is now**: all four of those values have named constants — `ERROR_RED` lives in `constants.generated.ts` (brand palette), while `DISABLED_GREY`, `NAV_ICON_GREY`, `ROW_SELECTED_BG` live in `constants.chrome.ts` (dashboard-only chrome). Both files are re-exported through the `constants.ts` barrel, so import from `@/constants`.
 
-When adding a new color, always add it to `constants.ts` first. If you catch yourself typing `#` in a component file, stop.
+When adding a new color, decide first where it belongs: a brand-level color goes into `../../groundx-design-standards/tokens.json` (re-run the generator to emit `constants.generated.ts`); a dashboard-only chrome color goes straight into `constants.chrome.ts`. Either way, it ends up exported through the barrel. If you catch yourself typing `#` in a component file, stop.
 
 ## 3. `GxCard`, not `<Card>` or inline `<Box sx={{…}}>`
 
@@ -63,7 +63,7 @@ The 799px cases were clearly meant to be `md` (1100) — they pre-date the md bu
 
 **Is now**: theme's `MuiCssBaseline` override applies `fontFamily: FONT_FAMILY` to `body`, so every text node inherits Inter unless explicitly overridden. `MuiTypography` retains the override as a belt-and-suspenders safeguard.
 
-If you want to be explicit (e.g. inside a `styled()` that resets all inherited styles), import `FONT_FAMILY` from `constants.ts` and apply it directly.
+If you want to be explicit (e.g. inside a `styled()` that resets all inherited styles), import `FONT_FAMILY` from `@/constants` and apply it directly.
 
 ## 9. `disableElevation` is the default
 
@@ -75,14 +75,14 @@ If you want to be explicit (e.g. inside a `styled()` that resets all inherited s
 
 **Was**: some surfaces used `1px solid LIGHT_GREY_2`, others used `2px solid`, others used `borderBottom` only with the color set via inline `theme.palette.divider`.
 
-**Is now**: **all surfaces use `1px solid LIGHT_GREY_2`.** The theme sets `palette.divider = LIGHT_GREY_2` so `<Divider />` and any component that reads `theme.palette.divider` get the same color.
+**Is now**: **all surfaces use `1px solid BORDER`.** The theme sets `palette.divider = BORDER` so `<Divider />` and any component that reads `theme.palette.divider` get the same color.
 
 ## Summary table
 
 | # | Was | Is now |
 | --- | --- | --- |
-| 1 | `primary.main = #1976d2` | `primary.main = CORAL_ORANGE` |
-| 2 | Hex literals in components | Named constants in `constants.ts` |
+| 1 | `primary.main = #1976d2` | `primary.main = GREEN` |
+| 2 | Hex literals in components | Named constants imported from `@/constants` |
 | 3 | `Card` and `Box` both used | `GxCard` only |
 | 4 | X-RAY is a `CommonSubmitButton` | X-RAY is a `GxPill` |
 | 5 | `@media (max-width: Xpx)` | `theme.breakpoints` |
@@ -90,4 +90,4 @@ If you want to be explicit (e.g. inside a `styled()` that resets all inherited s
 | 7 | Icon sizes mixed | MUI size tokens only |
 | 8 | Font only on `<Typography>` | Font on `<body>` via `CssBaseline` |
 | 9 | `boxShadow: "none"` everywhere | `disableElevation: true` on theme |
-| 10 | Inconsistent border treatment | `1px solid LIGHT_GREY_2` everywhere |
+| 10 | Inconsistent border treatment | `1px solid BORDER` everywhere |

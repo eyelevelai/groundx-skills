@@ -19,10 +19,12 @@ import { FC, MouseEvent, ReactNode } from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
 
 import {
-  ACTIVE_GREEN,
   BORDER_RADIUS_2X,
-  CORAL_ORANGE,
-  MAIN_BLACK,
+  CORAL,
+  FONT_WEIGHT_LABEL,
+  GREEN,
+  LETTER_SPACING_CHIP,
+  NAVY,
   WHITE,
 } from "../../constants";
 
@@ -53,16 +55,16 @@ export const CommonSubmitButton: FC<CommonSubmitButtonProps> = ({
       type={type}
       variant="contained"
       sx={{
-        backgroundColor: invert ? ACTIVE_GREEN : CORAL_ORANGE,
-        color: invert ? MAIN_BLACK : WHITE,
-        fontWeight: 600,
+        backgroundColor: invert ? GREEN : CORAL,
+        color: invert ? NAVY : WHITE,
+        fontWeight: FONT_WEIGHT_LABEL,
         borderRadius: BORDER_RADIUS_2X,
         boxShadow: "none",
         textTransform: isUppercase ? "uppercase" : "none",
-        letterSpacing: isUppercase ? "0.5px" : undefined,
+        letterSpacing: isUppercase ? LETTER_SPACING_CHIP : undefined,
         "&:hover": {
-          backgroundColor: invert ? CORAL_ORANGE : ACTIVE_GREEN,
-          color: invert ? WHITE : MAIN_BLACK,
+          backgroundColor: invert ? CORAL : GREEN,
+          color: invert ? WHITE : NAVY,
           boxShadow: "none",
         },
         ...props.sx,

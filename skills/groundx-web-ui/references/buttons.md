@@ -2,7 +2,7 @@
 
 Every action in the GroundX UI falls into one of a small number of button patterns. Pick the right one from this decision tree — don't invent a new button style.
 
-> **Primary is Green, not Coral.** The authoritative style guide sets `GREEN #a1ec83` as the primary CTA fill with navy text (see `../../groundx-design-standards/references/colors.md` rule 1). Coral is reserved for eyebrows, highlight pills, and the occasional secondary alt-CTA. The dashboard's current `CommonSubmitButton` still ships with a coral fill + green-hover; that's a migration target, not the canonical style. New components should use green-fill-at-rest.
+> **Primary is Green, not Coral.** The authoritative style guide sets `GREEN` as the primary CTA fill with navy text (see `../../groundx-design-standards/references/colors.md` rule 1; hex in `../../groundx-design-standards/references/tokens.md` § 1.1). Coral is reserved for eyebrows, highlight pills, and the occasional secondary alt-CTA. The dashboard's current `CommonSubmitButton` still ships with a coral fill + green-hover; that's a migration target, not the canonical style. New components should use green-fill-at-rest.
 
 ## Decision tree
 
@@ -30,7 +30,7 @@ Is this a primary action (submit, create, confirm)?
 
 ## Primary action: `CommonSubmitButton`
 
-**Target style (new):** Green `#a1ec83` fill, navy text, fontWeight 600, uppercase, `borderRadius: 200px` (pill). Hover darkens the green ~8%.
+**Target style (new):** `GREEN` fill, `NAVY` text, `fontWeight: 600`, uppercase, `borderRadius: BORDER_RADIUS_PILL` (the full-pill shape). Hover darkens the green ~8%.
 
 **Current shipped component:** Coral fill, white text, hover flips to green fill with navy text. Slated for migration to the target style above; until then, both call sites continue to work against this file's decision tree.
 
@@ -42,7 +42,7 @@ Is this a primary action (submit, create, confirm)?
 
 Common modifiers:
 
-- **Extra-rounded pill** for standalone CTAs: `sx={{ borderRadius: BORDER_RADIUS_4X }}`.
+- **Full pill shape** for standalone CTAs: `sx={{ borderRadius: BORDER_RADIUS_PILL }}`. (The old `BORDER_RADIUS_4X` and `BORDER_RADIUS_3X` have been retired — their aliases now resolve to `BORDER_RADIUS_PILL` and `BORDER_RADIUS_CARD` respectively; migrate as you touch files.)
 - **Start icon**: `startIcon={<AddIcon />}`.
 - **Inverted** (start in the green state): `<CommonSubmitButton invert>`. Use for secondary confirm actions where you don't want to fight the primary CTA on the same screen.
 - **No uppercase**: `<CommonSubmitButton isUppercase={false}>`. Rare. Use for CTAs with long / sentence-case labels.
@@ -120,7 +120,7 @@ A standalone wide-pill action — used for "+ NEW BUCKET", "+ ADD CONTENT", and 
 ```tsx
 <CommonSubmitButton
   startIcon={<AddIcon />}
-  sx={{ borderRadius: BORDER_RADIUS_4X, px: 2.5 }}
+  sx={{ borderRadius: BORDER_RADIUS_PILL, px: 2.5 }}
 >
   New Bucket
 </CommonSubmitButton>

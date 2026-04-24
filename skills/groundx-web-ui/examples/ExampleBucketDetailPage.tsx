@@ -39,12 +39,16 @@ import GxCard from "../templates/components/GxCard";
 import GxPill from "../templates/components/GxPill";
 
 import {
+  BORDER,
   BORDER_RADIUS,
-  CORAL_ORANGE,
-  LIGHT_GREY_2,
-  MAIN_BLACK,
+  BORDER_RADIUS_CARD,
+  CORAL,
+  FONT_SIZE_H5,
+  FONT_WEIGHT_LABEL,
+  GRAY,
   MAIN_CONTENT_PADDING,
   MAIN_CONTENT_TOP_MARGIN,
+  NAVY,
   PADDING,
   ROW_SELECTED_BG,
 } from "../templates/constants";
@@ -88,19 +92,19 @@ function HelpAccordion() {
     <Accordion
       square
       sx={{
-        borderRadius: 3,
+        borderRadius: BORDER_RADIUS_CARD,
         boxShadow: "none",
-        border: `1px solid ${LIGHT_GREY_2}`,
+        border: `1px solid ${BORDER}`,
         "&:before": { display: "none" },
       }}
     >
-      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: CORAL_ORANGE }} />}>
-        <Typography sx={{ color: MAIN_BLACK, fontWeight: 600 }}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: CORAL }} />}>
+        <Typography sx={{ color: NAVY, fontWeight: FONT_WEIGHT_LABEL }}>
           What can I do inside a content bucket?
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography variant="body2" sx={{ color: MAIN_BLACK }}>
+        <Typography variant="body2" sx={{ color: NAVY }}>
           Upload, chat with, and search your documents. Use the X-RAY action to
           inspect how GroundX parsed a file.
         </Typography>
@@ -113,14 +117,20 @@ function HelpAccordion() {
 
 function BucketHeader({ bucketName }: { bucketName: string }) {
   return (
-    <GxCard sx={{ backgroundColor: LIGHT_GREY_2 }}>
+    <GxCard sx={{ backgroundColor: GRAY }}>
       <Stack
         direction={{ xs: "column", lg: "row" }}
         alignItems={{ xs: "flex-start", lg: "center" }}
         justifyContent="space-between"
         spacing={2}
       >
-        <Typography sx={{ color: MAIN_BLACK, fontWeight: 600, fontSize: "1.05rem" }}>
+        <Typography
+          sx={{
+            color: NAVY,
+            fontWeight: FONT_WEIGHT_LABEL,
+            fontSize: FONT_SIZE_H5,
+          }}
+        >
           {bucketName}
         </Typography>
         <Stack direction="row" spacing={1} flexWrap="wrap">
@@ -166,7 +176,7 @@ function DocumentTable({ rows }: { rows: DocRow[] }) {
                 <TableCell padding="checkbox">
                   <Checkbox />
                 </TableCell>
-                <TableCell sx={{ color: CORAL_ORANGE, fontWeight: 500 }}>
+                <TableCell sx={{ color: CORAL, fontWeight: FONT_WEIGHT_LABEL }}>
                   {r.name}
                 </TableCell>
                 <TableCell align="right">
@@ -176,7 +186,7 @@ function DocumentTable({ rows }: { rows: DocRow[] }) {
                     justifyContent="flex-end"
                     spacing={1}
                   >
-                    <Typography variant="body2" sx={{ color: MAIN_BLACK }}>
+                    <Typography variant="body2" sx={{ color: NAVY }}>
                       {r.docId}
                     </Typography>
                     <IconButton size="small" aria-label="copy document id">

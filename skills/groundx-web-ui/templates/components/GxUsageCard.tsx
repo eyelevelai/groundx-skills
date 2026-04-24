@@ -10,11 +10,17 @@
 import { Box, Button, LinearProgress, Typography } from "@mui/material";
 
 import {
-  ACTIVE_GREEN,
-  BORDER_RADIUS_3X,
-  CORAL_ORANGE,
-  LIGHT_GREY_2,
-  MAIN_BLACK,
+  BORDER,
+  BORDER_RADIUS_CARD,
+  BORDER_RADIUS_PILL,
+  BORDER_RADIUS_SM,
+  CORAL,
+  FONT_WEIGHT_HEADLINE,
+  FONT_WEIGHT_LABEL,
+  GREEN,
+  LETTER_SPACING_CHIP,
+  LINE_HEIGHT_CARD_SUBHEAD,
+  NAVY,
   PADDING,
   WHITE,
 } from "../constants";
@@ -49,9 +55,9 @@ export function GxUsageCard({
   return (
     <Box
       sx={{
-        borderRadius: BORDER_RADIUS_3X,
-        backgroundColor: MAIN_BLACK,
-        border: `1px solid ${LIGHT_GREY_2}`,
+        borderRadius: BORDER_RADIUS_CARD,
+        backgroundColor: NAVY,
+        border: `1px solid ${BORDER}`,
         padding: PADDING,
         color: WHITE,
         display: "flex",
@@ -59,13 +65,19 @@ export function GxUsageCard({
         gap: 1.5,
       }}
     >
-      <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: 1.4 }}>
+      <Typography
+        variant="body2"
+        sx={{
+          fontWeight: FONT_WEIGHT_LABEL,
+          lineHeight: LINE_HEIGHT_CARD_SUBHEAD,
+        }}
+      >
         {planSummary}
       </Typography>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 600 }}>
+          <Typography variant="caption" sx={{ fontWeight: FONT_WEIGHT_LABEL }}>
             {ingestLabel}
           </Typography>
           <LinearProgress
@@ -74,14 +86,14 @@ export function GxUsageCard({
             sx={{
               mt: 0.25,
               height: 6,
-              borderRadius: 3,
+              borderRadius: BORDER_RADIUS_SM,
               backgroundColor: "rgba(255,255,255,0.15)",
-              "& .MuiLinearProgress-bar": { backgroundColor: CORAL_ORANGE },
+              "& .MuiLinearProgress-bar": { backgroundColor: CORAL },
             }}
           />
         </Box>
         <Box>
-          <Typography variant="caption" sx={{ fontWeight: 600 }}>
+          <Typography variant="caption" sx={{ fontWeight: FONT_WEIGHT_LABEL }}>
             {searchLabel}
           </Typography>
           <LinearProgress
@@ -90,9 +102,9 @@ export function GxUsageCard({
             sx={{
               mt: 0.25,
               height: 6,
-              borderRadius: 3,
+              borderRadius: BORDER_RADIUS_SM,
               backgroundColor: "rgba(255,255,255,0.15)",
-              "& .MuiLinearProgress-bar": { backgroundColor: CORAL_ORANGE },
+              "& .MuiLinearProgress-bar": { backgroundColor: CORAL },
             }}
           />
         </Box>
@@ -102,17 +114,17 @@ export function GxUsageCard({
         fullWidth
         onClick={onUpgradeClick}
         sx={{
-          color: CORAL_ORANGE,
+          color: CORAL,
           backgroundColor: "transparent",
-          border: `2px solid ${CORAL_ORANGE}`,
-          fontWeight: 700,
-          letterSpacing: "0.5px",
+          border: `1px solid ${CORAL}`,
+          fontWeight: FONT_WEIGHT_HEADLINE,
+          letterSpacing: LETTER_SPACING_CHIP,
           textTransform: "uppercase",
-          borderRadius: 999,
+          borderRadius: BORDER_RADIUS_PILL,
           "&:hover": {
-            color: MAIN_BLACK,
-            backgroundColor: ACTIVE_GREEN,
-            borderColor: ACTIVE_GREEN,
+            color: NAVY,
+            backgroundColor: GREEN,
+            borderColor: GREEN,
           },
         }}
       >

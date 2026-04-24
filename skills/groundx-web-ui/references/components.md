@@ -10,7 +10,7 @@ These live in `templates/components/` and don't exist in the dashboard repo yet.
 
 ### `GxCard`
 
-The canonical GroundX surface — a white `Box` with a 1px `LIGHT_GREY_2` border, `BORDER_RADIUS_3X` rounding, no shadow, and `PADDING` inside.
+The canonical GroundX surface — a white `Box` with a 1px `BORDER` hairline, `BORDER_RADIUS_CARD` rounding, no shadow, and `PADDING` inside.
 
 Use for **every** card-shaped surface. Don't use raw `<Card>`, don't re-spell this in inline `sx`. Variants:
 
@@ -46,7 +46,7 @@ The coral-fill primary action. On hover it flips to green. Props: `invert` (star
 When to reach for it:
 
 - Form submit buttons
-- "+ NEW BUCKET", "+ ADD CONTENT" pill actions (add `sx={{ borderRadius: BORDER_RADIUS_4X }}` for extra roundness)
+- "+ NEW BUCKET", "+ ADD CONTENT" pill actions (add `sx={{ borderRadius: BORDER_RADIUS_PILL }}` for extra roundness)
 - Delete / Chat / Retrievals action rows in bucket headers
 
 ### `CommonCancelButton`

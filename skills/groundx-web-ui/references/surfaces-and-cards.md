@@ -34,19 +34,19 @@ If you find existing code using `<Card>`, replace it during the same PR — it's
 
 ## Radii by surface type
 
-Webflow's scale: 4 / 6 / 12 / 20 / 200. Every surface in the UI picks one.
+The ladder itself (4 / 6 / 12 / 20 / 200 px) is defined in `../../groundx-design-standards/references/tokens.md` § 5 — don't restate it; import the tokens by name. The table below just maps each surface type onto the right token.
 
-| Surface | Radius | Token |
-| --- | --- | --- |
-| Top-level card | 20px | `BORDER_RADIUS_CARD` |
-| Nested surface (table wrapper inside a card) | 6px | `BORDER_RADIUS` |
-| Input field | 6px | `BORDER_RADIUS` |
-| Dropdown menu / toast | 12px | `BORDER_RADIUS_2X` |
-| Modal (Dialog Paper) | 20px | `BORDER_RADIUS_CARD` |
-| Segmented button group | 200px outer (pill), internal straight edges | `BORDER_RADIUS_PILL` |
-| Button (primary + secondary) | 200px (pill) | `BORDER_RADIUS_PILL` |
-| Pill / chip / tag | 200px | `BORDER_RADIUS_PILL` |
-| Tight inner shape (divider wrap, inline chip) | 4px | `BORDER_RADIUS_SM` |
+| Surface | Token |
+| --- | --- |
+| Top-level card | `BORDER_RADIUS_CARD` |
+| Nested surface (table wrapper inside a card) | `BORDER_RADIUS` |
+| Input field | `BORDER_RADIUS` |
+| Dropdown menu / toast | `BORDER_RADIUS_2X` |
+| Modal (Dialog Paper) | `BORDER_RADIUS_CARD` |
+| Segmented button group (outer pill, internal straight edges) | `BORDER_RADIUS_PILL` |
+| Button (primary + secondary) | `BORDER_RADIUS_PILL` |
+| Pill / chip / tag | `BORDER_RADIUS_PILL` |
+| Tight inner shape (divider wrap, inline chip) | `BORDER_RADIUS_SM` |
 
 ## Asymmetric radii
 
@@ -82,14 +82,16 @@ Use MUI `<Divider>` rather than borders. The theme sets `divider` to `BORDER` so
 
 Occasionally a card needs to stand out. The canonical surface variants are:
 
+Hex values for every color below live in `../../groundx-design-standards/references/tokens.md` § 1.1.
+
 | Variant | Background | Text | Use |
 | --- | --- | --- | --- |
 | Default | `WHITE` | `BODY_TEXT` paragraphs, `NAVY` headings | The default everywhere. |
-| Gray | `GRAY` (`#f2f4f5`) | `BODY_TEXT`, `NAVY` | Alt section bg to break long white pages; input field fill. |
-| Tint | `TINT` (`#eff9fb`) | `BODY_TEXT`, `NAVY` | Callouts, tutorial hints, info panels. |
-| Cyan | `CYAN` (`#c1e8ee`) | `NAVY` (both heading and body) | Secondary accent panel, quiet feature card. |
-| Green | `GREEN` (`#a1ec83`) | `NAVY` (both heading and body) | Primary feature card at rest; success surface. |
-| Navy | `NAVY` (`#29335c`) | `WHITE` body + `GREEN` eyebrow | Dark sidebar card, emphasis panel. |
+| Gray | `GRAY` | `BODY_TEXT`, `NAVY` | Alt section bg to break long white pages; input field fill. |
+| Tint | `TINT` | `BODY_TEXT`, `NAVY` | Callouts, tutorial hints, info panels. |
+| Cyan | `CYAN` | `NAVY` (both heading and body) | Secondary accent panel, quiet feature card. |
+| Green | `GREEN` | `NAVY` (both heading and body) | Primary feature card at rest; success surface. |
+| Navy | `NAVY` | `WHITE` body + `GREEN` eyebrow | Dark sidebar card, emphasis panel. |
 
 Rules:
 

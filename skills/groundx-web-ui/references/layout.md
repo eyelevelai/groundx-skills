@@ -21,7 +21,7 @@ The GroundX dashboard uses a classic three-piece shell: a persistent left **Draw
 
 ## Drawer (left sidebar)
 
-- **Background**: `NAVY` (`#29335c`). White logo, light text, green active state (green eyebrow rule on dark surfaces; see `../../groundx-design-standards/references/colors.md` rule 5).
+- **Background**: `NAVY`. White logo, light text, green active state (green eyebrow rule on dark surfaces; see `../../groundx-design-standards/references/colors.md` rule 5).
 - **Width**: varies by breakpoint and open state:
 
 | State | Width |
@@ -32,7 +32,7 @@ The GroundX dashboard uses a classic three-piece shell: a persistent left **Draw
 | Mobile (< sm), collapsed | `theme.spacing(5) = 40px` |
 
 - **Transition**: width eases via `theme.transitions.create("width", …)`. Don't animate the individual nav items — let the drawer drive the transition.
-- **Active nav state**: bold font, white icon, `backgroundColor: CORAL_ORANGE`. Inactive: `NAV_ICON_GREY` icons, muted label.
+- **Active nav state**: bold font, white icon, `backgroundColor: CORAL`. Inactive: `NAV_ICON_GREY` icons, muted label.
 - **Usage card**: `GxUsageCard` sits between the top and bottom link groups. On the icon-only collapsed state it hides entirely (don't try to shrink it).
 
 ## AppBar (top)
@@ -53,7 +53,7 @@ padding: theme.spacing(MAIN_CONTENT_PADDING),      // 40px on desktop
 [theme.breakpoints.down("sm")]: { padding: theme.spacing(1) }, // 8px on mobile
 ```
 
-- **Background**: `MAIN_BACKGROUND`. Cards inside the pane supply the white surfaces.
+- **Background**: `TINT`. Cards inside the pane supply the white surfaces.
 - **Height trick**: the app uses a `--vh` CSS custom property for iOS Safari viewport height correctness. Preserve the existing `html { height: calc(var(--vh, 1vh) * 100); }` rule when building new pages — it's not something you need to opt into, but don't accidentally override it.
 
 ## When to use the shell
