@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EyeLevel — Style Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+/* ── Tokens ── */
+:root {
+  --text-color:  #40496b;
+  --primary-1:  #29335c;
+  --primary-2:  #a1ec83;
+  --primary-3:  #c1e8ee;
+  --primary-4:  #eff9fb;
+  --primary-5:  #f3663f;
+  --white:      #ffffff;
+  --gray:       #f2f4f5;
+  --border:     rgba(41,51,92,0.1);
+  --font:       'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); font-size: 16px; color: var(--text-color); background: var(--gray); }
+
+/* ── Guide shell ── */
+.guide { max-width: 900px; margin: 0 auto; padding: 60px 32px 120px; }
+
+/* ── Page header ── */
+.guide-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary-5);
+  margin-bottom: 10px;
+}
+.guide-name {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--primary-1);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.guide-sub {
+  font-size: 16px;
+  color: var(--text-color);
+  margin-bottom: 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Section headings ── */
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary-5);
+  margin-bottom: 20px;
+  margin-top: 56px;
+  padding-top: 56px;
+  border-top: 1px solid var(--border);
+}
+.section-title:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+/* ── Color swatches ── */
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 16px; }
+.swatch { border-radius: 12px; overflow: hidden; background: var(--white); border: 1px solid var(--border); }
+.swatch__color { height: 80px; }
+.swatch__info  { padding: 10px 12px; }
+.swatch__name  { font-size: 12px; font-weight: 700; color: var(--primary-1); margin-bottom: 2px; }
+.swatch__hex   { font-family: monospace; font-size: 11px; color: var(--text-color); opacity: 0.7; }
+.swatch__role  { font-size: 10px; color: var(--text-color); opacity: 0.5; margin-top: 3px; line-height: 1.3; }
+
+/* ── Type specimens ── */
+.type-row {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.type-row:last-child { border-bottom: none; }
+.type-meta { width: 130px; flex-shrink: 0; }
+.type-meta-name { font-size: 11px; font-weight: 700; color: var(--primary-5); letter-spacing: 0.06em; text-transform: uppercase; }
+.type-meta-spec { font-size: 10px; color: var(--text-color); opacity: 0.5; margin-top: 3px; font-family: monospace; }
+.type-specimen  { color: var(--primary-1); font-weight: 700; }
+
+/* ── Button row ── */
+.btn-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 24px; }
+.btn-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-color); opacity: 0.5; width: 100%; margin-top: 8px; }
+
+/* Actual buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font); font-weight: 600; text-decoration: none; cursor: pointer;
+  border: 2px solid transparent; border-radius: 200px; white-space: nowrap;
+  transition: box-shadow 0.2s;
+}
+.btn-base     { font-size: 16px; line-height: 28px; padding: 14px 24px; }
+.btn-sm       { font-size: 14px; line-height: 22px; padding: 10px 20px; }
+.btn-lg       { font-size: 20px; line-height: 30px; padding: 19px 36px; }
+
+.btn-green    { background: var(--primary-2); color: var(--primary-1); }
+.btn-green:hover { box-shadow: inset 0 0 0 100px rgba(0,0,0,0.05); }
+.btn-navy     { background: var(--primary-1); color: var(--white); }
+.btn-white    { background: var(--white); color: var(--primary-1); }
+.btn-outline  { background: transparent; border-color: var(--border); color: var(--primary-1); }
+.btn-outline:hover { background: var(--border); }
+.btn-coral    { background: var(--primary-5); color: var(--white); }
+.btn-cyan     { background: var(--primary-3); color: var(--primary-1); }
+.btn-faded    { background: var(--border); color: var(--primary-1); }
+
+/* ── Card demos ── */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.demo-card { border-radius: 20px; padding: 24px; border: 1px solid var(--border); }
+.demo-card__label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary-5); margin-bottom: 8px; }
+.demo-card__title { font-size: 18px; font-weight: 700; color: var(--primary-1); margin-bottom: 8px; line-height: 1.3; }
+.demo-card__body  { font-size: 14px; color: var(--text-color); line-height: 1.6; }
+.demo-card.white  { background: var(--white); }
+.demo-card.gray   { background: var(--gray);  border-color: transparent; }
+.demo-card.tint   { background: var(--primary-4); border-color: transparent; }
+.demo-card.green  { background: var(--primary-2); border-color: transparent; }
+.demo-card.navy   { background: var(--primary-1); border-color: transparent; }
+.demo-card.navy .demo-card__title,
+.demo-card.navy .demo-card__label,
+.demo-card.navy .demo-card__body { color: var(--white); }
+.demo-card.navy .demo-card__label { color: var(--primary-2); }
+
+/* ── Badges ── */
+.badge-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; border-radius: 9999px; padding: 4px 14px; line-height: 22px;
+}
+.badge-default { background: var(--gray);      color: var(--text-color); border: 1px solid var(--border); }
+.badge-green   { background: var(--primary-2);  color: var(--primary-1); }
+.badge-cyan    { background: var(--primary-3);  color: var(--primary-1); }
+.badge-navy    { background: var(--primary-1);  color: var(--white); }
+.badge-coral   { background: var(--primary-5);  color: var(--white); }
+.badge-outline { background: transparent; color: var(--primary-1); border: 2px solid var(--border); }
+
+/* ── Tags ── */
+.tag {
+  display: inline-flex; align-items: center; font-size: 13px; font-weight: 600;
+  color: var(--text-color); border: 2px solid var(--border); border-radius: 9999px;
+  padding: 6px 18px; background: transparent;
+}
+.tag.active { background: var(--primary-2); border-color: transparent; color: var(--primary-1); }
+
+/* ── Form ── */
+.form-demo { max-width: 420px; }
+.field-label { display: block; font-size: 14px; font-weight: 700; color: var(--primary-1); margin-bottom: 7px; }
+.field-input {
+  width: 100%; font-family: var(--font); font-size: 16px; color: var(--text-color);
+  background: var(--white); border: 1px solid rgba(41,51,92,0.2); border-radius: 6px;
+  padding: 14px 20px; outline: none; line-height: 28px; margin-bottom: 16px;
+}
+.field-input:focus { border-color: var(--primary-2); box-shadow: 0 0 0 3px rgba(161,236,131,0.25); }
+
+/* ── Spacing ruler ── */
+.spacing-grid { display: flex; flex-direction: column; gap: 10px; }
+.space-row { display: flex; align-items: center; gap: 16px; }
+.space-bar { background: var(--primary-2); border-radius: 4px; height: 20px; flex-shrink: 0; }
+.space-meta { font-size: 12px; font-family: monospace; color: var(--text-color); }
+
+/* ── Section bg demos ── */
+.bg-strip-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+.bg-strip { padding: 20px 16px; }
+.bg-strip__name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.bg-strip__var  { font-size: 10px; font-family: monospace; opacity: 0.6; }
+
+/* ── Misc ── */
+.note { font-size: 13px; color: var(--text-color); opacity: 0.6; margin-top: 8px; }
+
+</style>
+</head>
+<body>
+<div class="guide">
+
+  <!-- Header -->
+  <p class="guide-title">Brand System</p>
+  <h1 class="guide-name">EyeLevel</h1>
+  <p class="guide-sub">Visual reference for Replit builds. Extracted from the live Webflow CSS.</p>
+
+  <!-- ══ COLORS ══════════════════════════════════════════════ -->
+  <p class="section-title">Colors</p>
+  <div class="swatches">
+    <div class="swatch">
+      <div class="swatch__color" style="background:#29335c"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Navy</div>
+        <div class="swatch__hex">#29335c</div>
+        <div class="swatch__role">Headings · Links · Dark bg</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background:#a1ec83"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Lime Green</div>
+        <div class="swatch__hex">#a1ec83</div>
+        <div class="swatch__role">Primary CTA · Accents</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background:#f3663f"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Coral</div>
+        <div class="swatch__hex">#f3663f</div>
+        <div class="swatch__role">Labels · Highlights</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background:#c1e8ee"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Cyan</div>
+        <div class="swatch__hex">#c1e8ee</div>
+        <div class="swatch__role">Secondary accent</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background:#eff9fb"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Tint</div>
+        <div class="swatch__hex">#eff9fb</div>
+        <div class="swatch__role">Section backgrounds</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background:#40496b"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Body Text</div>
+        <div class="swatch__hex">#40496b</div>
+        <div class="swatch__role">Paragraphs · Labels</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background:#f2f4f5"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">Gray</div>
+        <div class="swatch__hex">#f2f4f5</div>
+        <div class="swatch__role">Alt section bg · Inputs</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch__color" style="background:#ffffff; border-bottom: 1px solid rgba(41,51,92,0.08)"></div>
+      <div class="swatch__info">
+        <div class="swatch__name">White</div>
+        <div class="swatch__hex">#ffffff</div>
+        <div class="swatch__role">Primary bg · Cards</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION BACKGROUNDS ════════════════════════════════ -->
+  <p class="section-title">Section Backgrounds</p>
+  <div class="bg-strip-grid">
+    <div class="bg-strip" style="background:#ffffff">
+      <div class="bg-strip__name" style="color:#29335c">White</div>
+      <div class="bg-strip__var" style="color:#40496b">Default</div>
+    </div>
+    <div class="bg-strip" style="background:#f2f4f5">
+      <div class="bg-strip__name" style="color:#29335c">Gray</div>
+      <div class="bg-strip__var" style="color:#40496b">bg-gray</div>
+    </div>
+    <div class="bg-strip" style="background:#eff9fb">
+      <div class="bg-strip__name" style="color:#29335c">Tint</div>
+      <div class="bg-strip__var" style="color:#40496b">bg-tint</div>
+    </div>
+    <div class="bg-strip" style="background:#a1ec83">
+      <div class="bg-strip__name" style="color:#29335c">Green</div>
+      <div class="bg-strip__var" style="color:#29335c">bg-green</div>
+    </div>
+    <div class="bg-strip" style="background:#c1e8ee">
+      <div class="bg-strip__name" style="color:#29335c">Cyan</div>
+      <div class="bg-strip__var" style="color:#29335c">bg-cyan</div>
+    </div>
+    <div class="bg-strip" style="background:#29335c">
+      <div class="bg-strip__name" style="color:#ffffff">Navy</div>
+      <div class="bg-strip__var" style="color:rgba(255,255,255,0.5)">bg-navy</div>
+    </div>
+  </div>
+
+  <!-- ══ TYPOGRAPHY ════════════════════════════════════════ -->
+  <p class="section-title">Typography — Inter</p>
+  <div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Display LG</div>
+        <div class="type-meta-spec">64px / 800</div>
+      </div>
+      <div class="type-specimen" style="font-size:48px; letter-spacing:-0.03em; line-height:1.05">GroundX</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Display MD</div>
+        <div class="type-meta-spec">54px / 700</div>
+      </div>
+      <div class="type-specimen" style="font-size:38px; letter-spacing:-0.02em">99% Accuracy</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">H1</div>
+        <div class="type-meta-spec">40px / 700 / -0.02em</div>
+      </div>
+      <div class="type-specimen" style="font-size:32px; letter-spacing:-0.02em">Enterprise Document AI</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">H2</div>
+        <div class="type-meta-spec">32px / 700 / -0.01em</div>
+      </div>
+      <div class="type-specimen" style="font-size:26px; letter-spacing:-0.01em">End to End Platform</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">H3</div>
+        <div class="type-meta-spec">28px / 700</div>
+      </div>
+      <div class="type-specimen" style="font-size:22px">GroundX for Transformation</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">H4</div>
+        <div class="type-meta-spec">24px / 700</div>
+      </div>
+      <div class="type-specimen" style="font-size:19px">Garbage In, Clean Data Out</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Body</div>
+        <div class="type-meta-spec">18px / 400 / lh 28px</div>
+      </div>
+      <div class="type-specimen" style="font-size:16px; font-weight:400; color:#40496b; line-height:1.6; max-width:500px">No brittle templates, no stale OCR, no hallucinations. GroundX transforms enterprise documents into enterprise data with 99% accuracy.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Small</div>
+        <div class="type-meta-spec">14px / 400 / lh 22px</div>
+      </div>
+      <div class="type-specimen" style="font-size:13px; font-weight:400; color:#40496b">Caption text, footnotes, metadata labels</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-name">Label / Eyebrow</div>
+        <div class="type-meta-spec">12px / 700 / 0.12em UC</div>
+      </div>
+      <div class="type-specimen" style="font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#f3663f">Section Label</div>
+    </div>
+  </div>
+
+  <!-- ══ BUTTONS ════════════════════════════════════════════ -->
+  <p class="section-title">Buttons</p>
+
+  <p class="btn-label">Primary — Green fill (default CTA)</p>
+  <div class="btn-grid">
+    <a class="btn btn-green btn-sm">Small</a>
+    <a class="btn btn-green btn-base">Default</a>
+    <a class="btn btn-green btn-lg">Large</a>
+  </div>
+
+  <p class="btn-label">Outline — secondary action</p>
+  <div class="btn-grid">
+    <a class="btn btn-outline btn-sm">Small</a>
+    <a class="btn btn-outline btn-base">Default</a>
+    <a class="btn btn-outline btn-lg">Large</a>
+  </div>
+
+  <p class="btn-label">Color variants</p>
+  <div class="btn-grid">
+    <a class="btn btn-navy btn-base">Navy</a>
+    <a class="btn btn-white btn-base" style="border:1px solid rgba(41,51,92,0.15)">White</a>
+    <a class="btn btn-coral btn-base">Coral</a>
+    <a class="btn btn-cyan btn-base">Cyan</a>
+    <a class="btn btn-faded btn-base">Faded</a>
+  </div>
+
+  <p class="note">All buttons use border-radius: 200px (pill shape). Hover applies inset shadow darkening.</p>
+
+  <!-- ══ CARDS ══════════════════════════════════════════════ -->
+  <p class="section-title">Cards</p>
+  <div class="card-grid">
+    <div class="demo-card white">
+      <div class="demo-card__label">White card</div>
+      <div class="demo-card__title">GroundX Extract</div>
+      <div class="demo-card__body">99% accurate, zero headaches. Default card style.</div>
+    </div>
+    <div class="demo-card gray">
+      <div class="demo-card__label">Gray card</div>
+      <div class="demo-card__title">GroundX Interact</div>
+      <div class="demo-card__body">Enterprise-grade RAG on gray background.</div>
+    </div>
+    <div class="demo-card tint">
+      <div class="demo-card__label">Tint card</div>
+      <div class="demo-card__title">GroundX Report</div>
+      <div class="demo-card__body">Deploy on your environment. Cyan tint bg.</div>
+    </div>
+    <div class="demo-card green">
+      <div class="demo-card__label">Green card</div>
+      <div class="demo-card__title">FraudX</div>
+      <div class="demo-card__body">Find insurance fraud 40× faster with AI.</div>
+    </div>
+    <div class="demo-card navy">
+      <div class="demo-card__label">Navy card</div>
+      <div class="demo-card__title">On-Premises</div>
+      <div class="demo-card__body">Air-gapped or cloud. Maximum security.</div>
+    </div>
+  </div>
+
+  <!-- ══ BADGES ═════════════════════════════════════════════ -->
+  <p class="section-title">Badges &amp; Tags</p>
+  <div class="badge-row" style="margin-bottom: 16px">
+    <span class="badge badge-default">Default</span>
+    <span class="badge badge-green">Lime Green</span>
+    <span class="badge badge-cyan">Cyan</span>
+    <span class="badge badge-navy">Navy</span>
+    <span class="badge badge-coral">Coral</span>
+    <span class="badge badge-outline">Outline</span>
+  </div>
+  <div class="badge-row">
+    <span class="tag">All</span>
+    <span class="tag active">Extract</span>
+    <span class="tag">Interact</span>
+    <span class="tag">Report</span>
+    <span class="tag">FraudX</span>
+  </div>
+  <p class="note" style="margin-top:10px">Tags use border: 2px solid border-dark. Active state fills with --primary-2.</p>
+
+  <!-- ══ FORMS ══════════════════════════════════════════════ -->
+  <p class="section-title">Form Elements</p>
+  <div class="form-demo">
+    <label class="field-label">API Key</label>
+    <input class="field-input" type="text" placeholder="gx-xxxxxxxxxxxxxxxx">
+    <label class="field-label">Bucket Name</label>
+    <input class="field-input" type="text" placeholder="my-groundx-bucket">
+    <label class="field-label">Query</label>
+    <textarea class="field-input" rows="3" placeholder="What documents do you want to search?"></textarea>
+    <a class="btn btn-green btn-base" style="margin-top:4px">Submit Query</a>
+  </div>
+  <p class="note">Focus ring: border-color #a1ec83 + box-shadow rgba(161,236,131,0.25). Input border: rgba(29,51,92,0.2).</p>
+
+  <!-- ══ SPACING ════════════════════════════════════════════ -->
+  <p class="section-title">Spacing Scale</p>
+  <div class="spacing-grid">
+    <div class="space-row"><div class="space-bar" style="width:7px"></div><span class="space-meta">7px — --space-2 · micro gaps</span></div>
+    <div class="space-row"><div class="space-bar" style="width:14px"></div><span class="space-meta">14px — --space-3 · tight pairs</span></div>
+    <div class="space-row"><div class="space-bar" style="width:20px"></div><span class="space-meta">20px — --space-4 · form fields</span></div>
+    <div class="space-row"><div class="space-bar" style="width:24px"></div><span class="space-meta">24px — --space-5 · card padding</span></div>
+    <div class="space-row"><div class="space-bar" style="width:28px"></div><span class="space-meta">28px — --space-6 · section padding-x · standard gap</span></div>
+    <div class="space-row"><div class="space-bar" style="width:36px"></div><span class="space-meta">36px — --space-8 · button large</span></div>
+    <div class="space-row"><div class="space-bar" style="width:56px"></div><span class="space-meta">56px — --space-10 · section header margin</span></div>
+    <div class="space-row"><div class="space-bar" style="width:84px"></div><span class="space-meta">84px — --space-12 · reduced section padding</span></div>
+    <div class="space-row"><div class="space-bar" style="width:112px"></div><span class="space-meta">112px — --space-16 · full section padding (top &amp; bottom)</span></div>
+  </div>
+
+  <!-- ══ BORDER RADIUS ══════════════════════════════════════ -->
+  <p class="section-title">Border Radius</p>
+  <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:flex-end">
+    <div style="text-align:center">
+      <div style="width:60px;height:60px;background:var(--primary-2);border-radius:4px;margin:0 auto 8px"></div>
+      <div style="font-size:11px;font-family:monospace;color:var(--text-color)">4px<br>sm · inputs</div>
+    </div>
+    <div style="text-align:center">
+      <div style="width:60px;height:60px;background:var(--primary-2);border-radius:6px;margin:0 auto 8px"></div>
+      <div style="font-size:11px;font-family:monospace;color:var(--text-color)">6px<br>md · forms</div>
+    </div>
+    <div style="text-align:center">
+      <div style="width:60px;height:60px;background:var(--primary-2);border-radius:12px;margin:0 auto 8px"></div>
+      <div style="font-size:11px;font-family:monospace;color:var(--text-color)">12px<br>lg · alerts</div>
+    </div>
+    <div style="text-align:center">
+      <div style="width:60px;height:60px;background:var(--primary-2);border-radius:20px;margin:0 auto 8px"></div>
+      <div style="font-size:11px;font-family:monospace;color:var(--text-color)">20px<br>xl · cards</div>
+    </div>
+    <div style="text-align:center">
+      <div style="width:120px;height:60px;background:var(--primary-2);border-radius:200px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--primary-1)">Button</div>
+      <div style="font-size:11px;font-family:monospace;color:var(--text-color)">200px<br>pill · ALL buttons</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Q&amp;A panel</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- Q&A panel layout. Use when you're directly answering a question — a
+         customer RFP, a panel response, an FAQ slide, an executive briefing
+         where the questions are known in advance.
+
+         Each cell carries a two-part eyebrow ("DIFFERENTIATION · CAPABILITIES")
+         separated by a U+00B7 middle dot, an italicized question, and a
+         bold answer body. The italics on the question are the only place
+         italics appear in the system — they mark the text as "a question
+         being quoted". Do not use italics elsewhere.
+
+         For three cells or fewer, swap `.qa-grid` for `.qa-grid--single`.
+         For richer panels with a stat sidebar, see the
+         `.qa-with-sidebar` variant in styles.css. -->
+    <div class="slide slide--navy slide--qa-panel">
+
+      <div class="slide-logo" role="img" aria-label="EyeLevel, a Valantor company"></div>
+      <div class="slide-number">10</div>
+
+      <div class="stack-24">
+        <div class="eyebrow">YOUR QUESTIONS · OUR RESPONSES</div>
+        <h2 class="headline-hero">Direct answers, point by point.</h2>
+      </div>
+
+      <div class="qa-grid">
+        <div class="qa-cell">
+          <div class="qa-cell__eyebrow">DIFFERENTIATION · CAPABILITIES</div>
+          <p class="qa-cell__question">
+            What can't be replicated with a standard RAG pipeline?
+          </p>
+          <p class="qa-cell__answer">
+            A vision model fine-tuned to identify graphics, tables, and
+            paragraphs; agentic processing of document elements coupled with
+            proprietary hybrid search; deployment in the highest-security
+            environments — including fully on-prem.
+          </p>
+        </div>
+        <div class="qa-cell">
+          <div class="qa-cell__eyebrow">SCOPE · FULL PIPELINE</div>
+          <p class="qa-cell__question">
+            Retrieval only, or a full RAG pipeline including generation?
+          </p>
+          <p class="qa-cell__answer">
+            Complete solution. Document understanding, retrieval with hybrid
+            search at million-page scale, and response generation — connect
+            any LLM, including self-hosted and air-gapped models.
+          </p>
+        </div>
+        <div class="qa-cell">
+          <div class="qa-cell__eyebrow">STRUCTURED DATA · CRITICAL</div>
+          <p class="qa-cell__question">
+            How are tables and charts represented after ingestion?
+          </p>
+          <p class="qa-cell__answer">
+            Both — structured (JSON) and unstructured (narrative) —
+            simultaneously. Dual representation improves search performance
+            and LLM completions, and can be customized to any output schema.
+          </p>
+        </div>
+        <div class="qa-cell">
+          <div class="qa-cell__eyebrow">RETRIEVAL MODEL · SEMANTIC OBJECTS</div>
+          <p class="qa-cell__question">
+            What exactly are you retrieving — text or structured objects?
+          </p>
+          <p class="qa-cell__answer">
+            Not text chunks. GroundX turns documents into structured,
+            LLM-ready representations and retrieves both semantic text and
+            the underlying structure — tables, images, sections, key-value
+            data — with relationships preserved.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

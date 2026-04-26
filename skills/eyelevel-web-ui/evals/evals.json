@@ -1,0 +1,166 @@
+{
+  "skill": "eyelevel-web-ui",
+  "depends_on": ["eyelevel-design-standards"],
+  "description": "Evals for the EyeLevel web UI skill. Each test prompt exercises a different surface area (page-level layout, modal/form, settings list). The rubric checks that the generated code follows the canonical tokens, wrappers, and corrections — not just that it compiles. The skill is expected to read ../eyelevel-design-standards/references/ for brand invariants.",
+  "tests": [
+    {
+      "id": "api-keys-screen",
+      "prompt": "Build an API Keys management page for the GroundX dashboard. It should show a list of the user's existing keys in a table (columns: Label, Key Prefix, Created, Last Used, Actions) with a '+ NEW KEY' pill button in the top-right of the section header. Each row has a copy-to-clipboard icon for the prefix and a delete icon. Include an empty state for when the user has no keys yet. Use the design system.",
+      "rubric": {
+        "must_use": [
+          "GxCard as the outer surface (not MUI Card or inline Box with border sx)",
+          "GxSectionHeader for the 'API KEYS' row with the + NEW KEY action on the right",
+          "CommonSubmitButton with startIcon={<AddIcon />} and borderRadius: BORDER_RADIUS_PILL for the pill CTA",
+          "Named constants from '@/constants' — CORAL, BORDER, BORDER_RADIUS_CARD, PADDING — no hex literals",
+          "MUI IconButton with aria-label for copy and delete actions",
+          "fontSize='small' on icons inside table rows",
+          "Responsive behavior via theme.breakpoints or sx responsive objects"
+        ],
+        "must_not_use": [
+          "Hardcoded hex colors anywhere in JSX or sx",
+          "@media (max-width: Xpx) strings",
+          "boxShadow on the card",
+          "MUI <Card> component",
+          "textTransform: 'uppercase' on button labels (rely on CommonSubmitButton default or write literal uppercase strings)",
+          "inline SVG for icons (import from @mui/icons-material)",
+          "fontSize: '16px' or numeric fontSize on icons"
+        ],
+        "bonus": [
+          "Empty state uses the pattern from examples/ExampleEmptyState.tsx",
+          "Row hover uses ROW_SELECTED_BG token",
+          "A11y: delete icon has an aria-label that includes the key's label"
+        ]
+      }
+    },
+    {
+      "id": "invite-teammate-modal",
+      "prompt": "Generate a modal dialog for inviting a teammate to the workspace. Fields: email (required, must be valid email), role (dropdown with Admin / Editor / Viewer), optional personal message (textarea). Footer has Cancel + Send Invite buttons. Use Formik + Yup. Match the EyeLevel design system.",
+      "rubric": {
+        "must_use": [
+          "MUI <Dialog> with PaperProps={{ sx: { borderRadius: BORDER_RADIUS_CARD } }}",
+          "DialogTitle with a close IconButton (aria-label='close') as shown in examples/ExampleFormModal.tsx",
+          "CommonTextField for email and message",
+          "CommonCancelButton + CommonSubmitButton (in that order) in DialogActions",
+          "Formik + Yup schema with email().required() and role oneOf validation",
+          "fullWidth maxWidth='sm' on the Dialog",
+          "Named tokens from '@/constants' only"
+        ],
+        "must_not_use": [
+          "MUI <Button> directly for Submit",
+          "Hex literals",
+          "Hardcoded borderRadius px values",
+          "Cancel button with any accent color (must be grey/text)",
+          "Two CommonSubmitButtons (Cancel must use CommonCancelButton)"
+        ],
+        "bonus": [
+          "Multiline TextField for the personal message",
+          "Role Select uses MUI <Select> with consistent styling",
+          "isSubmitting disables the submit button without extra styling"
+        ]
+      }
+    },
+    {
+      "id": "settings-billing-page",
+      "prompt": "Build a Billing & Plan settings page. Show: (1) current plan card with plan name, usage bars (pages ingested, queries this month) and an 'Upgrade to Premium' CTA; (2) a payment method section with the current card on file and an 'Update payment method' button; (3) an invoice history table with Date, Amount, Status (paid/failed/pending as pills), Download link. Use the design system.",
+      "rubric": {
+        "must_use": [
+          "GxUsageCard or a close analog for the plan usage section",
+          "gx-premium-button variant for the Upgrade CTA",
+          "GxPill with variant='success'|'warning'|'error' for invoice status",
+          "GxCard for each top-level section with Stack spacing={3} between them",
+          "GxSectionHeader for 'PAYMENT METHOD' and 'INVOICE HISTORY'",
+          "Responsive content padding: MAIN_CONTENT_PADDING at md+, smaller at xs",
+          "Icons from @mui/icons-material (DownloadIcon for invoice download)"
+        ],
+        "must_not_use": [
+          "Hex literals",
+          "MUI <Card>",
+          "Inline border: '1px solid #... ' in sx",
+          "A button styled into a status pill (use GxPill)",
+          "Elevation / boxShadow on any surface"
+        ],
+        "bonus": [
+          "Failed invoices use ERROR_RED via GxPill variant='error'",
+          "Download icon is a properly labeled IconButton in the table row",
+          "Empty state if no invoices yet"
+        ]
+      }
+    },
+    {
+      "id": "marketing-landing-page",
+      "prompt": "Build a public-facing marketing landing page for a brand-new EyeLevel product (no dashboard chrome). The page is a single React component composing four sections from top to bottom: (1) a header bar with the EyeLevel lockup on the left, three nav links (PRODUCT / DOCS / PRICING) in the center, and a 'BOOK A DEMO' CTA on the right; (2) a hero section on a navy canvas with a coral eyebrow 'NEW · FOR ENTERPRISES', an 800-weight white headline, a body sentence, and a primary CTA; (3) a feature grid section on a tint canvas with three GxCards in a row, each with a coral eyebrow + card heading + 2-sentence body; (4) a navy footer with the EyeLevel lockup (white variant), four columns of nav links under green eyebrow headings, and a copyright row. Use the design system. The page must be standalone — imports resolve to the project's own src/, never to groundx-ai-dashboard.",
+      "rubric": {
+        "must_use": [
+          "Composes four section components (HeaderBar, HeroSection, FeatureGrid, SiteFooter) — the public-page layout vocabulary from references/layout.md § Public-page layout",
+          "GxCard for each card-shaped surface (the three feature tiles)",
+          "CommonSubmitButton for the 'BOOK A DEMO' CTA",
+          "Two logo variants used per surface luminance — eyelevel-logo-color.png on the white header bar, eyelevel-logo-white.png on the navy footer (literal paths to ../eyelevel-design-standards/assets/logos/)",
+          "Eyebrow color swap per surface: coral on light surfaces (the feature-grid eyebrows), green on dark surfaces (the footer column eyebrows). Use surface-aware tokens or correct named colors from @/constants",
+          "Named tokens from '@/constants' only — NAVY, GREEN, CORAL, TINT, BORDER, BORDER_RADIUS_CARD, etc.",
+          "Sections are full-bleed with inner content constrained to a maxWidth (~1280–1440px) and centered horizontally",
+          "Responsive behavior — feature grid drops from repeat(3,1fr) to 1fr at xs via sx responsive object syntax",
+          "The 'NEW · FOR ENTERPRISES' eyebrow is written as a literal uppercase string with a U+00B7 middle dot — no textTransform"
+        ],
+        "must_not_use": [
+          "Any import from 'groundx-ai-dashboard' (the page must be standalone — imports resolve to the project's own src/)",
+          "Hex literals anywhere in JSX or sx",
+          "@media (max-width: Xpx) strings (use theme.breakpoints or sx responsive objects)",
+          "boxShadow on any surface (header, hero, cards, footer)",
+          "MUI <Card> (use GxCard)",
+          "MUI <Button> directly for the CTA (use CommonSubmitButton)",
+          "textTransform: 'uppercase' on any label (literal uppercase strings in JSX)",
+          "A photographic background on the hero (default to solid navy unless the prompt asks for imagery)",
+          "elevation prop on the AppBar / header"
+        ],
+        "bonus": [
+          "Header uses 1px BORDER hairline along the bottom edge (no shadow)",
+          "Hero CTA shows the coral-rest, green-on-hover convention via CommonSubmitButton without overriding it",
+          "Section components are factored to src/shared/components/ so they can drop into another project (HeroSection, FeatureGrid, SiteFooter) without rewrites",
+          "Voice register matches voice.md — no 'unleash', 'next-generation', 'cutting-edge', or unsupported superlatives in the headline / body"
+        ]
+      }
+    }
+  ],
+  "sanity_checks": {
+    "description": "Files that must exist for the skill and its dependency to render correctly.",
+    "required_files_this_skill": [
+      "SKILL.md",
+      "references/tokens.md",
+      "references/typography.md",
+      "references/layout.md",
+      "references/surfaces-and-cards.md",
+      "references/buttons.md",
+      "references/components.md",
+      "references/responsive.md",
+      "references/icons.md",
+      "references/corrections.md",
+      "templates/constants.ts",
+      "templates/theme.ts",
+      "templates/fonts.css",
+      "templates/ThemeProvider.tsx",
+      "templates/components/GxCard.tsx",
+      "templates/components/GxPill.tsx",
+      "templates/components/GxSectionHeader.tsx",
+      "templates/components/GxButtonGroup.tsx",
+      "templates/components/GxUsageCard.tsx",
+      "templates/components/CommonSubmitButton.tsx",
+      "templates/components/CommonCancelButton.tsx",
+      "templates/components/CommonTextField.tsx",
+      "examples/ExampleDashboardPage.tsx",
+      "examples/ExampleBucketDetailPage.tsx",
+      "examples/ExampleFormModal.tsx",
+      "examples/ExampleEmptyState.tsx"
+    ],
+    "required_files_standards_skill": [
+      "../eyelevel-design-standards/SKILL.md",
+      "../eyelevel-design-standards/references/brand-principles.md",
+      "../eyelevel-design-standards/references/colors.md",
+      "../eyelevel-design-standards/references/typography.md",
+      "../eyelevel-design-standards/references/logos.md",
+      "../eyelevel-design-standards/assets/logos/eyelevel-logo-white.png",
+      "../eyelevel-design-standards/assets/logos/eyelevel-logo-color.png",
+      "../eyelevel-design-standards/assets/fonts/README.md"
+    ]
+  },
+  "how_to_run": "For each test prompt, run the agent in a session with both skills enabled, save the generated code, then grep for forbidden patterns: (a) '#' followed by a hex character inside .tsx files, (b) '@media (max-width', (c) 'boxShadow', (d) 'fontSize: \"' on icons, (e) literal '<Card>' imports from '@mui/material'. Each hit fails a must_not_use criterion. Then inspect imports to confirm the must_use criteria. The sanity_checks can be automated with: for file in required_files; do test -f \"$SKILL_DIR/$file\"; done."
+}

@@ -1,0 +1,18 @@
+{
+  "name": "eyelevel-slides-deck",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "EyeLevel slide deck scaffold — HTML slides rendered to a single PDF via headless Chrome.",
+  "scripts": {
+    "dev": "serve --listen 4173 --no-port-switching .",
+    "build": "node build.mjs",
+    "preview": "serve --listen 4173 --no-port-switching ./out"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "puppeteer": "^23.0.0",
+    "serve": "^14.2.4",
+    "serve-handler": "^6.1.6"
+  }
+}

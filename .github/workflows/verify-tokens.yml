@@ -1,9 +1,9 @@
-# Verify that every mirror generated from groundx-design-standards/tokens.json is
+# Verify that every mirror generated from eyelevel-design-standards/tokens.json is
 # in sync with the source of truth. If someone edits tokens.json without re-running
 # the generator (or hand-edits a generated file), this job fails loudly.
 #
 # The verify script is pure Node with zero npm deps, so we skip `npm install`.
-# See skills/groundx-design-standards/scripts/verify-mirrors.mjs.
+# See skills/eyelevel-design-standards/scripts/verify-mirrors.mjs.
 name: Verify token mirrors
 
 on:
@@ -28,10 +28,10 @@ jobs:
       - name: Validate tokens.json is parseable
         run: >-
           node --input-type=module -e
-          "import('./skills/groundx-design-standards/tokens.json', { with: {
+          "import('./skills/eyelevel-design-standards/tokens.json', { with: {
           type: 'json' } }).then(() => console.log('tokens.json parses
           cleanly.'))"
 
       - name: Verify mirrors are in sync with tokens.json
-        working-directory: skills/groundx-design-standards
+        working-directory: skills/eyelevel-design-standards
         run: node scripts/verify-mirrors.mjs

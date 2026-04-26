@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Photo cover</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- Photo-cover layout. Imagery is opt-in: only use this template when
+         the user has asked for a photo-driven cover or section break (a
+         hero image, a customer photograph, a moody product shot). The
+         default cover (`01-cover.html`) renders solid navy and is the
+         right choice when no imagery is requested.
+
+         Provide your own image at /assets/images/<filename> and reference
+         it from `.photo-cover__image` below. The `.photo-cover__scrim`
+         applies a flat 72%-navy overlay so white headline text holds
+         contrast — do not switch this to a gradient (gradients are not
+         part of the brand language). Reserve photo-cover layouts for
+         cover / section-break / closing surfaces only; never use a photo
+         background on an interior content slide. -->
+    <div class="slide slide--photo-cover">
+
+      <!-- Replace the inline url() with your image path. -->
+      <div class="photo-cover__image" style="background-image: url('/assets/images/cover.jpg');"></div>
+      <div class="photo-cover__scrim"></div>
+
+      <div class="slide-logo" role="img" aria-label="EyeLevel, a Valantor company"></div>
+      <div class="slide-number">09</div>
+
+      <!-- Optional tri-corner header strip. Three slots: brand · context · partner.
+           Type the strings literally in uppercase — no text-transform. -->
+      <div class="photo-cover__strip">
+        <div>EYELEVEL.AI</div>
+        <div>CONFIDENTIAL</div>
+        <div>PARTNER NAME</div>
+      </div>
+
+      <div class="cover-main">
+        <h1 class="headline-cover">Your photo-cover headline.</h1>
+        <p class="subhead">
+          One or two sentences setting up the deck. The headline carries the
+          brand moment; the subhead names the audience and the stakes.
+        </p>
+      </div>
+
+      <!-- Optional bottom-stat trio. Mirror cover.html if you want this. -->
+      <div class="cover-stats">
+        <div class="stat-row stat-row--cycle">
+          <div class="stat">
+            <div class="stat-numeral">99%</div>
+            <div class="stat-label">ACCURACY</div>
+          </div>
+          <div class="stat">
+            <div class="stat-numeral">500B</div>
+            <div class="stat-label">TOKENS PROCESSED</div>
+          </div>
+          <div class="stat">
+            <div class="stat-numeral">IL6</div>
+            <div class="stat-label">DOD SECURITY CLEARANCE</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

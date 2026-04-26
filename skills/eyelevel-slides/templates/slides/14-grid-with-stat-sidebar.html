@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Grid with stat sidebar</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- Grid with stat sidebar. A 2×3 card grid (six concept cells) plus a
+         green-filled stat panel that anchors one corner of the slide.
+         The stat panel is the boldest move on the slide — a giant numeral
+         over a sub-grid of supporting metrics. Use when you have one
+         dominant proof number plus six supporting concepts that each need
+         a half-card of explanation. -->
+    <div class="slide slide--tint slide--grid-with-stat-sidebar">
+
+      <div class="slide-logo" role="img" aria-label="EyeLevel, a Valantor company"></div>
+      <div class="slide-number">14</div>
+
+      <div class="stack-24">
+        <div class="eyebrow">WHAT MAKES GROUNDX UNIQUE</div>
+        <h2 class="headline-hero">RAG built from first principles.</h2>
+      </div>
+
+      <div class="grid-with-sidebar">
+        <div class="grid-with-sidebar__main">
+          <div class="card">
+            <div class="eyebrow">DUAL-MODEL ARCHITECTURE</div>
+            <p class="body-sm">
+              A fine-tuned vision model (layout detection) paired with a VLM
+              (content translation) — the only RAG platform with a
+              fine-tunable VLM in production.
+            </p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">PROPRIETARY HYBRID SEARCH</div>
+            <p class="body-sm">
+              Outperforms pure vector retrieval at scale. Ranked #1 on the
+              DocBench RAG benchmark. Returns relevance scores with full
+              source provenance.
+            </p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">SEMANTIC OBJECTS, NOT TEXT CHUNKS</div>
+            <p class="body-sm">
+              Retrieves structured objects carrying rich metadata: keywords,
+              section summaries, JSON, narrative — aligned to meaning, not
+              token count.
+            </p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">AGENTIC CUSTOMIZATION</div>
+            <p class="body-sm">
+              GroundX Workflows let you define any output schema — fine-tune
+              extraction agents on your specific document types with up to
+              100 configurable parameters.
+            </p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">VISUAL INTELLIGENCE</div>
+            <p class="body-sm">
+              Tables, figures, and graphs are processed as both structured
+              JSON and narrative text — preserving the visual meaning for
+              downstream LLM use.
+            </p>
+          </div>
+          <div class="card">
+            <div class="eyebrow">ENTERPRISE-GRADE GOVERNANCE</div>
+            <p class="body-sm">
+              Element-level provenance traces every output back to the exact
+              document, page, and section. Audit-ready from day one —
+              version-aware, de-duplicated, stable.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-with-sidebar__sidebar">
+          <div class="grid-with-sidebar__stat">
+            <p class="stat-numeral">99%</p>
+            <p class="stat-label">
+              Industry-leading accuracy on complex, diverse documents
+            </p>
+            <div class="grid-with-sidebar__substats">
+              <div class="grid-with-sidebar__substat">
+                <p class="stat-numeral">#1</p>
+                <p class="stat-label">DOCBENCH RAG BENCHMARK</p>
+              </div>
+              <div class="grid-with-sidebar__substat">
+                <p class="stat-numeral">21</p>
+                <p class="stat-label">PATENTS IN AI &amp; SECURITY</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

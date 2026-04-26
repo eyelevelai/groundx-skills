@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Findings grid</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <!-- Findings grid. A 2×2 card grid where each cell uses an em-dash
+         divider between the eyebrow + headline pair on top and the body
+         sentence below. Use when reporting back what you found in a
+         document review, customer interview, or audit — and pairing the
+         findings with a commitment.
+
+         The em-dash is written literally in HTML as "—". Do not insert it
+         via CSS `content`. Do not use a horizontal rule (`<hr>`). The
+         standalone em-dash is a typographic device specific to this layout
+         — a quiet vertical pause inside each cell. -->
+    <div class="slide slide--tint slide--findings-grid">
+
+      <div class="slide-logo" role="img" aria-label="EyeLevel, a Valantor company"></div>
+      <div class="slide-number">12</div>
+
+      <div class="stack-24">
+        <div class="eyebrow">DOCUMENT REVIEW</div>
+        <h2 class="headline-hero">Exactly the kind of content that breaks general AI.</h2>
+        <p class="subhead">
+          We reviewed the documents you shared. They are excellent examples of
+          the complex visual elements that break general-purpose AI — and the
+          problem GroundX was built to solve.
+        </p>
+      </div>
+
+      <div class="findings-meta">
+        <div class="findings-meta__label">WHAT WE FOUND</div>
+        <div class="findings-meta__label">OUR COMMITMENT</div>
+      </div>
+
+      <div class="findings-grid">
+        <div class="findings-cell">
+          <h3 class="findings-cell__headline">Dense tables &amp; mixed layouts</h3>
+          <div class="findings-cell__rule">—</div>
+          <p class="findings-cell__body">
+            Multi-column structures with embedded tables that standard
+            parsers flatten into unreadable text.
+          </p>
+        </div>
+        <div class="findings-cell">
+          <h3 class="findings-cell__headline">Run GroundX against your real documents</h3>
+          <div class="findings-cell__rule">—</div>
+          <p class="findings-cell__body">
+            And measure the accuracy difference yourself. Two-week eval, no
+            commitment, $0 if the eval fails.
+          </p>
+        </div>
+        <div class="findings-cell">
+          <h3 class="findings-cell__headline">Visual elements with real meaning</h3>
+          <div class="findings-cell__rule">—</div>
+          <p class="findings-cell__body">
+            Charts, diagrams, and figures carry critical context that's
+            usually lost in OCR-only pipelines.
+          </p>
+        </div>
+        <div class="findings-cell">
+          <h3 class="findings-cell__headline">Heterogeneous formats &amp; versions</h3>
+          <div class="findings-cell__rule">—</div>
+          <p class="findings-cell__body">
+            Mixed PDF, Word, and slide content with inconsistent structure
+            across revisions — handled end-to-end.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>

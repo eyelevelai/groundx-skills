@@ -1,0 +1,1366 @@
+/* =============================================================
+   EyeLevel Slides — shared stylesheet
+
+   ALL design tokens live in the generated :root block below,
+   between the BEGIN/END GENERATED TOKENS markers. Class rules
+   below reference the tokens via var(--gx-*). Never hardcode a
+   color, font-size, radius, or asset path in a slide file — and
+   never hardcode one below :root either; every literal value
+   belongs in the generated block.
+
+   The canonical source of truth for these tokens is
+   ../../eyelevel-design-standards/tokens.json (machine-readable)
+   with a narrative mirror in
+   ../../eyelevel-design-standards/references/tokens.md. To change
+   a value: edit tokens.json (and the matching row in tokens.md),
+   then run the generator — see the BEGIN/END comments below.
+   Hand-edits inside the generated block will be overwritten on
+   the next run.
+   ============================================================= */
+
+/* Inter is the brand typeface across slides + dashboard + web UI. Chosen for
+   enterprise legibility at both 11px (chrome) and 288px (display-stat). The
+   brand weight ladder is 400 / 600 / 700 / 800 — weight 500 is "indecisive"
+   per brand rules, 900 is retired. OpenType stylistic sets (ss01, cv11, cv01)
+   are tuned globally on body. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+/* BEGIN GENERATED TOKENS — do not edit by hand. */
+/* Regenerate via: (cd eyelevel-design-standards && node scripts/generate-mirrors.mjs) */
+/* Source of truth: eyelevel-design-standards/tokens.json */
+:root {
+
+  /* ── Brand palette (tokens.md §1.1) ── */
+  --gx-navy:                       #29335c;
+  --gx-green:                      #a1ec83;
+  --gx-cyan:                       #c1e8ee;
+  --gx-tint:                       #eff9fb;
+  --gx-coral:                      #f3663f;
+  --gx-body-text:                  #40496b;
+  --gx-gray:                       #f2f4f5;
+  --gx-white:                      #ffffff;
+  --gx-border:                     rgba(41, 51, 92, 0.1);
+
+  /* ── Support palette (tokens.md §1.2) ── */
+  --gx-error-red:                  #f70d1a;
+  --gx-lighter-red:                #ff7f7f;
+  --gx-blue:                       #0b99ff;
+  --gx-dark-grey:                  #81879a;
+
+  /* ── Surface-aware color aliases (§1.3) ── */
+  --gx-eyebrow-on-light:           var(--gx-coral);
+  --gx-eyebrow-on-dark:            var(--gx-green);
+  --gx-body-on-light:              var(--gx-body-text);
+  --gx-body-on-dark:               rgba(255, 255, 255, 0.82);
+  --gx-muted-on-light:             rgba(64, 73, 107, 0.7);
+  --gx-muted-on-dark:              rgba(255, 255, 255, 0.65);
+
+  /* ── Typography — family & OpenType features ── */
+  --gx-font:                       "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --gx-font-features:              "ss01", "cv11", "cv01";
+
+  /* ── Typography — weight ladder (§2.2) ── */
+  --gx-weight-body:                400;
+  --gx-weight-label:               600;
+  --gx-weight-headline:            700;
+  --gx-weight-display:             800;
+
+  /* ── Typography — letter spacing ── */
+  --gx-track-label:                0.12em;
+  --gx-track-button:               0.04em;
+  --gx-track-chip:                 0.5px;
+  --gx-track-display-tight:        -0.01em;
+  --gx-track-heading-tight:        -0.005em;
+
+  /* ── Slide size scale (§3) ── */
+  --gx-size-chrome-sm:             0.75rem;
+  --gx-size-chrome-md:             0.875rem;
+  --gx-size-body-sm:               1.25rem;
+  --gx-size-body-card:             1.375rem;
+  --gx-size-body:                  1.5rem;
+  --gx-size-subhead-md:            1.75rem;
+  --gx-size-subhead-lg:            2rem;
+  --gx-size-subhead-xl:            2.75rem;
+  --gx-size-label:                 2rem;
+  --gx-size-headline-card:         2.25rem;
+  --gx-size-headline-split:        2.75rem;
+  --gx-size-headline-hero:         4rem;
+  --gx-size-headline-section:      5.5rem;
+  --gx-size-headline-cover:        5.5rem;
+  --gx-size-stat-numeral:          5.5rem;
+  --gx-size-stat-label:            1.375rem;
+  --gx-size-stat-numeral-display:  18rem;
+  --gx-size-stat-label-display:    2.5rem;
+  --gx-size-step-numeral:          4rem;
+  --gx-size-cta-sm:                1.125rem;
+  --gx-size-cta:                   1.375rem;
+  --gx-size-cta-lg:                1.75rem;
+
+  /* ── Radii (§5) ── */
+  --gx-radius-sm:                  4px;
+  --gx-radius-md:                  6px;
+  --gx-radius-lg:                  12px;
+  --gx-radius-card:                20px;
+  --gx-radius-pill:                200px;
+
+  /* ── Slide canvas (§6) ── */
+  --gx-slide-width:                1920px;
+  --gx-slide-height:               1080px;
+  --gx-slide-padding:              80px;
+  --gx-accent-bar-height:          8px;
+
+  /* ── Logo lockup (§7) ── */
+  --gx-logo-light:                 url("/assets/logos/eyelevel-logo-color.png");
+  --gx-logo-dark:                  url("/assets/logos/eyelevel-logo-white.png");
+  --gx-logo-width:                 220px;
+  --gx-logo-height:                72px;
+  --gx-logo-top:                   56px;
+  --gx-logo-left:                  80px;
+
+  /* ── CSS-only shorthands (composed from primitives above) ── */
+  /* Canonical hairline border. Use everywhere a 1px navy-at-10% edge is needed. */
+  --gx-border-hairline:            1px solid var(--gx-border);
+
+  /* Apply Inter OpenType features at the document root so children inherit. */
+  font-feature-settings: var(--gx-font-features);
+}
+/* END GENERATED TOKENS */
+
+/* ── Base reset ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--gx-white); }
+body {
+  font-family: var(--gx-font);
+  color: var(--gx-body-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: var(--gx-font-features);
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Slide container ──
+   Surface modifiers mirror the six canonical section backgrounds in the
+   design standards: white (default), gray, tint, cyan, green, navy. */
+.slide {
+  position: relative;
+  width: var(--gx-slide-width);
+  height: var(--gx-slide-height);
+  overflow: hidden;
+  padding: var(--gx-slide-padding);
+  background: var(--gx-white);
+  color: var(--gx-body-text);
+}
+.slide--gray  { background: var(--gx-gray); }
+.slide--tint  { background: var(--gx-tint); }
+.slide--cyan  { background: var(--gx-cyan); }
+.slide--green { background: var(--gx-green); }
+.slide--navy  { background: var(--gx-navy); color: var(--gx-white); }
+
+/*
+ * Layout marker classes.
+ * These are semantic hooks on the .slide container identifying which layout
+ * archetype the slide is using. They are intentionally empty — layout work
+ * happens via inner classes (.three-card-grid, .split, .steps, etc.) so the
+ * same content can be reflowed inside any .slide without touching the outer
+ * classes. Keep them as selectors so layout-specific rules have a home when
+ * they're needed.
+ */
+.slide--cover,
+.slide--cta,
+.slide--section-break,
+.slide--hero-with-stats,
+.slide--split,
+.slide--three-card-grid,
+.slide--numbered-steps,
+.slide--display-stat,
+.slide--detail-grid-with-sidebar,
+.slide--photo-cover,
+.slide--qa-panel,
+.slide--summary-built-for,
+.slide--findings-grid,
+.slide--numbered-solutions-anchor,
+.slide--grid-with-stat-sidebar { /* layout marker */ }
+
+/* ── Slide chrome: logo lockup + slide number ────────────────────────────
+   The brand lockup is a single PNG (EyeLevel wordmark + A VALANTOR COMPANY
+   baked in). Two files — one for dark surfaces (white lettering), one for
+   light surfaces (dark lettering + red Valantor tagline). Swap by ancestor
+   surface class; the aspect ratio is preserved via `contain`.
+
+   Fixed size across every slide — no `--sm` / `--lg` variants. The lockup
+   is already small relative to the headline tier (72px tall vs 64–88px
+   headlines) so it never competes for attention. */
+.slide-logo {
+  position: absolute;
+  top: var(--gx-logo-top);
+  left: var(--gx-logo-left);
+  width: var(--gx-logo-width);
+  height: var(--gx-logo-height);
+  background: var(--gx-logo-light) no-repeat left center / contain;
+}
+.slide--navy .slide-logo,
+.slide--green .slide-logo,
+.slide--coral .slide-logo {
+  background-image: var(--gx-logo-dark);
+}
+
+.slide-number {
+  position: absolute;
+  bottom: 48px;
+  right: var(--gx-slide-padding);
+  font-size: var(--gx-size-chrome-sm);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+  color: var(--gx-dark-grey);
+}
+.slide--navy .slide-number { color: rgba(255, 255, 255, 0.55); }
+
+/* ── Accent bar (thin brand gradient) ── */
+.accent-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--gx-accent-bar-height);
+  background: linear-gradient(
+    90deg,
+    var(--gx-green) 0%,
+    var(--gx-cyan) 50%,
+    var(--gx-coral) 100%
+  );
+}
+.accent-bar--top { top: 0; }
+.accent-bar--bottom { bottom: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   TYPE SYSTEM
+   A clean modular scale (~1.35× steps). One class per role.
+   Do NOT inline-override font-size, font-weight, or color in
+   slide HTML — if a new size is needed, add a class here first.
+
+   Weight ladder — kept deliberately narrow for a refined look:
+     400 — body, subhead
+     600 — eyebrows, labels, stat-labels (uppercase + tracked)
+     700 — all headlines (card → section)
+     800 — cover headline only (single "brand moment" per deck)
+
+   Spacing rhythm (4px base): 12 (eyebrow→headline) · 20 (headline→
+   body) · 24 (body→next). Gaps between major blocks are 48 / 72.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Label (unified section-label / eyebrow style) ──
+   Every uppercase "section label" on the slide uses this one size. Slide
+   eyebrows ("HOW IT WORKS"), card eyebrows ("SCALE", "SECURITY"), step
+   labels ("CONNECT"), day labels ("DAY 1-2"), and "PART TWO"-style
+   section-break eyebrows are all the same tier — they just change color by
+   surface. Unifying them kills the drift that used to scatter 14 / 16 / 22 /
+   32 across the deck.
+
+   Labels are written UPPERCASE in source HTML — see
+   eyelevel-design-standards/references/typography.md ALL-CAPS rule.
+   Do not `text-transform: uppercase` here.
+
+   Three color variants, picked by context:
+     • coral   — the default (.eyebrow on light, .detail-item__label)
+     • green   — on a navy slide (.slide--navy .eyebrow)
+     • navy    — inside an active-green card or on a light surface with green
+                 numerals (.step__label)
+   All three tiers share the same size / weight / tracking / line-height. */
+.eyebrow,
+.step__label,
+.detail-item .detail-item__label {
+  font-size: var(--gx-size-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+  line-height: 1.1;
+  margin: 0 0 24px 0;
+}
+
+/* Default label color on light surfaces. */
+.eyebrow,
+.detail-item .detail-item__label { color: var(--gx-eyebrow-on-light); }
+
+/* Step label sits on light OR navy; default to navy, flip on navy slides. */
+.step__label { color: var(--gx-navy); }
+
+/* Navy-slide color flip for every label tier. */
+.slide--navy .eyebrow,
+.slide--navy .step__label,
+.slide--navy .detail-item .detail-item__label { color: var(--gx-eyebrow-on-dark); }
+
+/* A white card nested on a navy slide is a light surface again — restore
+   coral label on the card even though the slide is navy. (Already handled
+   for .eyebrow below in the card-in-navy block, but we also restore
+   step__label and detail-item__label here for completeness.) */
+.slide--navy .card:not(.card--navy) .eyebrow,
+.slide--navy .card:not(.card--navy) .step__label,
+.slide--navy .card:not(.card--navy) .detail-item__label {
+  color: var(--gx-eyebrow-on-light);
+}
+/* A white card nested inside a navy slide is still a light surface —
+   eyebrow, headline, and body inside the card all stay light-surface
+   colors. Navy-slide color rules bleed through otherwise. */
+.slide--navy .card:not(.card--navy) .eyebrow      { color: var(--gx-eyebrow-on-light); }
+.slide--navy .card:not(.card--navy) .headline-card { color: var(--gx-navy); }
+.slide--navy .card:not(.card--navy) .body,
+.slide--navy .card:not(.card--navy) .body-sm       { color: var(--gx-body-on-light); }
+
+/* ── Headlines ── */
+
+/* Cover title matches the section-break headline at 88px. Keeping the cover
+   and section-break at the same size gives the two "brand-moment" layouts a
+   shared scale so a deck doesn't jump between 112px and 88px display sizes
+   across adjacent slides. The cover's weight (800) is what keeps it distinct
+   from section-break's 700 — hierarchy through weight, not size. */
+.headline-cover {
+  font-size: var(--gx-size-headline-cover);
+  font-weight: var(--gx-weight-display);
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  color: var(--gx-white);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.headline-section {
+  font-size: var(--gx-size-headline-section);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--gx-white);
+  margin: 0;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.headline-hero {
+  font-size: var(--gx-size-headline-hero);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--gx-navy);
+  margin: 0 0 24px 0;
+  text-wrap: balance;
+  /* No hard cap — let the headline stretch across the slide, balanced wrap
+     handles runt lines. Old 20ch cap forced weird early breaks and left
+     the right half of the slide empty. Layout-specific caps live on the
+     layout class (e.g., .slide--detail-grid-with-sidebar) where the column
+     is narrower than the full canvas. */
+  max-width: 32ch;
+}
+.slide--navy .headline-hero { color: var(--gx-white); }
+
+/* Split-column headlines — proportioned to read as peers across two
+   equal columns. Balanced wrapping so both columns break cleanly.
+   max-width at 18ch ≈ half of the 1920 canvas at 44px, which lets
+   each column's headline breathe across two lines instead of three. */
+.headline-split {
+  font-size: var(--gx-size-headline-split);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--gx-navy);
+  margin: 0 0 20px 0;
+  text-wrap: balance;
+  max-width: 18ch;
+}
+.slide--navy .headline-split { color: var(--gx-white); }
+
+/* Card-in-grid headline — fixed size since cards are fixed width. Lifted
+   to 36px so it clearly outranks the 32px label that sits above it. */
+.headline-card {
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--gx-navy);
+  margin: 0 0 16px 0;
+  text-wrap: balance;
+}
+.slide--navy .headline-card { color: var(--gx-white); }
+
+/* ── Body copy ── */
+.body {
+  font-size: var(--gx-size-body);
+  font-weight: var(--gx-weight-body);
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  margin: 0;
+  max-width: 38ch;
+}
+.slide--navy .body { color: var(--gx-body-on-dark); }
+
+.body-sm {
+  font-size: var(--gx-size-body-sm);
+  font-weight: var(--gx-weight-body);
+  line-height: 1.55;
+  color: var(--gx-body-on-light);
+  margin: 0;
+}
+.slide--navy .body-sm { color: var(--gx-body-on-dark); }
+
+/* Subhead / lead paragraph — sits under the dominant headline.
+   Measured max-width in ch keeps lines readable regardless of canvas. */
+.subhead {
+  font-size: var(--gx-size-body);
+  font-weight: var(--gx-weight-body);
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  max-width: 52ch;
+  margin: 0;
+}
+.slide--navy .subhead { color: var(--gx-body-on-dark); }
+
+/* Centered subhead variant (used under section-break headlines). */
+.subhead--center { text-align: center; max-width: 44ch; margin-left: auto; margin-right: auto; }
+
+/* ── Scoped subhead / body sizes by layout ──
+   The default body/subhead at 24px reads small next to the 88px section and
+   64px hero headlines. These layout-scoped overrides lift the lead paragraph
+   to roughly half its paired headline — consistent with the
+   "subhead ≈ half of headline" rhythm established on section-break and cover.
+
+   Scoping is on the outer `.slide--<layout>` class so the override applies
+   only where the typography is paired with the large headline; nested
+   `.card` bodies keep their own `.body-sm` sizing (see below). */
+.slide--section-break .subhead,
+.slide--section-break .subhead--center,
+.slide--cover .subhead {
+  font-size: var(--gx-size-subhead-xl);
+  line-height: 1.3;
+  max-width: 42ch;
+  font-weight: var(--gx-weight-body);
+}
+.slide--section-break .subhead--center {
+  max-width: 36ch;
+}
+
+.slide--hero-with-stats .subhead,
+.slide--hero-with-stats .body,
+.slide--cta .subhead,
+.slide--cta .body {
+  font-size: var(--gx-size-subhead-lg);
+  line-height: 1.4;
+  /* 62ch at 32px ≈ 1400px: subhead fills most of the slide width so the
+     right half doesn't sit empty. Kept below the 1760px content width so
+     lines still feel intentional rather than edge-bleeding. */
+  max-width: 62ch;
+}
+
+.slide--split .subhead,
+.slide--split .body {
+  font-size: var(--gx-size-subhead-md);
+  line-height: 1.4;
+  max-width: 28ch;
+}
+
+/* Card bodies inside a three-card grid share the unified "card-body" tier
+   (22px) with detail-item bodies. Cards are third-width; 22px keeps line
+   counts reasonable while staying bigger than the old 20px. */
+.slide--three-card-grid .card .body-sm {
+  font-size: var(--gx-size-body-card);
+  line-height: 1.5;
+}
+
+/* ── Display stat ── */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  line-height: 1;
+}
+.stat .stat-numeral {
+  font-size: var(--gx-size-stat-numeral);
+  font-weight: var(--gx-weight-display);
+  line-height: 1;
+  color: var(--gx-coral);
+  letter-spacing: -0.025em;
+}
+.slide--navy .stat .stat-numeral { color: var(--gx-green); }
+.stat .stat-label {
+  font-size: var(--gx-size-stat-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);     /* tracking eases slightly at larger size */
+  color: var(--gx-muted-on-light);
+}
+.slide--navy .stat .stat-label { color: rgba(255, 255, 255, 0.7); }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 64px;
+  align-items: end;
+}
+
+/* Three-up cycle: GREEN → CYAN → CORAL (see standards colors.md rule 6).
+   Contrast-gated: cycling only applies on navy surfaces. On light canvases
+   the cycle colors fail contrast — especially cyan on tint — so stats fall
+   through to the surface-primary accent (coral). */
+.slide--navy .stat-row--cycle > .stat:nth-child(3n+1) .stat-numeral,
+.slide--navy .stat--green .stat-numeral {
+  color: var(--gx-green);
+}
+.slide--navy .stat-row--cycle > .stat:nth-child(3n+2) .stat-numeral,
+.slide--navy .stat--cyan .stat-numeral {
+  color: var(--gx-cyan);
+}
+.slide--navy .stat-row--cycle > .stat:nth-child(3n) .stat-numeral,
+.slide--navy .stat--coral .stat-numeral {
+  color: var(--gx-coral);
+}
+
+/* Full-slide display stat */
+.display-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  height: 100%;
+  text-align: center;
+}
+.display-stat .stat-numeral {
+  font-size: var(--gx-size-stat-numeral-display);
+  font-weight: var(--gx-weight-display);
+  letter-spacing: -0.035em;
+  color: var(--gx-navy);
+}
+.slide--navy .display-stat .stat-numeral { color: var(--gx-green); }
+.display-stat .stat-label {
+  font-size: var(--gx-size-stat-label-display);
+  letter-spacing: 0.14em;
+  color: var(--gx-muted-on-light);
+  /* Wrap long labels onto two balanced lines so the label doesn't visually
+     dominate the shorter numeral. */
+  max-width: 22ch;
+  text-wrap: balance;
+  text-align: center;
+}
+.display-stat__note {
+  font-size: var(--gx-size-body);
+  line-height: 1.5;
+  color: var(--gx-muted-on-light);
+  margin-top: 24px;
+  max-width: 52ch;
+}
+.slide--navy .display-stat__note { color: var(--gx-muted-on-dark); }
+
+/* ── Card ──
+   Matches styleguide.html: 20px radius, 24px padding, 1px hairline border.
+   Slide cards use looser padding (40px) because slide canvases are larger;
+   the `.card--tight` modifier returns to the webflow 24px. */
+.card {
+  background: var(--gx-white);
+  border: var(--gx-border-hairline);
+  border-radius: var(--gx-radius-card);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.card--tight { padding: 24px; }
+.card--gray  { background: var(--gx-gray); border-color: transparent; }
+.card--tint  { background: var(--gx-tint); border-color: transparent; }
+.card--green { background: var(--gx-green); border-color: transparent; color: var(--gx-navy); }
+.card--green .headline-card,
+.card--green .body-sm { color: var(--gx-navy); }
+/* Optional navy-tinted card for navy-on-navy layouts — a subtle tinted
+   fill with a hairline border so cards sit against the slide without
+   introducing a second surface color. Headline copy stays white. */
+.card--navy {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--gx-white);
+}
+.card--navy .headline-card,
+.card--navy .body-sm { color: var(--gx-white); }
+.card--navy .body-sm { color: rgba(255, 255, 255, 0.8); }
+
+/* ── Three-card grid ── */
+.three-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* Cycling eyebrows across three cards (see standards colors.md rule 6).
+   Only use this with .card--navy children — cyan on white is low-contrast.
+   Opt in by combining .three-card-grid--cycle on the grid AND .card--navy on each card. */
+.three-card-grid--cycle > .card--navy:nth-child(3n+1) .eyebrow { color: var(--gx-green); }
+.three-card-grid--cycle > .card--navy:nth-child(3n+2) .eyebrow { color: var(--gx-cyan); }
+.three-card-grid--cycle > .card--navy:nth-child(3n)   .eyebrow { color: var(--gx-coral); }
+
+/* ── Split problem/solution ──
+   Columns share a baseline: both start at the same y and flow top-down,
+   so eyebrows line up regardless of headline wrap. The whole split block
+   is vertically centered on the slide via the absolute-positioned wrapper
+   (use `.split` inside `.slide-centerblock`, or wrap with `.split-wrap`).
+*/
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;          /* lock both columns to the same top baseline */
+}
+.split--divider > *:first-child {
+  border-right: var(--gx-border-hairline);
+  padding-right: 80px;
+}
+.split__column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;                      /* spacing handled by type-scale margins */
+}
+
+/* Vertical-centering wrapper for a split block.
+   Absolutely positioned between chrome boundaries so content reads centered
+   without relying on `height: 100%` games inside the grid. */
+.split-wrap {
+  position: absolute;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 40px 0;             /* never bump the chrome if content grows */
+}
+
+/* ── Numbered steps ──
+   Horizontal 3-up by default: a row of steps fills the slide width so the
+   right half of the canvas stops looking empty. The numeral sits above each
+   label/body column — the vertical "1 / CONNECT / body" rhythm reads cleanly
+   at a glance. Use `.steps--stack` for 4-5 steps or copy-heavy bodies where
+   the vertical form reads better. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 64px;
+  align-items: start;
+}
+.steps--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+.steps--stack .step {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: start;
+}
+.step__numeral {
+  font-size: var(--gx-size-step-numeral);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--gx-coral);
+}
+.slide--navy .step__numeral { color: var(--gx-green); }
+
+/* Three-up cycle for numbered steps (navy-only; see standards colors.md rule 6).
+   On light canvases the cycle fails contrast — steps fall through to
+   .step__numeral's default (coral). Four or five steps never cycle. */
+.slide--navy .steps--cycle > .step:nth-child(3n+1) .step__numeral,
+.slide--navy .step--green .step__numeral {
+  color: var(--gx-green);
+}
+.slide--navy .steps--cycle > .step:nth-child(3n+2) .step__numeral,
+.slide--navy .step--cyan .step__numeral {
+  color: var(--gx-cyan);
+}
+.slide--navy .steps--cycle > .step:nth-child(3n) .step__numeral,
+.slide--navy .step--coral .step__numeral {
+  color: var(--gx-coral);
+}
+/* .step__label size / weight / color handled by the unified label block
+   near the top of this file; it shares the 32px section-label tier. */
+.step__body {
+  font-size: var(--gx-size-body);
+  font-weight: var(--gx-weight-body);
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  margin: 0;
+  max-width: 32ch;
+}
+.steps--stack .step__body {
+  font-size: var(--gx-size-subhead-md);  /* 28 — paired with 64px numerals in stacked form */
+  max-width: 48ch;
+}
+.slide--navy .step__body { color: var(--gx-body-on-dark); }
+
+/* ── Detail grid with sidebar ── */
+.detail-grid-sidebar {
+  display: grid;
+  grid-template-columns: 62% 38%;     /* give the main column a bit more breathing room
+                                         so "A working integration, not a slide." wraps clean */
+  gap: 0;
+  height: 100%;
+}
+.detail-grid-sidebar__main {
+  padding-right: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+/* Main-column headline inside the detail-grid-sidebar layout lives in a
+   ~1120px column. Let it stretch wider than the default 32ch cap so the
+   headline reads as one intentional line instead of three runt lines.
+   Covers both heading-class variants that might appear in the main column. */
+.slide--detail-grid-with-sidebar .detail-grid-sidebar__main .headline-hero,
+.slide--detail-grid-with-sidebar .detail-grid-sidebar__main .headline-split {
+  max-width: none;
+}
+.detail-grid-sidebar__sidebar {
+  background: var(--gx-navy);
+  color: var(--gx-white);
+  border-radius: var(--gx-radius-card);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  justify-content: center;
+}
+/* Sidebar stats share the standard 3-up rhythm: 88px numeral / 22px label.
+   The 1:4 numeral-to-label ratio is the canonical "metric" style and is
+   applied everywhere a numeral + label pair appears. */
+.detail-grid-sidebar__sidebar .stat .stat-numeral {
+  color: var(--gx-green);
+  font-size: var(--gx-size-stat-numeral);
+  font-weight: var(--gx-weight-display);
+  letter-spacing: -0.025em;
+}
+.detail-grid-sidebar__sidebar .stat .stat-label {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: var(--gx-size-stat-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+}
+
+.detail-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 48px;
+}
+/* .detail-item__label size / weight / color handled by the unified label
+   block near the top of this file. Headline and body follow the unified
+   card tier (36 / 22). */
+.detail-item .detail-item__headline {
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--gx-navy);
+  margin: 0 0 12px 0;
+}
+.detail-item .detail-item__body {
+  font-size: var(--gx-size-body-card);
+  font-weight: var(--gx-weight-body);
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  margin: 0;
+}
+
+/* ── Pill ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: var(--gx-radius-pill);
+  font-size: var(--gx-size-chrome-sm);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  background: var(--gx-gray);
+  color: var(--gx-navy);
+}
+.pill--success { background: var(--gx-green);       color: var(--gx-navy); }
+.pill--cyan    { background: var(--gx-cyan);        color: var(--gx-navy); }
+.pill--navy    { background: var(--gx-navy);        color: var(--gx-white); }
+.pill--coral   { background: var(--gx-coral);       color: var(--gx-white); }
+.pill--error   { background: var(--gx-error-red);   color: var(--gx-white); }
+.pill--warning { background: var(--gx-lighter-red); color: var(--gx-white); }
+.pill--outline { background: transparent; border: 2px solid var(--gx-border); color: var(--gx-navy); }
+
+.pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ── CTA buttons ──
+   Mirrors the button system in styleguide.html: pill shape (200px radius),
+   600-weight, 14–20px text. Primary CTA is GREEN (navy text); Coral is a
+   secondary highlight variant. Outline is transparent with a hairline.
+   Hover state applies an inset darkening shadow rather than changing bg. */
+/* Buttons sit one tier below the unified label size — 22px / 600. A slide
+   button is a call to action, not a section headline; it should be readable
+   from 10 feet but never outshout the hero copy next to it. Padding scales
+   with the type; `.cta--sm` and `.cta--lg` follow the same ladder. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  font-family: var(--gx-font);
+  font-size: var(--gx-size-cta);
+  font-weight: var(--gx-weight-label);
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  border-radius: var(--gx-radius-pill);
+  border: 2px solid transparent;
+  background: var(--gx-green);
+  color: var(--gx-navy);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.cta--sm      { font-size: var(--gx-size-cta-sm); line-height: 1.2;  padding: 10px 24px; }
+.cta--lg      { font-size: var(--gx-size-cta-lg); line-height: 1.2;  padding: 20px 44px; }
+.cta--navy    { background: var(--gx-navy);  color: var(--gx-white); }
+.cta--white   { background: var(--gx-white); color: var(--gx-navy); border-color: var(--gx-border); }
+.cta--coral   { background: var(--gx-coral); color: var(--gx-white); }
+.cta--cyan    { background: var(--gx-cyan);  color: var(--gx-navy); }
+.cta--outline {
+  background: transparent;
+  border-color: var(--gx-border);
+  color: var(--gx-navy);
+}
+/* On a navy slide, the outline CTA inverts — transparent with white border. */
+.slide--navy .cta--outline {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--gx-white);
+}
+
+/* ── Layout helpers ── */
+.stack       { display: flex; flex-direction: column; }
+.stack-16    { display: flex; flex-direction: column; gap: 16px; }
+.stack-24    { display: flex; flex-direction: column; gap: 24px; }
+.stack-32    { display: flex; flex-direction: column; gap: 32px; }
+.stack-48    { display: flex; flex-direction: column; gap: 48px; }
+
+.hero-block  { display: flex; flex-direction: column; gap: 24px; max-width: 1400px; }
+
+/* Center-aligned (vertical) content block used on CTA and
+   similarly-composed one-block slides. Avoids inline position styles. */
+.slide-centerblock {
+  position: absolute;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* CTA button row — pair of buttons, left-aligned, breathing room above. */
+.cta-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.cover-main  {
+  position: absolute;
+  left: var(--gx-slide-padding);
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 1500px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.cover-context {
+  position: absolute;
+  top: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
+  font-size: var(--gx-size-chrome-md);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: 0.14em;
+  color: var(--gx-green);
+}
+.cover-stats {
+  position: absolute;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
+  bottom: 120px;
+}
+
+.section-break-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 200px;
+  text-align: center;
+}
+
+/* ── Layout content positioning ──
+   Each layout's primary content stack sits at a layout-specific top offset
+   and (where applicable) max-width. These rules let slide HTML stay free of
+   inline `style="margin-top:…; max-width:…"` attributes — every positioning
+   value lives in styles.css, every color/font/radius/canvas-dimension lives
+   in the generated `:root` block. Slide HTML carries layout class names
+   only.
+
+   Offsets here are in raw px — they're class-rule positioning, not brand
+   values, and the existing class rules above use the same convention
+   (gap: 24px on .stack-24, padding: 48px on the navy sidebar, etc.). New
+   brand-level values continue to flow through tokens.json. */
+
+/* Hero with stats: the lead block sits in the upper third; the stat-row
+   pins to the lower edge so the headline and stat trio share a visual axis. */
+.slide--hero-with-stats .hero-block { margin-top: 200px; }
+.slide--hero-with-stats > .stat-row {
+  position: absolute;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
+  bottom: 160px;
+}
+
+/* Three-card grid: lead-in stack, then the card row beneath. */
+.slide--three-card-grid > .stack-24       { margin-top: 120px; max-width: 1400px; }
+.slide--three-card-grid > .three-card-grid { margin-top: 72px; }
+
+/* Numbered steps: lead-in stack, steps follow. */
+.slide--numbered-steps > .stack-24 { margin-top: 96px; max-width: 1400px; }
+.slide--numbered-steps > .steps    { margin-top: 48px; }
+
+/* Detail grid with sidebar: the grid spans the slide minus the chrome zones
+   (logo + slide number reserve roughly 200px of vertical space combined). */
+.slide--detail-grid-with-sidebar > .detail-grid-sidebar {
+  margin-top: 120px;
+  height: calc(100% - 200px);
+}
+
+/* Q&A panel: lead-in stack, then the grid. */
+.slide--qa-panel > .stack-24 { margin-top: 96px; max-width: 1400px; }
+.slide--qa-panel > .qa-grid  { margin-top: 64px; }
+
+/* Summary "Built for X": lead-in stack, then the three-card row. */
+.slide--summary-built-for > .stack-24          { margin-top: 96px; max-width: 1500px; }
+.slide--summary-built-for > .summary-built-for { margin-top: 64px; }
+
+/* Findings grid: lead-in stack, then the meta-headers row above the grid. */
+.slide--findings-grid > .stack-24      { margin-top: 96px; max-width: 1500px; }
+.slide--findings-grid > .findings-meta { margin-top: 56px; }
+
+/* Numbered solutions, anchored: lead-in stack, then the column grid + anchor row. */
+.slide--numbered-solutions-anchor > .stack-24        { margin-top: 96px; max-width: 1500px; }
+.slide--numbered-solutions-anchor > .numbered-anchor { margin-top: 64px; }
+
+/* Grid with stat sidebar: lead-in stack, then the 6-card grid + stat panel. */
+.slide--grid-with-stat-sidebar > .stack-24          { margin-top: 96px; max-width: 1500px; }
+.slide--grid-with-stat-sidebar > .grid-with-sidebar { margin-top: 56px; height: 720px; }
+
+/* ─────────────────────────────────────────────────────────────
+   PHOTO COVER (`photo-cover`)
+
+   Imagery is opt-in. The default cover is `.slide--cover` (solid navy);
+   reach for `.slide--photo-cover` only when the user has asked for a
+   photo-driven cover or section break — a hero image, a customer
+   photograph, a moody product shot. Reserve this layout for cover /
+   section-break / closing surfaces; never use a photographic background
+   on an interior content slide (see brand-principles.md rule 1).
+
+   Structure:
+   - `.photo-cover__image` is an absolutely-positioned background image
+     filling the slide (cover-fit). Provide it inline via
+     `style="background-image: url(...);"` on the inline element OR set
+     a custom property on the slide root.
+   - `.photo-cover__scrim` darkens the photo so white headline text holds
+     contrast — a flat navy-tint overlay, not a gradient (gradients are
+     not part of the brand language; see brand-principles.md rule 1).
+   - `.photo-cover__strip` is the optional tri-corner header band
+     ("eyelevel.ai · confidential · partner") at the top edge.
+   - `.photo-cover__main` and `.photo-cover__stats` reuse the cover
+     positioning helpers above. ───────────────────────────────────── */
+.slide--photo-cover {
+  background: var(--gx-navy);   /* fallback if image fails */
+  color: var(--gx-white);
+  overflow: hidden;
+}
+.photo-cover__image {
+  position: absolute;
+  inset: 0;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.photo-cover__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(41, 51, 92, 0.72);   /* navy at 72% — darken for legibility */
+}
+.photo-cover__strip {
+  position: absolute;
+  top: 56px;
+  left: var(--gx-slide-padding);
+  right: var(--gx-slide-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--gx-size-chrome-md);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+  color: rgba(255, 255, 255, 0.85);
+  z-index: 2;
+}
+.photo-cover__strip > * { flex: 1; }
+.photo-cover__strip > *:nth-child(2) { text-align: center; }
+.photo-cover__strip > *:nth-child(3) { text-align: right; }
+
+/* Photo-cover content sits above the scrim. */
+.slide--photo-cover .cover-main,
+.slide--photo-cover .cover-stats,
+.slide--photo-cover .slide-logo,
+.slide--photo-cover .slide-number,
+.slide--photo-cover .accent-bar {
+  z-index: 2;
+}
+
+/* On a photo cover the logo and slide number always use the dark-surface
+   variants — even though the surface technically isn't a `.slide--navy`. */
+.slide--photo-cover .slide-logo {
+  background-image: var(--gx-logo-dark);
+}
+.slide--photo-cover .slide-number {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Q&A PANEL (`qa-panel`)
+
+   Used on slides where you're directly answering a question — a customer
+   RFP, a panel response, an FAQ slide. Two-part eyebrows separated by a
+   middle dot ("DIFFERENTIATION · CAPABILITIES") sit above an italicized
+   question and a bold answer body. Four cells fit comfortably on a single
+   slide as a 2×2 grid; three or fewer can use a single column.
+
+   The italicized question is the only place italics appear in the system.
+   It marks "this is a question being quoted, not a claim being made". Do
+   not use italics elsewhere in slides.
+   ───────────────────────────────────────────────────────────── */
+.qa-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px 80px;
+}
+.qa-grid--single { grid-template-columns: 1fr; gap: 48px; }
+.qa-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.qa-cell__eyebrow {
+  font-size: var(--gx-size-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+  line-height: 1.1;
+  color: var(--gx-eyebrow-on-dark);
+  margin: 0;
+}
+/* Light-surface variant. */
+.slide:not(.slide--navy) .qa-cell__eyebrow { color: var(--gx-eyebrow-on-light); }
+/* The middle dot is rendered as plain content inside the eyebrow string —
+   "DIFFERENTIATION · CAPABILITIES" — so it survives translation and copy
+   without a CSS hook. The dot character is U+00B7 (middle dot). */
+.qa-cell__question {
+  font-size: var(--gx-size-subhead-md);
+  font-style: italic;
+  font-weight: var(--gx-weight-body);
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+.slide:not(.slide--navy) .qa-cell__question { color: var(--gx-muted-on-light); }
+.qa-cell__answer {
+  font-size: var(--gx-size-body-card);
+  font-weight: var(--gx-weight-label);
+  line-height: 1.5;
+  color: var(--gx-white);
+  margin: 0;
+  max-width: 44ch;
+}
+.slide:not(.slide--navy) .qa-cell__answer { color: var(--gx-navy); }
+
+/* Optional sidebar variant: 65% Q&A grid + 35% navy stat panel.
+   Shape mirrors `.detail-grid-sidebar` but tuned for Q&A content. */
+.qa-with-sidebar {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  gap: 0;
+  height: 100%;
+}
+.qa-with-sidebar__main {
+  padding-right: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.qa-with-sidebar__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  padding-left: 56px;
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SUMMARY BUILT-FOR (`summary-built-for`)
+
+   Three-card closing slide. Each card uses the "BUILT FOR <X>" eyebrow
+   pattern — a rhetorical scaffold that turns a feature list into three
+   parallel commitments. Two light cards on either side, a navy card in
+   the middle (or vice-versa) so the row reads as 2 + 1, not 3 of the
+   same thing. The middle card carries the strongest claim.
+   ───────────────────────────────────────────────────────────── */
+.summary-built-for {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  align-items: stretch;
+}
+.summary-built-for .card {
+  gap: 20px;            /* tighter rhythm than default 16 since copy is short */
+  justify-content: flex-start;
+}
+.summary-built-for .card .eyebrow {
+  margin-bottom: 4px;   /* the eyebrow is the lead — pull headline closer */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FINDINGS GRID (`findings-grid`)
+
+   2×2 card grid where each cell uses an em-dash divider between the
+   eyebrow + headline pair on top and the body sentence below.
+   Optional meta-headers ("WHAT WE FOUND" / "OUR COMMITMENT") sit above
+   the grid block, marking the grid's rhetorical role.
+   ───────────────────────────────────────────────────────────── */
+.findings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px 64px;
+}
+.findings-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.findings-cell__headline {
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--gx-navy);
+  margin: 0;
+}
+.slide--navy .findings-cell__headline { color: var(--gx-white); }
+/* Em-dash divider — written literally in HTML as `<div class="findings-cell__rule">—</div>`
+   so it survives translation and shows up in plain-text exports. The CSS
+   styles its size and color, never inserts it via `content`. */
+.findings-cell__rule {
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-body);
+  line-height: 1;
+  color: var(--gx-eyebrow-on-light);
+  margin: 4px 0;
+  user-select: none;
+}
+.slide--navy .findings-cell__rule { color: var(--gx-eyebrow-on-dark); }
+.findings-cell__body {
+  font-size: var(--gx-size-body-card);
+  font-weight: var(--gx-weight-body);
+  line-height: 1.5;
+  color: var(--gx-body-on-light);
+  margin: 0;
+  max-width: 38ch;
+}
+.slide--navy .findings-cell__body { color: var(--gx-body-on-dark); }
+
+/* Meta-headers — section labels above the grid that mark its role. They
+   share the unified label tier (size/weight) so they sit naturally next
+   to the eyebrow inside each cell. */
+.findings-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-bottom: 16px;
+}
+.findings-meta__label {
+  font-size: var(--gx-size-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+  color: var(--gx-eyebrow-on-light);
+  margin: 0;
+}
+.slide--navy .findings-meta__label { color: var(--gx-eyebrow-on-dark); }
+
+/* ─────────────────────────────────────────────────────────────
+   NUMBERED SOLUTIONS ANCHOR (`numbered-solutions-anchor`)
+
+   Three numbered columns ("01 — PURPOSE-BUILT", "02 — UNIQUE INGESTION",
+   "03 — INTEGRATED SEARCH") stacked above a full-width fourth row that
+   anchors the slide ("Built for On-Prem"). The numeral and the column
+   label are written together as a single string with an em-dash — the
+   shape "01 — PURPOSE-BUILT" is the brand pattern; do not split into two
+   visual elements. The same pattern shows up in marketing surfaces.
+
+   On navy slides the numerals + dashes are green; on light, navy.
+   ───────────────────────────────────────────────────────────── */
+.numbered-anchor {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.numbered-anchor__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px;
+}
+.numbered-anchor__column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.numbered-anchor__index {
+  font-size: var(--gx-size-label);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+  line-height: 1.1;
+  color: var(--gx-eyebrow-on-dark);
+  margin: 0;
+}
+.slide:not(.slide--navy) .numbered-anchor__index { color: var(--gx-navy); }
+.numbered-anchor__headline {
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-headline);
+  line-height: 1.2;
+  color: var(--gx-white);
+  margin: 0;
+}
+.slide:not(.slide--navy) .numbered-anchor__headline { color: var(--gx-navy); }
+.numbered-anchor__body {
+  font-size: var(--gx-size-body-card);
+  font-weight: var(--gx-weight-body);
+  line-height: 1.5;
+  color: var(--gx-body-on-dark);
+  margin: 0;
+  max-width: 36ch;
+}
+.slide:not(.slide--navy) .numbered-anchor__body { color: var(--gx-body-on-light); }
+
+/* The anchor row — full-width single column, separated from the three
+   columns above by a hairline divider. Reuses the same column class so
+   typography stays consistent. */
+.numbered-anchor__anchor {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 56px;
+  align-items: start;
+}
+.slide:not(.slide--navy) .numbered-anchor__anchor {
+  border-top-color: var(--gx-border);
+}
+.numbered-anchor__anchor .numbered-anchor__body { max-width: 70ch; }
+
+/* ─────────────────────────────────────────────────────────────
+   GRID WITH STAT SIDEBAR (`grid-with-stat-sidebar`)
+
+   2×3 card grid (six cells) plus a green-filled stat panel that anchors
+   one corner of the slide. The stat panel is the boldest move on the
+   slide — a giant numeral over a sub-grid of supporting metrics. Use
+   when you have one dominant proof number plus six supporting concepts
+   that each need a half-card of explanation.
+
+   Layout: main grid takes ~62%, stat panel takes ~38%. Stat panel is a
+   `.card--green` with internal stats — uses the standard `.stat` block
+   for the giant numeral so the stat-numeral / stat-label types stay
+   token-driven.
+   ───────────────────────────────────────────────────────────── */
+.grid-with-sidebar {
+  display: grid;
+  grid-template-columns: 62% 38%;
+  gap: 32px;
+  height: 100%;
+}
+.grid-with-sidebar__main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 24px;
+}
+.grid-with-sidebar__main .card {
+  padding: 32px;
+  gap: 12px;
+}
+.grid-with-sidebar__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+/* The dominant stat panel — green fill, navy text. The numeral inside
+   uses the display-stat scale so it lands as the largest type on the
+   slide. */
+.grid-with-sidebar__stat {
+  background: var(--gx-green);
+  color: var(--gx-navy);
+  border-radius: var(--gx-radius-card);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  justify-content: center;
+}
+.grid-with-sidebar__stat .stat-numeral {
+  font-size: var(--gx-size-stat-numeral-display);
+  font-weight: var(--gx-weight-display);
+  line-height: 0.95;
+  letter-spacing: -0.035em;
+  color: var(--gx-navy);
+  margin: 0;
+}
+.grid-with-sidebar__stat .stat-label {
+  font-size: var(--gx-size-body-card);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  color: var(--gx-navy);
+  max-width: 24ch;
+  margin: 0;
+}
+/* Sub-grid of secondary metrics inside the stat panel — small numerals,
+   tight rows, same green-on-navy palette. */
+.grid-with-sidebar__substats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 32px;
+  border-top: 1px solid rgba(41, 51, 92, 0.18);
+  padding-top: 24px;
+  margin-top: 8px;
+}
+.grid-with-sidebar__substat .stat-numeral {
+  font-size: var(--gx-size-headline-card);
+  font-weight: var(--gx-weight-display);
+  letter-spacing: -0.01em;
+  color: var(--gx-navy);
+  line-height: 1;
+  margin: 0 0 4px 0;
+}
+.grid-with-sidebar__substat .stat-label {
+  font-size: var(--gx-size-chrome-md);
+  font-weight: var(--gx-weight-label);
+  letter-spacing: var(--gx-track-label);
+  color: var(--gx-navy);
+  opacity: 0.8;
+  margin: 0;
+}
