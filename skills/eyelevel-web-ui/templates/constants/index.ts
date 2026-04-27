@@ -1,9 +1,10 @@
 /**
  * EyeLevel web-UI constants barrel.
  *
- * This file preserves the `import { NAVY, PADDING, ... } from "./constants"`
- * call-site convention shared across every EyeLevel-styled web project. It
- * re-exports two concerns from two files:
+ * Once this folder lives at `src/constants/` in the consuming project, every
+ * call site imports from a single namespace: `import { NAVY, PADDING, ... }
+ * from "@/constants"` (the alias) or `from "../../constants"` (the relative
+ * form components use). This barrel re-exports two concerns from two files:
  *
  *   constants.generated.ts  — brand tokens, auto-generated from
  *                             ../../eyelevel-design-standards/tokens.json.

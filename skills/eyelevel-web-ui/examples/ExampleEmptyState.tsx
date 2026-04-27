@@ -10,7 +10,7 @@ import { Box, Link, Stack, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { ReactNode, useState } from "react";
 
-import GxCard from "../templates/components/GxCard";
+import GxCard from "../templates/shared/components/GxCard";
 import {
   BORDER,
   CORAL,
@@ -57,7 +57,7 @@ export function ExampleEmptyState({
       }}
     >
       <Stack alignItems="center" spacing={1} sx={{ py: 3 }}>
-        <CloudUploadIcon sx={{ color: CORAL, fontSize: 32 }} />
+        <CloudUploadIcon fontSize="large" sx={{ color: CORAL }} />
         <Typography sx={{ color: NAVY, fontWeight: FONT_WEIGHT_LABEL }}>{label}</Typography>
         {footer ?? (
           <Box sx={{ color: NAVY, fontSize: FONT_SIZE_BODY_SM }}>

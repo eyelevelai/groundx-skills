@@ -1,26 +1,31 @@
 /**
- * GxButtonGroup — the "RETRIEVALS | CHAT" segmented button.
+ * GxButtonGroup — segmented control for 2–3 mutually navigational actions.
  *
  * Navy 1px outline, white background, inner buttons share a vertical divider,
- * and each button flips to coral on hover. The current dashboard defines this
- * inline inside Home/Buckets.tsx as a `CustomButtonGroup`; this is the
- * canonical, reusable version.
+ * and each inner button flips to GREEN on hover (the brand's hover-go-state)
+ * with navy text. Used wherever a small set of related navigations sits next
+ * to each other — `RETRIEVALS | CHAT` toggles on a dashboard card,
+ * `MONTHLY | YEARLY` switches on a pricing tile, `OVERVIEW | ACTIVITY` tabs
+ * on a detail surface.
+ *
+ * For 4+ actions, stack `CommonSubmitButton`s in a Stack instead — a
+ * segmented group with too many segments stops being readable.
  */
 
 import { ButtonGroup, ButtonGroupProps, styled } from "@mui/material";
 
 import {
-  BORDER_RADIUS_2X,
-  CORAL,
+  BORDER_RADIUS_PILL,
   FONT_WEIGHT_LABEL,
+  GREEN,
   LETTER_SPACING_CHIP,
   NAVY,
   WHITE,
-} from "../constants";
+} from "../../constants";
 
 export const GxButtonGroup = styled(ButtonGroup)<ButtonGroupProps>(() => ({
   border: `1px solid ${NAVY}`,
-  borderRadius: BORDER_RADIUS_2X,
+  borderRadius: BORDER_RADIUS_PILL,
   background: WHITE,
   boxShadow: "none",
   overflow: "hidden",
@@ -40,9 +45,12 @@ export const GxButtonGroup = styled(ButtonGroup)<ButtonGroupProps>(() => ({
       borderRight: `1px solid ${NAVY}`,
     },
 
+    // Inner-button hover lifts to GREEN (the brand's hover-go-state) with
+    // navy text, matching CommonSubmitButton's coral-rest → green-hover
+    // convention. See buttons.md.
     "&:hover": {
-      backgroundColor: CORAL,
-      color: WHITE,
+      backgroundColor: GREEN,
+      color: NAVY,
     },
   },
 }));

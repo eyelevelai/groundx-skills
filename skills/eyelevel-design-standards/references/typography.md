@@ -101,7 +101,7 @@ Tracking values for labels are captured in `tokens.md` as `--gx-track-label` (0.
 
 ## Medium-specific implementation
 
-- **`eyelevel-web-ui`** — `@import` from Google Fonts in `templates/fonts.css`. `FONT_FAMILY` and `FONT_FEATURE_SETTINGS` live in the auto-generated `templates/constants.generated.ts` (re-exported via the `constants.ts` barrel), sourced from `tokens.json` § typography. The MUI theme's typography variants consume the web size ladder from the same generated file (`FONT_SIZE_H1`–`H6`, `FONT_SIZE_BODY`, etc.).
+- **`eyelevel-web-ui`** — `@import` from Google Fonts in `templates/fonts.css`. `FONT_FAMILY` and `FONT_FEATURE_SETTINGS` live in the auto-generated `templates/constants/constants.generated.ts` (re-exported via the `constants.ts` barrel), sourced from `tokens.json` § typography. The MUI theme's typography variants consume the web size ladder from the same generated file (`FONT_SIZE_H1`–`H6`, `FONT_SIZE_BODY`, etc.).
 - **`eyelevel-slides`** — same Google Fonts `@import` in `templates/styles.css`. The `:root` block is auto-generated from `tokens.json` and contains every `--gx-size-*`, `--gx-weight-*`, `--gx-font`, and `--gx-font-features` declaration; every class rule below the generated block references them by name. The build script (`build.mjs`) primes weights 400 / 600 / 700 / 800 before rendering each slide to PDF so headlines don't ship in the system fallback.
 - **Email / print** — use the system fallback. Inter is widely pre-installed on modern systems; for print production, download the weights from fonts.google.com or rsms.me/inter and embed in the PDF.
 

@@ -107,6 +107,6 @@ The theme sets per-variant line-heights from the `LINE_HEIGHT_*` ladder in `cons
 
 - `../../eyelevel-design-standards/references/tokens.md` § 2, § 4 — canonical size / weight / letter-spacing / line-height values.
 - `../../eyelevel-design-standards/references/typography.md` — brand-level type rules and hierarchy.
-- `templates/constants.ts` — the barrel that re-exports `constants.generated.ts` (auto-generated brand tokens) and `constants.chrome.ts` (project-specific chrome — the dashboard's holds drawerWidth + nav icon colors; a marketing site's may hold different values or be empty). Components import every named constant from `@/constants`.
+- `templates/constants/index.ts` — the barrel that re-exports `constants.generated.ts` (auto-generated brand tokens) and `constants.chrome.ts` (project-specific chrome — the dashboard's holds drawerWidth + nav icon colors; a marketing site's may hold different values or be empty). Components import every named constant from `@/constants`.
 - `templates/fonts.css` — the actual `@font-face` declarations.
 - `templates/theme.ts` — where the MUI variants wire the constants into the theme.

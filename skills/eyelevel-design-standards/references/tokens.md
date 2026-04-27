@@ -1,6 +1,6 @@
 # Tokens — canonical reference
 
-Every color, font, size, radius, spacing unit, canvas dimension, and logo filename the brand uses is defined **once**. This file is the human-readable reference — it explains each token's role, its name across mediums, and why it exists. The machine-readable source of truth is the sibling file `tokens.json` (DTCG-flavored); a codegen script reads `tokens.json` and writes the medium-specific mirrors (`eyelevel-web-ui/templates/constants.generated.ts` and the `:root` block of `eyelevel-slides/templates/styles.css`). Medium-specific skills never *redeclare* a value — they consume the generated mirrors.
+Every color, font, size, radius, spacing unit, canvas dimension, and logo filename the brand uses is defined **once**. This file is the human-readable reference — it explains each token's role, its name across mediums, and why it exists. The machine-readable source of truth is the sibling file `tokens.json` (DTCG-flavored); a codegen script reads `tokens.json` and writes the medium-specific mirrors (`eyelevel-web-ui/templates/constants/constants.generated.ts` and the `:root` block of `eyelevel-slides/templates/styles.css`). Medium-specific skills never *redeclare* a value — they consume the generated mirrors.
 
 **Two files, one source of truth:**
 
@@ -212,7 +212,7 @@ Five values. Everything the UI or slide needs sits on one of them.
 | --- | --- | --- | --- |
 | `--gx-radius-sm` | `BORDER_RADIUS_SM` | `4px` | Tight inner shapes — hairline divider wraps, inline chips. |
 | `--gx-radius-md` / `--gx-radius-input` | `BORDER_RADIUS` | `6px` | Inner / nested surfaces, inputs. |
-| `--gx-radius-lg` | `BORDER_RADIUS_2X` | `12px` | Dropdown menus, toast, form field containers. |
+| `--gx-radius-lg` | `BORDER_RADIUS_2X` | `12px` | Dropdown menus, toast, medium-surface containers. |
 | `--gx-radius-card` | `BORDER_RADIUS_CARD` | `20px` | Top-level cards, accordions. The default unless a reason not to. |
 | `--gx-radius-pill` | `BORDER_RADIUS_PILL` | `200px` | Buttons, pills, tags, segmented button ends. Full-pill shape. |
 
@@ -291,7 +291,7 @@ The web-ui consumes brand tokens via two files under `templates/`:
 - `constants.generated.ts` — auto-generated from `tokens.json`. Contains every brand-level named `const` matching the "Web TS const" column of each table (NAVY, GREEN, FONT_WEIGHT_*, FONT_SIZE_*, BORDER_RADIUS_*, LETTER_SPACING_*, LINE_HEIGHT_*, PADDING, etc.). Never edit by hand — re-run the generator instead.
 - `constants.chrome.ts` — project-specific chrome tokens that are *not* brand palette. The dashboard's version holds `drawerWidth`, `NAV_ICON_GREY`, `DISABLED_GREY`, `ROW_SELECTED_BG`, `WARNING_AMBER`, the premium-button gradient. A different project (a marketing site, internal tool, demo) holds different values, or none — each project owns its own chrome file.
 
-`templates/constants.ts` is a thin barrel: `export * from "./constants.generated"; export * from "./constants.chrome";` so `import { NAVY } from "./constants"` keeps working everywhere.
+`templates/constants/index.ts` is a thin barrel: `export * from "./constants.generated"; export * from "./constants.chrome";` so `import { NAVY } from "./constants"` keeps working everywhere.
 
 `templates/fonts.css` declares the font family + feature settings at the `body` level. The MUI theme maps `primary.main = GREEN`, `text.primary = NAVY`, `text.secondary = BODY_TEXT`, breakpoints per section 4's breakpoint table (in tokens but spec'd further in the web-ui skill), radii per section 5.
 
@@ -309,7 +309,7 @@ Same pattern: inline the hex values for email (CSS variables aren't universally 
 
 1. Edit the value in `tokens.json` (machine-readable source).
 2. Edit the matching row in the table above in `tokens.md` so the narrative stays in sync.
-3. Run the codegen: `cd skills/eyelevel-design-standards && node scripts/generate-mirrors.mjs`. This overwrites `eyelevel-web-ui/templates/constants.generated.ts` and re-splices the `:root` block of `eyelevel-slides/templates/styles.css`.
+3. Run the codegen: `cd skills/eyelevel-design-standards && node scripts/generate-mirrors.mjs`. This overwrites `eyelevel-web-ui/templates/constants/constants.generated.ts` and re-splices the `:root` block of `eyelevel-slides/templates/styles.css`.
 4. Commit the three changed files together — `tokens.json`, `tokens.md`, and the regenerated mirrors.
 5. Run `eyelevel-slides` build (`cd templates && npm run build`) to verify the deck still looks right.
 6. If the value appears in a prose explanation in `colors.md` / `typography.md` / `typography-slides.md`, update the cited example there too. The prose in those files is allowed to *reference* the number — but the authoritative table lives here.

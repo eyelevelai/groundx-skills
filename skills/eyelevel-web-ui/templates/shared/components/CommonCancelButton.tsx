@@ -1,16 +1,14 @@
 /**
  * CommonCancelButton — secondary/cancel action counterpart to CommonSubmitButton.
  *
- * Text-style button in dark grey that lifts to green on hover. Always pairs
- * with CommonSubmitButton in modal footers.
+ * Text-style button in dark grey that lifts to green-on-navy on hover. Always
+ * pairs with CommonSubmitButton in a modal footer (Cancel + Save), never used
+ * standalone. For a standalone secondary button, use `<Button variant="outlined">`
+ * with the navy/coral colors documented in `references/buttons.md`.
  *
- * Corrections applied vs. the original:
- *   - Hover text color is now NAVY (was WHITE, which was low-contrast on
- *     the green hover background).
- *   - borderRadius reads from BORDER_RADIUS_PILL (the retired BORDER_RADIUS_4X
- *     alias is no longer used — standalone pill CTAs are now fully rounded).
- *   - The invisible 1px white border is retained intentionally — it reserves
- *     the hit target size so the button doesn't reflow on hover state changes.
+ * The invisible 1px white border is intentional — it reserves the hit target
+ * size so the button doesn't reflow when the hover state changes the
+ * background fill.
  */
 
 import Button, { ButtonProps } from "@mui/material/Button";

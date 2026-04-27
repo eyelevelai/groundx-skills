@@ -12,25 +12,17 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  IconButton,
   Stack,
-  Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
-import CommonCancelButton from "../templates/components/CommonCancelButton";
-import CommonSubmitButton from "../templates/components/CommonSubmitButton";
-import CommonTextField from "../templates/components/CommonTextField";
+import CommonCancelButton from "../templates/shared/components/CommonCancelButton";
+import CommonSubmitButton from "../templates/shared/components/CommonSubmitButton";
+import CommonTextField from "../templates/shared/components/CommonTextField";
+import DialogTitle from "../templates/shared/components/DialogTitle";
 
-import {
-  BORDER_RADIUS_CARD,
-  FONT_SIZE_H5,
-  FONT_WEIGHT_LABEL,
-  NAVY,
-} from "../templates/constants";
+import { BORDER_RADIUS_CARD } from "../templates/constants";
 
 interface ExampleFormModalProps {
   open: boolean;
@@ -52,14 +44,7 @@ export function ExampleFormModal({ open, onClose, onSubmit }: ExampleFormModalPr
       maxWidth="sm"
       PaperProps={{ sx: { borderRadius: BORDER_RADIUS_CARD } }}
     >
-      <DialogTitle sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Typography sx={{ color: NAVY, fontWeight: FONT_WEIGHT_LABEL, fontSize: FONT_SIZE_H5 }}>
-          Invite team member
-        </Typography>
-        <IconButton onClick={onClose} aria-label="close" size="small">
-          <CloseIcon fontSize="small" />
-        </IconButton>
-      </DialogTitle>
+      <DialogTitle onClose={onClose}>Invite team member</DialogTitle>
 
       <Formik
         initialValues={{ name: "", email: "" }}

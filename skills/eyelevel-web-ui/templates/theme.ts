@@ -89,8 +89,10 @@ declare module "@mui/material/Button" {
 
 const theme = createTheme({
   // ────────────────────────────────────────────────────────────────────────
-  // Breakpoints — `md` is bumped from MUI's default 900 → 1100 to match the
-  // point at which the dashboard sidebar collapses.
+  // Breakpoints — `md` is bumped from MUI's default 900 → 1100. This is the
+  // brand-wide desktop threshold; every EyeLevel project uses the same
+  // breakpoints so components are mutually portable. (The bump originated
+  // where an app shell collapses its sidebar, but it applies brand-wide.)
   // ────────────────────────────────────────────────────────────────────────
   breakpoints: {
     values: {
@@ -152,7 +154,7 @@ const theme = createTheme({
       letterSpacing: LETTER_SPACING_DISPLAY_TIGHT,
       color: NAVY,
     },
-    // Page heading — the title of a dashboard route (e.g. "Buckets").
+    // Page heading — top-level title of a route or page section.
     h2: {
       fontSize: FONT_SIZE_H2,
       fontWeight: FONT_WEIGHT_HEADLINE,
@@ -188,7 +190,7 @@ const theme = createTheme({
       lineHeight: LINE_HEIGHT_CARD_SUBHEAD,
       color: NAVY,
     },
-    // Body — the default reading size for the dashboard.
+    // Body — the default reading size for the project.
     body1: {
       fontSize: FONT_SIZE_BODY,
       fontWeight: FONT_WEIGHT_BODY,
@@ -270,7 +272,9 @@ const theme = createTheme({
       },
     },
 
-    // Tables — match the subtle border treatment used in SelectedBucketTable.
+    // Tables — every row uses the same hairline BORDER (10% navy), so a
+    // table inside a GxCard reads as one continuous surface, not a stack of
+    // boxed rows.
     MuiTableCell: {
       styleOverrides: {
         root: {

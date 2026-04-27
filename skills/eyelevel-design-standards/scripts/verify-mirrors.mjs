@@ -6,7 +6,7 @@
  * disk. Instead, it compares what the generator would produce against what is
  * currently committed in:
  *
- *   ../../eyelevel-web-ui/templates/constants.generated.ts
+ *   ../../eyelevel-web-ui/templates/constants/constants.generated.ts
  *   ../../eyelevel-slides/templates/styles.css  (only the :root block between
  *                                                BEGIN GENERATED TOKENS /
  *                                                END GENERATED TOKENS markers)

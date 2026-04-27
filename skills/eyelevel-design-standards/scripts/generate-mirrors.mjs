@@ -3,7 +3,7 @@
  * generate-mirrors.mjs — single source of truth → runtime mirrors.
  *
  * Reads ../tokens.json and emits:
- *   - ../../eyelevel-web-ui/templates/constants.generated.ts
+ *   - ../../eyelevel-web-ui/templates/constants/constants.generated.ts
  *     (brand-token exports for React/MUI consumers)
  *   - Replaces the :root block in ../../eyelevel-slides/templates/styles.css
  *     (bounded by BEGIN GENERATED TOKENS / END GENERATED TOKENS markers)
@@ -11,6 +11,23 @@
  * The TS file is always fully regenerated. The CSS file is edited in place:
  * only the block between the markers is replaced so hand-written layout rules
  * stay untouched.
+ *
+ * Adding a new consumer (e.g., a future eyelevel-docs / eyelevel-social /
+ * eyelevel-email skill that needs a programmatic mirror of the brand tokens):
+ *   1. Decide the output format the new medium consumes (CSS vars? a JSON
+ *      file for the python-docx generator? inline-style snippets for email?).
+ *   2. Add an OUTPUT_PATH constant for the new file (next to TS_OUT_PATH /
+ *      CSS_OUT_PATH below).
+ *   3. Write a render function (e.g., renderDocxStyles, renderEmailInline)
+ *      that walks `leaves` (the flattened token tree built below) and emits
+ *      the target format. Reuse `tokenPathToTsConst` / `tokenPathToCssVar` as
+ *      patterns; add a new path-to-name helper if the medium uses different
+ *      naming (e.g., XML element names for DOCX).
+ *   4. Wire the new render into the CLI write block at the bottom and into
+ *      the exports for verify-mirrors.mjs to diff-check.
+ *
+ * The walk and resolveRef helpers are medium-agnostic — they only depend on
+ * tokens.json's DTCG shape — so the pattern repeats cleanly per consumer.
  *
  * Run: node scripts/generate-mirrors.mjs (from the eyelevel-design-standards dir)
  */
@@ -24,7 +41,7 @@ const STANDARDS_DIR = resolve(HERE, "..");
 const SKILLS_DIR = resolve(STANDARDS_DIR, "..");
 
 const TOKENS_PATH  = resolve(STANDARDS_DIR, "tokens.json");
-const TS_OUT_PATH  = resolve(SKILLS_DIR, "eyelevel-web-ui/templates/constants.generated.ts");
+const TS_OUT_PATH  = resolve(SKILLS_DIR, "eyelevel-web-ui/templates/constants/constants.generated.ts");
 const CSS_OUT_PATH = resolve(SKILLS_DIR, "eyelevel-slides/templates/styles.css");
 
 const tokens = JSON.parse(readFileSync(TOKENS_PATH, "utf8"));

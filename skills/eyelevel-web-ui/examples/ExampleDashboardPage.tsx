@@ -28,15 +28,14 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-import CommonSubmitButton from "../templates/components/CommonSubmitButton";
-import GxButtonGroup from "../templates/components/GxButtonGroup";
-import GxCard from "../templates/components/GxCard";
-import GxSectionHeader from "../templates/components/GxSectionHeader";
+import CommonSubmitButton from "../templates/shared/components/CommonSubmitButton";
+import GxButtonGroup from "../templates/shared/components/GxButtonGroup";
+import GxCard from "../templates/shared/components/GxCard";
+import GxSectionHeader from "../templates/shared/components/GxSectionHeader";
 
 import {
   BORDER,
   BORDER_RADIUS_CARD,
-  BORDER_RADIUS_PILL,
   CORAL,
   FONT_WEIGHT_LABEL,
   LETTER_SPACING_CHIP,
@@ -152,10 +151,7 @@ function ContentSection({ buckets }: { buckets: Bucket[] }) {
         <GxSectionHeader
           label="CONTENT"
           action={
-            <CommonSubmitButton
-              startIcon={<AddIcon />}
-              sx={{ borderRadius: BORDER_RADIUS_PILL, px: 2.5 }}
-            >
+            <CommonSubmitButton startIcon={<AddIcon />} sx={{ px: 2.5 }}>
               New Bucket
             </CommonSubmitButton>
           }
@@ -240,7 +236,7 @@ function BucketRow({ bucket }: { bucket: Bucket }) {
         <Typography sx={{ color: NAVY, fontWeight: FONT_WEIGHT_LABEL }}>
           Drag files here
         </Typography>
-        <CloudUploadIcon sx={{ color: CORAL, fontSize: 28 }} />
+        <CloudUploadIcon fontSize="large" sx={{ color: CORAL }} />
       </Box>
     </Stack>
   );

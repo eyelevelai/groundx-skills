@@ -11,8 +11,8 @@ Decks at EyeLevel are built as a set of 16:9 HTML pages, styled with the same de
 
 ## Why HTML → PDF, not .pptx
 
-- **One typography system across mediums.** Inter renders from the same Google Fonts source as the dashboard; no font-embedding gymnastics.
-- **Pixel-consistent palette.** The CSS custom properties in `styles.css` `:root` are auto-generated from `../eyelevel-design-standards/tokens.json` (the machine-readable source of truth), the same file the dashboard's `constants.generated.ts` is generated from — no drift between mediums.
+- **One typography system across mediums.** Inter renders from the same Google Fonts source as the web UI; no font-embedding gymnastics.
+- **Pixel-consistent palette.** The CSS custom properties in `styles.css` `:root` are auto-generated from `../eyelevel-design-standards/tokens.json` (the machine-readable source of truth), the same file the web UI's `constants.generated.ts` is generated from — no drift between mediums.
 - **Editable by developers, reviewable by designers.** HTML diffs cleanly in a PR; .pptx binary diffs do not.
 - **No PowerPoint-specific rendering quirks.** No surprise drop shadows, no "smart" text auto-scaling, no chart styling drift.
 
@@ -22,7 +22,7 @@ The trade-off: the final artifact is a **flat PDF**, not an editable .pptx. User
 
 Every slide is a **1920 × 1080** HTML page (16:9, 1×). Puppeteer prints each page at that exact viewport and the resulting PDF has the same dimensions. The CSS uses absolute pixel values tuned to this canvas; a slide built for this canvas will not render correctly at 1280×720 without re-tuning, and that's deliberate — slides are a fixed-format medium.
 
-Rem is set so `1rem = 16px` on the slide, matching the dashboard's root. All type sizes in `references/typography-slides.md` are expressed in rem so they stay consistent with web conventions.
+Rem is set so `1rem = 16px` on the slide, matching the web UI's root. All type sizes in `references/typography-slides.md` are expressed in rem so they stay consistent with web conventions.
 
 ## Working with patterns and recipes
 
@@ -115,7 +115,7 @@ The checks split into two groups. **Brand invariants** must pass — failing one
 
 ### Brand invariants (must pass)
 
-1. **All values come from tokens.** No hex literal, no raw px/rem size, no raw font-weight numeral, no raw logo URL, and no raw canvas dimension (1920/1080/80px) in HTML or in `styles.css` *outside* the generated `:root` block. Every such value is emitted once into the `/* BEGIN GENERATED TOKENS */ … /* END GENERATED TOKENS */` span by the codegen (sourced from `../eyelevel-design-standards/tokens.json`) and referenced from class rules via `var(--gx-*)`. Grep for `#` followed by a hex digit, `font-size:` / `font-weight:` with a literal number, and `url(` in both `.html` files and in `styles.css` class rules — anything outside the generated block is a violation.
+1. **All brand values come from tokens.** No hex literal, no raw px/rem size, no raw font-weight numeral, no raw logo URL, and no raw canvas dimension (1920/1080/80px) in HTML or in `styles.css` *outside* the generated `:root` block. Every such value is emitted once into the `/* BEGIN GENERATED TOKENS */ … /* END GENERATED TOKENS */` span by the codegen (sourced from `../eyelevel-design-standards/tokens.json`) and referenced from class rules via `var(--gx-*)`. Grep for `#` followed by a hex digit, `font-size:` / `font-weight:` with a literal number, and `url(` in both `.html` files and in `styles.css` class rules — anything outside the generated block is a violation. **Sanctioned exception:** the `photo-cover` layout's `style="background-image: url('/assets/images/<name>')"` placeholder, where the URL is *user-supplied content* (the user's chosen hero photo), not a brand value. That `url(` is content, not a brand decoration; flag any other `url(` in slide HTML.
 2. **Eyebrow color matches surface.** Coral eyebrows on light surfaces, green eyebrows on navy. Use the surface-aware aliases (`--gx-eyebrow-on-light`, `--gx-eyebrow-on-dark`) rather than naming the color directly. Grep for `.eyebrow` class usage and confirm.
 3. **Inter is loaded.** `styles.css` imports Inter from Google Fonts (`fonts.googleapis.com`); `build.mjs` primes weights 400 / 600 / 700 / 800 before each slide is printed.
 4. **Logo lockup present.** Every slide except the section break has the EyeLevel lockup top-left. The CSS swaps via the `--gx-logo-light` / `--gx-logo-dark` tokens — light PNG on light surfaces, dark PNG on navy / green / coral. "A VALANTOR COMPANY" is baked into both PNGs. No `.tagline` element (see `../eyelevel-design-standards/references/logos.md`).

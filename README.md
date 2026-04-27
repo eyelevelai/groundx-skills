@@ -4,14 +4,14 @@ A Claude Code plugin marketplace that teaches agents to follow the EyeLevel bran
 
 > **Brand relationship.** EyeLevel is an AI company; Valantor is the parent — EyeLevel is "a Valantor company." GroundX is one of EyeLevel's products and consumes these standards. The primary brand mark is the **EyeLevel + "A VALANTOR COMPANY" lockup** — shipped as a single PNG in dark-surface and light-surface variants. The Valantor co-sign is baked into the file, not rendered as a separate tagline. Source-of-truth palette and typography tokens live in `skills/eyelevel-design-standards/tokens.json` (machine-readable, DTCG format) with a narrative mirror at `references/tokens.md`; the original EyeLevel webflow style guide is archived at `references/styleguide.html` for reference.
 
-A sibling `valantor-brand-standards` skill will land later for parent-brand surfaces; until then, this skill is authoritative for any EyeLevel- or GroundX-branded artifact.
+A sibling `valantor-brand-standards` skill will land later for parent-brand surfaces; until then, this skill is authoritative for any EyeLevel- or GroundX-branded artifact. Other medium-specific siblings — `eyelevel-docs` (Word documents), `eyelevel-social` (social media posts and OG images), `eyelevel-email` (HTML email), `eyelevel-print` (print-ready PDFs) — would land alongside `eyelevel-web-ui` and `eyelevel-slides`, each consuming the same `tokens.json` source of truth. See `skills/eyelevel-design-standards/SKILL.md > Future siblings` for the pattern.
 
 ## The three skills
 
 | Skill | Does | Triggers on |
 | --- | --- | --- |
 | `eyelevel-design-standards` | Palette, typography, logos, brand principles, cross-medium patterns. Single source of truth — doesn't produce code. | "What's the EyeLevel palette?", "Which logo on dark?", "EyeLevel brand principles" |
-| `eyelevel-web-ui` | React + MUI v5 + TypeScript. Drop-in theme tokens and components for EyeLevel product UIs (currently the GroundX dashboard). | "Build a React component for …", "Style this page to match EyeLevel" |
+| `eyelevel-web-ui` | React + MUI v5 + TypeScript. Drop-in theme tokens and components for any EyeLevel-styled web surface — dashboards, marketing sites, landing pages, internal tools, demos. The GroundX dashboard is one current consumer. | "Build a React component for …", "Make a landing page", "Style this page to match EyeLevel" |
 | `eyelevel-slides` | HTML → PDF 16:9 slide decks rendered via headless Chrome. Same palette and typography as the web UI. | "Make me a deck for …", "Build a pitch deck about …" |
 
 Medium-specific skills route to the standards skill for any brand-level question, so installing a web-ui or slides skill pulls the standards skill with it.
@@ -46,7 +46,7 @@ The slides skill's templates are a self-contained Node project, so Replit (or an
 3. Edit the HTML files in `slides/`, then `npm run build`.
 4. Open `out/deck.pdf`.
 
-For brand guidance inside Replit AI (or Cursor, Continue, etc.), paste the contents of `skills/eyelevel-design-standards/SKILL.md` into the agent's context — it's the same brand tour the skills route to. The web UI skill's `templates/` folder is drop-in for any EyeLevel product repo (the GroundX dashboard at `groundx-ai-dashboard` is the canonical consumer) and can be copied into any React+MUI Replit the same way.
+For brand guidance inside Replit AI (or Cursor, Continue, etc.), paste the contents of `skills/eyelevel-design-standards/SKILL.md` into the agent's context — it's the same brand tour the skills route to. The web UI skill's `templates/` folder is a self-contained drop-in for any EyeLevel-styled React+MUI project — a new marketing site, an internal tool, a demo app, or an existing product repo (the GroundX dashboard is one current consumer). Copy it into any React+MUI Replit the same way.
 
 ## Repository layout
 

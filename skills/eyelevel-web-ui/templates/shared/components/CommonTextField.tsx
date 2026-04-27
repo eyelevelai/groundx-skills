@@ -1,20 +1,21 @@
 /**
  * CommonTextField — wrapped MUI TextField with the EyeLevel form defaults.
  *
- * White input background, outlined variant, and a top margin that matches the
- * rhythm used in modal forms. Pass `dense` to drop the top margin when you're
- * composing forms with explicit spacing (e.g. inside a Stack with gap).
+ * White input background, outlined variant, BORDER_RADIUS (6px) corners
+ * matching the brand's input radius (see surfaces-and-cards.md and the
+ * webflow snapshot at eyelevel-design-standards/references/styleguide.html).
+ * Top margin matches the rhythm used in modal forms — pass `dense` to drop
+ * it when composing in a Stack with explicit gap spacing.
  *
- * Corrections applied vs. the original:
- *   - Top margin is now toggleable via `dense` prop (was always forced to 16px).
- *   - Font size/weight explicitly set so the field doesn't rely on the global
- *     Inter override leaking into the native <input>.
+ * Font family is set explicitly so the native <input> picks up Inter even
+ * if the global body-level override doesn't cascade through MUI's outlined
+ * variant.
  */
 
 import TextField, { OutlinedTextFieldProps } from "@mui/material/TextField";
 import { FC } from "react";
 
-import { BORDER_RADIUS_2X, FONT_FAMILY, WHITE } from "../../constants";
+import { BORDER_RADIUS, FONT_FAMILY, WHITE } from "../../constants";
 
 export interface CommonTextFieldProps extends OutlinedTextFieldProps {
   /** Drop the default top margin (use inside explicit-spacing layouts). */
@@ -36,7 +37,7 @@ export const CommonTextField: FC<CommonTextFieldProps> = ({
           fontFamily: FONT_FAMILY,
         },
         "& .MuiOutlinedInput-root": {
-          borderRadius: BORDER_RADIUS_2X,
+          borderRadius: BORDER_RADIUS,
           backgroundColor: WHITE,
         },
         ...props.sx,

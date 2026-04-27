@@ -1,0 +1,22 @@
+{
+  "name": "eyelevel-web-ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EyeLevel web UI skill — drop-in templates and reference example pages. The deps below are devDependencies so the templates can be type-checked in CI; consumers (a dashboard, a marketing site, a new product UI) install their own.",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.0",
+    "@mui/material": "^5.15.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "formik": "^2.4.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.4.0",
+    "yup": "^1.3.0"
+  }
+}

@@ -2,13 +2,13 @@
 
 EyeLevel's de-facto component library is a small set of wrappers around MUI primitives — `GxCard`, `GxPill`, `GxSectionHeader`, `GxButtonGroup`, `GxUsageCard`, `CommonSubmitButton`, `CommonCancelButton`, `CommonTextField`, plus a handful of accessory components. This document lists each wrapper, what it's for, and what to reach for *instead* if you're tempted to build something new.
 
-These wrappers ship in `templates/components/` of this skill and live at `src/shared/components/` in every project the skill produces. The set is shared across every project — dashboard, marketing site, internal tool, demo, product UI — so a component built for one project drops into another without rewrites. If a wrapper isn't in the project yet, port it from `templates/components/` before using it; don't re-spell its styles inline.
+These wrappers ship in `templates/shared/components/` of this skill and live at `src/shared/components/` in every project the skill produces. The set is shared across every project — dashboard, marketing site, internal tool, demo, product UI — so a component built for one project drops into another without rewrites. If a wrapper isn't in the project yet, port it from `templates/shared/components/` before using it; don't re-spell its styles inline.
 
 **Brand contract sections** under each wrapper describe what the wrapper actually does at the brand layer (white fill, 1px hairline, 20px radius, etc.). That's useful when you're reading the wrapper to understand it, when you're verifying that a port from `templates/` landed correctly, or when you're reviewing existing code for drift. It is **not** an invitation to skip the wrapper and re-implement its contract inline — always use the wrapper.
 
 **Rule of thumb**: if you're about to write the word `Card`, `Button`, `Chip`, or `Paper` from MUI directly, stop and check this list first.
 
-The wrappers below are grouped by purpose, not by where they originated. Some were first abstracted in this skill, some predate it in the dashboard repo; the canonical implementation lives in `templates/components/` either way, and every project — dashboard or otherwise — should be using that canonical version.
+The wrappers below are grouped by purpose, not by where they originated. Some were first abstracted in this skill, some predate it in the dashboard repo; the canonical implementation lives in `templates/shared/components/` either way, and every project — dashboard or otherwise — should be using that canonical version.
 
 ## Surface primitives
 
@@ -20,7 +20,7 @@ The canonical EyeLevel surface — a white `Box` with a 1px `BORDER` hairline, `
 
 **Brand contract:** white fill, `1px solid rgba(41,51,92,0.1)` hairline border, 20px corner radius, no shadow, internal padding from the spacing scale.
 
-Use `GxCard` for every card-shaped surface in every project — a dashboard card, a feature tile on a landing page, a pricing tier, a testimonial block, a docs sidebar tree wrapper. Don't use raw `<Card>`, don't re-spell this in inline `sx`. If `GxCard` isn't in the project yet, port `templates/components/GxCard.tsx` to `src/shared/components/GxCard.tsx` first, then use it. Variants:
+Use `GxCard` for every card-shaped surface in every project — a dashboard card, a feature tile on a landing page, a pricing tier, a testimonial block, a docs sidebar tree wrapper. Don't use raw `<Card>`, don't re-spell this in inline `sx`. If `GxCard` isn't in the project yet, port `templates/shared/components/GxCard.tsx` to `src/shared/components/GxCard.tsx` first, then use it. Variants:
 
 - `radius="lg"` (default) — top-level cards.
 - `radius="sm"` — inner/nested surfaces like table wrappers.
@@ -48,11 +48,11 @@ The coral-fill primary action. On hover the fill flips to green and the label co
 Reach for it when —
 
 - Form submit buttons.
-- Pill-shaped create-entity actions (`+ NEW BUCKET`, `+ ADD CONTENT`, `+ NEW PROJECT`, `+ INVITE TEAMMATE`) — add `sx={{ borderRadius: BORDER_RADIUS_PILL }}` for extra roundness.
+- Pill-shaped create-entity actions (`+ NEW BUCKET`, `+ ADD CONTENT`, `+ NEW PROJECT`, `+ INVITE TEAMMATE`) — pass `sx={{ px: 2.5 }}` for a wider affordance (the pill shape is already the default).
 - Action rows on entity headers (delete / chat / share / export and similar).
 - Marketing-site and landing-page CTAs (`Talk to Sales`, `Start free`, `Book a demo`).
 
-If `CommonSubmitButton` isn't in the project yet, port `templates/components/CommonSubmitButton.tsx` to `src/shared/components/`. **Don't substitute a green-rest button** or a different hover color anywhere, including on marketing surfaces — coral-rest, green-hover, navy text on the hover state is the EyeLevel convention everywhere, and mutual portability depends on it.
+If `CommonSubmitButton` isn't in the project yet, port `templates/shared/components/CommonSubmitButton.tsx` to `src/shared/components/`. **Don't substitute a green-rest button** or a different hover color anywhere, including on marketing surfaces — coral-rest, green-hover, navy text on the hover state is the EyeLevel convention everywhere, and mutual portability depends on it.
 
 ### `CommonCancelButton`
 
@@ -72,24 +72,24 @@ A non-interactive status indicator. Variants: `default | success | warning | err
 
 ### `CommonTextField`
 
-Outlined TextField wrapped with EyeLevel form defaults (white background, 12px radius, 16px top margin). Pass `dense` to drop the top margin when composing with `<Stack spacing={2}>`.
+Outlined TextField wrapped with EyeLevel form defaults (white background, 6px radius matching the input radius from the standards' `BORDER_RADIUS` token, 16px top margin). Pass `dense` to drop the top margin when composing with `<Stack spacing={2}>`.
 
 ## Accessory components
 
-These are smaller utilities — already shipped in the dashboard repo and stable. Reach for them rather than reinventing. Port them from the dashboard's `src/shared/components/` (or their `templates/components/` mirror, if added) when starting a new project that needs them.
+A second tier of small wrappers — tooltips, copy-to-clipboard icons, download buttons, dropdown menus, loading dots, and similar. They ship canonically in `templates/shared/components/` alongside the `Gx*` / `Common*` set above; port them into a new project's `src/shared/components/` the same way you port the rest of the wrapper layer. Each is short (15–80 lines) and follows the same brand contracts: tokens from `@/constants`, no hex literals, MUI size tokens on icons, `aria-label`s on every interactive element.
 
 | Component | Purpose |
 | --- | --- |
-| `CommonToolTip` | Styled MUI Tooltip. Use for any hover-triggered explanatory text. |
-| `CommonCloseIcon` | Styled close button for modals and panels. |
-| `DialogTitle` | Modal title row with close button. Pair with MUI's `Dialog` + `DialogContent` + `DialogActions`. |
-| `DropdownMenu` | A generic dropdown menu (account menu, sort menu, action overflow). |
-| `CopyToClipboard` | A copy-to-clipboard icon — pairs naturally with IDs, codes, or any inline value the user might want to copy. |
-| `DownloadButton` | Icon button for file downloads. |
-| `LoadingDots` | Animated dots for loading states. |
-| `UsageBar/*` | The individual progress bars used in `GxUsageCard` (usable on their own for any "X of Y" indicator). |
-| `VideoPlayer` | Video embed — used for tutorial cards, marketing-page hero videos, etc. |
-| `CodeSnippet` | Multi-tab code example viewer (cURL / JS / Python). Use for API documentation screens. |
+| `CommonToolTip` | Styled MUI Tooltip with navy fill + white text. Drop-in replacement for `<Tooltip>` — same prop API. |
+| `CommonCloseIcon` | Pre-labelled close-icon `IconButton`. Defaults to `size="small"` and `aria-label="close"`. |
+| `DialogTitle` | Modal title row with built-in close button. Pair with MUI's `Dialog` + `DialogContent` + `DialogActions`. Pass title text as children + an `onClose` callback. |
+| `DropdownMenu` | Generic anchored menu (account menu, sort menu, action overflow). Pass a `trigger` render function and an `items` array. |
+| `CopyToClipboard` | Copy-to-clipboard `IconButton` with check-glyph feedback after a successful copy. Use beside any inline ID, code, or value. |
+| `DownloadButton` | Download `IconButton`. With `href`, renders as a native `<a>` download; without, runs an `onClick` handler. |
+| `LoadingDots` | Three pulsing dots for inline loading affordances. Coral by default; pass `color` for a context override. Carries `role="status"`. |
+| `UsageBar` | Single "X of Y used" progress bar. Used inside `GxUsageCard`, also fine standalone for storage / quota / billing strips. |
+| `VideoPlayer` | `<video>` wrapped in the brand surface treatment — card radius, hairline border, navy letterbox fallback. |
+| `CodeSnippet` | Multi-tab code-example viewer (cURL / JavaScript / Python / etc.) with built-in copy-to-clipboard. Use on API documentation screens. |
 
 ## What to build vs. what to compose
 

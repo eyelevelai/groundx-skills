@@ -53,7 +53,7 @@ When adding a new color, decide first where it belongs: a brand-level color goes
 - `gx-back-button` — never uppercase (`textTransform: "none"`).
 - Section labels (TUTORIAL, CONTENT, FEATURES, PRICING) — **literal UPPERCASE strings** in JSX, no `textTransform`. This keeps translation pipelines honest and matches the brand's "ALL-CAPS is a shape, not a formatting rule" principle.
 
-**Older pattern:** mixed `textTransform` rules across buttons and labels, plus props that don't actually affect rendering. If `CommonSubmitButton`'s `isUppercase={false}` doesn't downcase the label in your project, port the corrected wrapper from `templates/components/CommonSubmitButton.tsx`.
+**Older pattern:** mixed `textTransform` rules across buttons and labels, plus props that don't actually affect rendering. If `CommonSubmitButton`'s `isUppercase={false}` doesn't downcase the label in your project, port the corrected wrapper from `templates/shared/components/CommonSubmitButton.tsx`.
 
 ## 7. Icon sizes use MUI tokens, not px
 

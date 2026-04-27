@@ -71,7 +71,7 @@ padding: theme.spacing(MAIN_CONTENT_PADDING),      // 40px on desktop
 
 ### When to use the shell
 
-**Do** use the shell for any authenticated in-app page in a product UI. In the dashboard, that means composing inside the `<Outlet />` of `views/CoreLayouts/Dashboard.tsx`.
+**Do** use the shell for any authenticated in-app page in a product UI. In practice that means composing the page inside the route's `<Outlet />` (e.g., the dashboard puts its `<Outlet />` inside `views/CoreLayouts/Dashboard.tsx`; a different project would put it wherever its router renders the per-route view).
 
 **Don't** use the shell for:
 

@@ -80,17 +80,17 @@ Don't read every reference up front. Read the one that matches the question, the
 
 ## How to start a new project
 
-The `templates/` directory contains the skeleton every EyeLevel-styled web project starts from. **For any new project**, port these files into the project's `src/` tree before writing feature code; that's what makes the project standalone (the imports resolve locally) and dashboard-compatible (the structure matches the dashboard's). For work inside an existing project that already has these files, skip this step.
+The `templates/` directory contains the skeleton every EyeLevel-styled web project starts from. Its layout mirrors `src/` exactly — `templates/constants/` ports to `src/constants/`, `templates/shared/components/` ports to `src/shared/components/`, and so on — so the relative imports inside the template files (`../../constants`) resolve identically in both locations. **For any new project**, copy the templates into the project's `src/` tree (`cp -r templates/. src/` is enough) before writing feature code; that's what makes the project standalone (the imports resolve locally) and dashboard-compatible (the structure matches the dashboard's). For work inside an existing project that already has these files, skip this step.
 
 | Template | Goes to | What it is |
 | --- | --- | --- |
-| `templates/constants.ts` | `src/constants/index.ts` | Barrel re-exporting everything from `constants.generated.ts` and `constants.chrome.ts`. After this lands, `import { NAVY, PADDING } from "@/constants"` resolves locally. |
-| `templates/constants.generated.ts` | `src/constants/constants.generated.ts` | Auto-generated brand tokens from `../../eyelevel-design-standards/tokens.json`. **Never hand-edit** — regenerate via `eyelevel-design-standards/scripts/generate-mirrors.mjs`. Identical across every EyeLevel project. |
-| `templates/constants.chrome.ts` | `src/constants/constants.chrome.ts` | Project-specific chrome tokens. The dashboard's version holds `drawerWidth`, `NAV_ICON_GREY`, `DISABLED_GREY`, etc. A marketing site's version may hold different values (or be empty). Each project owns its own. |
+| `templates/constants/index.ts` | `src/constants/index.ts` | Barrel re-exporting everything from `constants.generated.ts` and `constants.chrome.ts`. After this lands, `import { NAVY, PADDING } from "@/constants"` resolves locally. |
+| `templates/constants/constants.generated.ts` | `src/constants/constants.generated.ts` | Auto-generated brand tokens from `../../eyelevel-design-standards/tokens.json`. **Never hand-edit** — regenerate via `eyelevel-design-standards/scripts/generate-mirrors.mjs`. Identical across every EyeLevel project. |
+| `templates/constants/constants.chrome.ts` | `src/constants/constants.chrome.ts` | Project-specific chrome tokens. The dashboard's version holds `drawerWidth`, `NAV_ICON_GREY`, `DISABLED_GREY`, etc. A marketing site's version may hold different values (or be empty). Each project owns its own. |
 | `templates/theme.ts` | `src/theme.ts` | The MUI theme — Inter at body, `palette.primary.main = GREEN`, `disableElevation: true`, `palette.divider = BORDER`. |
 | `templates/fonts.css` | `src/fonts.css` | `@import` of Inter from Google Fonts plus body-level `font-family` and OpenType feature settings (`ss01`, `cv11`, `cv01`). |
 | `templates/ThemeProvider.tsx` | `src/ThemeProvider.tsx` | `GxThemeProvider` wiring theme + `CssBaseline` + fonts. |
-| `templates/components/*.tsx` | `src/shared/components/*.tsx` | `GxCard`, `GxPill`, `GxSectionHeader`, `GxButtonGroup`, `GxUsageCard`, plus `CommonSubmitButton`, `CommonCancelButton`, `CommonTextField`. |
+| `templates/shared/components/*.tsx` | `src/shared/components/*.tsx` | Wrapper layer: `GxCard`, `GxPill`, `GxSectionHeader`, `GxButtonGroup`, `GxUsageCard`, plus `CommonSubmitButton`, `CommonCancelButton`, `CommonTextField`. Accessory layer: `CommonToolTip`, `CommonCloseIcon`, `DialogTitle`, `DropdownMenu`, `CopyToClipboard`, `DownloadButton`, `LoadingDots`, `UsageBar`, `VideoPlayer`, `CodeSnippet`. Port whichever the project uses. |
 
 After porting, every component you write imports from the same paths the dashboard uses:
 
@@ -119,7 +119,7 @@ These apply to every EyeLevel-styled web project — dashboard, marketing site, 
 3. **Inter at the body level.** Weight ladder is 400 / 600 / 700 / 800 — no other weights. Body copy is `BODY_TEXT`; headings are `NAVY` — never `#000`.
 4. **No literal UPPERCASE hacks via `textTransform`.** Section labels are literal uppercase strings in JSX; buttons follow the per-component rule in `references/corrections.md > 6`.
 5. **No hardcoded px breakpoints.** Use `theme.breakpoints.*` or sx responsive object syntax (`sx={{ p: { xs: 1, md: 5 } }}`).
-6. **No MUI `<Card>`.** Use `GxCard` from `@/shared/components/`. If the project doesn't have `GxCard` yet, port it from `templates/components/GxCard.tsx` — don't re-spell the styles inline.
+6. **No MUI `<Card>`.** Use `GxCard` from `@/shared/components/`. If the project doesn't have `GxCard` yet, port it from `templates/shared/components/GxCard.tsx` — don't re-spell the styles inline.
 7. **No raw `<Button>` for primary actions.** Use `CommonSubmitButton`. For segmented navigation, `GxButtonGroup`. For status labels, `GxPill` (not a button). Same porting rule applies — if the wrapper doesn't exist, port it.
 8. **No hardcoded `fontSize: "16px"` on icons.** Use MUI size tokens: `small | medium | large`.
 9. **Every interactive icon gets `aria-label`.** Decorative icons inside a labeled button get `aria-hidden="true"`.
@@ -132,7 +132,7 @@ Before returning generated code:
 
 **Project skeleton (only on the first commit to a new project).**
 
-- [ ] `templates/constants.ts`, `constants.generated.ts`, `constants.chrome.ts` are at `src/constants/` and the `@/constants` alias resolves to them. `constants.chrome.ts` holds whatever project-specific chrome the project actually needs (a marketing site won't need `drawerWidth`; a dashboard does).
+- [ ] `templates/constants/index.ts`, `constants.generated.ts`, `constants.chrome.ts` are at `src/constants/` and the `@/constants` alias resolves to them. `constants.chrome.ts` holds whatever project-specific chrome the project actually needs (a marketing site won't need `drawerWidth`; a dashboard does).
 - [ ] `templates/theme.ts`, `fonts.css`, `ThemeProvider.tsx` are wired up at the project root.
 - [ ] The `Gx*` and `Common*` wrappers used by the work are present at `src/shared/components/` (port any that aren't yet).
 
@@ -195,4 +195,4 @@ Logos are not duplicated here — reference them from `../eyelevel-design-standa
 
 When you can't decide between two approaches, the one that results in **fewer tokens crossed into the component** and **more configuration up in the theme** is almost always correct. EyeLevel's visual system is calm and opinionated — aim for component files that read like plain structural JSX, with styling coming from theme overrides, sx tokens, and the Gx* wrappers.
 
-If a pattern truly doesn't exist yet, add it to the theme or to `templates/components/` (in your response) and reference that addition — don't open-code it in a one-off sx block. If the missing pattern is a brand-level decision (a new color, a new weight), add it to the standards skill first.
+If a pattern truly doesn't exist yet, add it to the theme or to `templates/shared/components/` (in your response) and reference that addition — don't open-code it in a one-off sx block. If the missing pattern is a brand-level decision (a new color, a new weight), add it to the standards skill first.

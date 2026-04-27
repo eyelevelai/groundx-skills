@@ -1,10 +1,16 @@
-# Verify that every mirror generated from eyelevel-design-standards/tokens.json is
-# in sync with the source of truth. If someone edits tokens.json without re-running
-# the generator (or hand-edits a generated file), this job fails loudly.
+# Verify the skills' brand and structural contracts on every push and PR.
 #
-# The verify script is pure Node with zero npm deps, so we skip `npm install`.
-# See skills/eyelevel-design-standards/scripts/verify-mirrors.mjs.
-name: Verify token mirrors
+# Two checks run in sequence:
+#   1. Mirror drift — if someone edits tokens.json without re-running the
+#      generator (or hand-edits a generated file), verify-mirrors.mjs fails.
+#   2. Structural lint — codifies every brand-contract assertion the skills
+#      enforce: no hex literals in components, no raw fontSize on icons, no
+#      @media strings, every IconButton has aria-label, every relative import
+#      resolves, every required file exists, voice-avoid words don't leak,
+#      etc. See scripts/lint-skills.mjs.
+#
+# Both scripts are pure Node with zero npm deps, so we skip `npm install`.
+name: Verify skills
 
 on:
   push:
@@ -13,8 +19,8 @@ on:
     branches: [ main ]
 
 jobs:
-  verify-mirrors:
-    name: tokens.json → mirrors drift check
+  verify-skills:
+    name: tokens drift + structural lint
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -35,3 +41,6 @@ jobs:
       - name: Verify mirrors are in sync with tokens.json
         working-directory: skills/eyelevel-design-standards
         run: node scripts/verify-mirrors.mjs
+
+      - name: Run structural lint across all skills
+        run: node scripts/lint-skills.mjs

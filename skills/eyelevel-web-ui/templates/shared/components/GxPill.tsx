@@ -1,16 +1,21 @@
 /**
- * GxPill — status pill used for indicators like "X-RAY" on bucket files.
+ * GxPill — non-interactive status indicator.
  *
- * In the existing codebase this pattern was implemented by pressing
- * CommonSubmitButton into service as a non-interactive status badge, which
- * conflated "button" and "label" semantically. GxPill replaces that usage.
+ * A label that announces a state — a row's processing status, a plan tier on
+ * an account card, a deployment-status badge, a category tag on a blog post
+ * card. Always paired with a literal status word; color is reinforcement,
+ * never the only signal.
+ *
+ * An older convention sometimes pressed `CommonSubmitButton` into service as
+ * a non-interactive badge, which conflated "button" and "label" semantically
+ * and confused screen readers. `GxPill` is the right answer for status.
  *
  * Variants:
- *   - "default"   coral fill with white text (the current X-RAY look)
+ *   - "default"   coral fill, white text — generic accent
  *   - "success"   green fill, navy text — completed states
- *   - "warning"   gradient fill — in-progress states
+ *   - "warning"   amber fill — in-progress states
  *   - "error"     red fill — failed states
- *   - "info"      navy fill with white text — neutral metadata
+ *   - "info"      navy fill, white text — neutral metadata
  *
  * Rendered as a <span> by default. Pass `onClick` to get a <button>.
  */
@@ -31,7 +36,7 @@ import {
   NAVY,
   WARNING_AMBER,
   WHITE,
-} from "../constants";
+} from "../../constants";
 
 type GxPillVariant = "default" | "success" | "warning" | "error" | "info";
 

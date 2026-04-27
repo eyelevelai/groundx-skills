@@ -1,25 +1,26 @@
 /**
  * CommonSubmitButton — the canonical EyeLevel primary action button.
  *
- * Coral fill with white text. On hover it flips to green with navy text — the
- * "inverted" state. Pass `invert` to start in the green state (useful for
- * destructive secondary actions that should read differently).
+ * Coral fill, white text, full-pill shape (BORDER_RADIUS_PILL). On hover the
+ * fill flips to green and the label flips to navy — the brand's "rest →
+ * intent" convention. Pass `invert` to start in the green state (useful for
+ * secondary confirm actions where you don't want to fight the primary CTA on
+ * the same screen).
  *
- * Corrections applied vs. the original in src/shared/components:
- *   - `isUppercase` prop now actually controls `textTransform` (was previously
- *     always uppercase regardless of the prop value).
- *   - `type` defaults to "button" so use inside a <form> doesn't
- *     accidentally submit; pass `type="submit"` explicitly when you want that.
- *   - The 2px white border was removed — it was effectively invisible and
- *     added an unbalanced 2px of slop at button edges.
- *   - borderRadius now reads from the token file instead of a hex/number.
+ * Notes on behavior:
+ *   - `isUppercase` controls `textTransform` (default true; pass false for
+ *     sentence-case labels).
+ *   - `type` defaults to "button" so use inside a <form> doesn't accidentally
+ *     submit; pass `type="submit"` explicitly when you want submit semantics.
+ *   - Every value comes from a brand token — no hex literals, no raw px
+ *     radii.
  */
 
 import { FC, MouseEvent, ReactNode } from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
 
 import {
-  BORDER_RADIUS_2X,
+  BORDER_RADIUS_PILL,
   CORAL,
   FONT_WEIGHT_LABEL,
   GREEN,
@@ -58,7 +59,7 @@ export const CommonSubmitButton: FC<CommonSubmitButtonProps> = ({
         backgroundColor: invert ? GREEN : CORAL,
         color: invert ? NAVY : WHITE,
         fontWeight: FONT_WEIGHT_LABEL,
-        borderRadius: BORDER_RADIUS_2X,
+        borderRadius: BORDER_RADIUS_PILL,
         boxShadow: "none",
         textTransform: isUppercase ? "uppercase" : "none",
         letterSpacing: isUppercase ? LETTER_SPACING_CHIP : undefined,

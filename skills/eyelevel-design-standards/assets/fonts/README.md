@@ -1,10 +1,10 @@
 # Inter Font Files (optional local mirror)
 
-This folder is reserved for local Inter font binaries in case a non-web medium (PowerPoint, Word, print) can't reach Google Fonts at render time, or a deliverable needs embedded fonts. Day-to-day, both the dashboard (`eyelevel-web-ui`) and the slide deck (`eyelevel-slides`) load Inter directly from Google Fonts — see `../../references/typography.md`.
+This folder is reserved for local Inter font binaries in case a non-web medium (PowerPoint, Word, print) can't reach Google Fonts at render time, or a deliverable needs embedded fonts. Day-to-day, both the web UI (`eyelevel-web-ui`, used by every EyeLevel-styled web project — dashboards, marketing sites, internal tools) and the slide deck (`eyelevel-slides`) load Inter directly from Google Fonts — see `../../references/typography.md`.
 
 ## When local files matter
 
-- **Air-gapped builds.** If Puppeteer or the dashboard runs without network access, local `.woff2` / `.ttf` files keep Inter rendering instead of falling back to the system sans stack.
+- **Air-gapped builds.** If Puppeteer or a web project runs without network access, local `.woff2` / `.ttf` files keep Inter rendering instead of falling back to the system sans stack.
 - **PowerPoint / Word embedding.** The built-in `pptx` and `docx` skills can embed `.ttf` files so the deck or document ships with fonts baked in.
 - **Print production.** Exporting a PDF for commercial printing typically requires the outline form of each glyph; embed the `.ttf` or `.otf` at PDF-generation time.
 

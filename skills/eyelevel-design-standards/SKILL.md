@@ -26,10 +26,20 @@ The skills enforce two layers of consistency. Both matter.
 | Skill | Medium | What it uses from here |
 | --- | --- | --- |
 | `eyelevel-web-ui` | React + MUI + TypeScript | Tokens → auto-generated `constants.generated.ts`, re-exported through `constants.ts` barrel. Typography → CSS/theme. Logos → `public/assets/`. Principles → components and corrections. |
-| `eyelevel-slides` | HTML → PDF (16:9 rendered via headless Chrome) | Tokens → auto-generated `:root` block in `styles.css` (spliced between `BEGIN/END GENERATED TOKENS` markers). Typography → `@import` Inter from Google Fonts (same as the dashboard). Logos → static image placements via `--gx-logo-*` tokens. Principles → layout grid, chart styles. |
-| Future skills (email, Word, marketing) | Various | Same. |
+| `eyelevel-slides` | HTML → PDF (16:9 rendered via headless Chrome) | Tokens → auto-generated `:root` block in `styles.css` (spliced between `BEGIN/END GENERATED TOKENS` markers). Typography → `@import` Inter from Google Fonts. Logos → static image placements via `--gx-logo-*` tokens. Principles → layout grid, chart styles. |
 
 Medium-specific skills should route to this skill's references from their own SKILL.md — *"Before producing anything, read `../eyelevel-design-standards/references/tokens.md` and `../eyelevel-design-standards/references/brand-principles.md`."*
+
+### Future siblings
+
+This skill is medium-agnostic on purpose. New mediums consume it the same way the existing two do — read the standards, take what's relevant for the medium, generate a medium-specific mirror from `tokens.json` if a programmatic mirror is useful for that medium. Anticipated siblings:
+
+- **`eyelevel-docs`** (DOCX / Word documents) — would consume the palette and typography for letter templates, white papers, contracts. Likely uses `python-docx` and a styles XML generated from `tokens.json`. Logos pulled from `assets/logos/`.
+- **`eyelevel-social`** (social media posts, OG images, banners) — would consume the palette, logos, and brand voice for square + landscape image templates. Likely renders via the same HTML-to-image pipeline as slides, just at different dimensions.
+- **`eyelevel-email`** (HTML email templates) — would consume the palette as inline-styled CSS (CSS variables aren't universally supported in email clients), with the typography ladder reduced to a few inline-style snippets.
+- **`eyelevel-print`** (high-resolution PDFs for print production) — would consume the palette and typography with embedded fonts (`.ttf` files from `assets/fonts/`).
+
+**How to add a new sibling**: create the skill folder under `skills/`, point its SKILL.md at `../eyelevel-design-standards/references/`, and — if the medium needs a programmatic mirror — extend `scripts/generate-mirrors.mjs` to emit the medium-specific output (see the script's "Adding a new consumer" section). The brand stays consistent only as long as new mediums consume `tokens.json` rather than redeclaring values locally.
 
 ### The token workflow
 
@@ -40,7 +50,7 @@ The source of truth has two shapes:
 
 Medium-specific mirrors are **auto-generated** from `tokens.json`, not hand-maintained. Running `scripts/generate-mirrors.mjs` writes:
 
-- `eyelevel-web-ui/templates/constants.generated.ts` (React/MUI exports)
+- `eyelevel-web-ui/templates/constants/constants.generated.ts` (React/MUI exports)
 - the `:root` block of `eyelevel-slides/templates/styles.css` (spliced in between `BEGIN GENERATED TOKENS` / `END GENERATED TOKENS` markers)
 
 To change a value brand-wide:

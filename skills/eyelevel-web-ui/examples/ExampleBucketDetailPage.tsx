@@ -34,9 +34,9 @@ import DownloadIcon from "@mui/icons-material/Download";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 
-import CommonSubmitButton from "../templates/components/CommonSubmitButton";
-import GxCard from "../templates/components/GxCard";
-import GxPill from "../templates/components/GxPill";
+import CommonSubmitButton from "../templates/shared/components/CommonSubmitButton";
+import GxCard from "../templates/shared/components/GxCard";
+import GxPill from "../templates/shared/components/GxPill";
 
 import {
   BORDER,

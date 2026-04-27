@@ -1,11 +1,16 @@
 /**
  * GxCard — the canonical EyeLevel surface.
  *
- * The dashboard uses a flat white surface with a 1px BORDER hairline (10%
- * navy), no shadow, and BORDER_RADIUS_CARD (20px) rounding. Throughout the
- * codebase this was expressed inconsistently — sometimes via MUI `<Card>`,
- * sometimes via `<Box>` with an inline `sx` block. Always use this wrapper
- * instead.
+ * Every card-shaped surface in any EyeLevel project — dashboard card, feature
+ * tile on a landing page, pricing tier, testimonial block, docs sidebar
+ * wrapper — uses this wrapper. Flat white fill, 1px BORDER hairline (10%
+ * navy), no shadow, BORDER_RADIUS_CARD (20px) rounding. The wrapper bakes
+ * those choices in so a brand-wide tweak (radius, border, padding) updates
+ * every card in every project at once.
+ *
+ * Older codebases sometimes express the same surface inline (raw MUI
+ * `<Card>` with elevation undone, or `<Box>` with a copy-pasted `sx` block).
+ * Replace those with `GxCard` when you touch the file.
  *
  * Pass a `radius` of "lg" (20px, default) for top-level cards, or "sm" (6px)
  * for nested sub-surfaces like inner table wrappers.
@@ -22,7 +27,7 @@ import {
   BORDER_RADIUS_CARD,
   PADDING,
   WHITE,
-} from "../constants";
+} from "../../constants";
 
 export interface GxCardProps extends BoxProps {
   /** Corner rounding. "lg" = top-level card, "sm" = nested surface. */

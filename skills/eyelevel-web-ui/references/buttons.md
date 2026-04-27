@@ -32,7 +32,7 @@ Is this a primary action (submit, create, confirm)?
 
 ## Primary action: `CommonSubmitButton`
 
-**Style:** `CORAL` fill, white text, `fontWeight: 600`, uppercase, `borderRadius: BORDER_RADIUS_PILL` (the full-pill shape). On hover, the fill flips to `GREEN` and the label color flips to `NAVY`. This rest → hover behavior is the EyeLevel convention; use it everywhere — dashboard surfaces, marketing CTAs, internal tools alike.
+**Style:** `CORAL` fill, white text, `fontWeight: 600`, uppercase, `borderRadius: BORDER_RADIUS_PILL` (the full-pill shape, applied by default). On hover, the fill flips to `GREEN` and the label color flips to `NAVY`. This rest → hover behavior is the EyeLevel convention; use it everywhere — dashboard surfaces, marketing CTAs, internal tools alike.
 
 ```tsx
 <CommonSubmitButton onClick={handleSubmit}>
@@ -40,11 +40,13 @@ Is this a primary action (submit, create, confirm)?
 </CommonSubmitButton>
 ```
 
+The pill shape is the default — every EyeLevel button is fully rounded (see `surfaces-and-cards.md` and the webflow snapshot in `eyelevel-design-standards/references/styleguide.html`). You don't need to add a modifier to get the pill; you'd only override `borderRadius` if you're doing something genuinely unusual.
+
 Common modifiers:
 
-- **Full pill shape** for standalone CTAs: `sx={{ borderRadius: BORDER_RADIUS_PILL }}`. (The old `BORDER_RADIUS_4X` and `BORDER_RADIUS_3X` have been retired — their aliases now resolve to `BORDER_RADIUS_PILL` and `BORDER_RADIUS_CARD` respectively; migrate as you touch files.)
 - **Start icon**: `startIcon={<AddIcon />}`.
 - **Inverted** (start in the green state): `<CommonSubmitButton invert>`. Use for secondary confirm actions where you don't want to fight the primary CTA on the same screen.
+- **Wider create-entity affordance** (see "Pill CTA pattern" below): pass `sx={{ px: 2.5 }}` for a touch more horizontal breathing room — the default padding is fine; the wider variant gives the `+ NEW PROJECT` style affordance more presence.
 - **No uppercase**: `<CommonSubmitButton isUppercase={false}>`. Rare. Use for CTAs with long / sentence-case labels.
 - **Disabled** state: relies on MUI's default disabled styling (grey). Don't override.
 
@@ -115,13 +117,10 @@ Do not use this variant for any other CTA. It's loud on purpose.
 
 ## Pill CTA pattern (create-entity)
 
-A standalone wide-pill action — used for create-entity affordances like `+ NEW BUCKET`, `+ ADD CONTENT`, `+ NEW PROJECT`, `+ INVITE TEAMMATE`. It's a `CommonSubmitButton` with extra rounding + an AddIcon:
+A standalone wide-pill action — used for create-entity affordances like `+ NEW BUCKET`, `+ ADD CONTENT`, `+ NEW PROJECT`, `+ INVITE TEAMMATE`. It's a `CommonSubmitButton` with an AddIcon and a touch of extra horizontal padding (the pill shape is already the default):
 
 ```tsx
-<CommonSubmitButton
-  startIcon={<AddIcon />}
-  sx={{ borderRadius: BORDER_RADIUS_PILL, px: 2.5 }}
->
+<CommonSubmitButton startIcon={<AddIcon />} sx={{ px: 2.5 }}>
   New Project
 </CommonSubmitButton>
 ```

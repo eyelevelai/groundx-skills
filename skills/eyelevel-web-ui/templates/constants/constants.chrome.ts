@@ -1,13 +1,28 @@
 /**
- * EyeLevel web-UI chrome tokens — hand-written.
+ * EyeLevel web-UI chrome tokens — hand-written, project-specific.
  *
- * These values are specific to the React/MUI dashboard shell and do not belong
- * in the shared design-system palette (tokens.json). Keeping them in a
- * separate file makes it unambiguous that editing them does not propagate to
- * the slide bundle or any other consumer.
+ * These values are *not* part of the brand palette and don't belong in the
+ * shared design-system source of truth (tokens.json). They live here per
+ * project because what counts as "chrome" varies between projects.
  *
- * If a value here starts being used outside the dashboard chrome (e.g. a new
- * brand accent creeps in), promote it to tokens.json and delete it here.
+ * What this file holds for the GroundX dashboard (illustrative — the canonical
+ * dashboard shell):
+ *   • drawerWidth — sidebar width
+ *   • NAV_ICON_GREY, DISABLED_GREY, ROW_SELECTED_BG, WARNING_AMBER — chrome states
+ *   • PREMIUM_GRADIENT_FROM/TO — premium-tier upsell button gradient
+ *   • TRANSPARENT — convenience constant
+ *
+ * What another project's `constants.chrome.ts` might hold:
+ *   • A marketing site: a MAX_CONTENT_WIDTH, a FOOTER_COLUMN_COUNT, or
+ *     nothing at all (chrome lives entirely in inline `sx` against brand
+ *     tokens).
+ *   • An internal tool: its own sidebar/drawer width, its own admin-state
+ *     colors, etc.
+ *   • A new product UI: whatever its chrome needs.
+ *
+ * The rule: if a value is only meaningful inside this project, it belongs
+ * here. If it crosses projects (or crosses mediums into slides), promote it
+ * to the standards skill's tokens.json.
  */
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -35,6 +50,9 @@ export const ROW_SELECTED_BG = "rgba(79, 53, 197, 0.1)";
 
 /** Warning-amber fill — in-progress pill states (e.g., ingest processing). */
 export const WARNING_AMBER = "#ffb45c";
+
+/** Translucent white track for progress bars on dark surfaces (used by GxUsageCard). */
+export const PROGRESS_TRACK_ON_DARK = "rgba(255, 255, 255, 0.15)";
 
 // ──────────────────────────────────────────────────────────────────────────
 // Premium button gradient (used only by the `gx-premium-button` variant)

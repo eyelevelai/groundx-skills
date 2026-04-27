@@ -1,0 +1,25 @@
+{
+  "// description": "Minimal tsconfig for type-checking the eyelevel-web-ui templates and example pages. The skill's runtime deps are in package.json devDependencies so `tsc --noEmit` can resolve them; consumers install their own.",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "templates/**/*",
+    "examples/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

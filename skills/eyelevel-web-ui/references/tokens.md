@@ -2,7 +2,7 @@
 
 Every value in an EyeLevel UI — colors, radii, spacing, breakpoints, typography — comes from a token you import from `@/constants` (the barrel that re-exports `constants.generated.ts` and `constants.chrome.ts`). Never write a hex literal, a hardcoded px radius, a magic-number media query, or a font-size literal in a component file. If a value doesn't exist yet as a constant, add it upstream (see "Editing workflow" below) — don't invent a local one.
 
-**Brand-level tokens (colors, typography, radii, slide dimensions, logo filenames) live in the standards skill as `tokens.json` (machine-readable source of truth) plus `references/tokens.md` (human-readable narrative).** A codegen script reads `tokens.json` and writes `templates/constants.generated.ts`. The brand-level hex values, weight numbers, sizes, radii, letter-spacings, and line-heights you see in `constants.generated.ts` are produced by that script — do not edit them by hand. When a new brand-level color, weight, or size is needed, add it to `tokens.json` and `tokens.md` first, then re-run the generator.
+**Brand-level tokens (colors, typography, radii, slide dimensions, logo filenames) live in the standards skill as `tokens.json` (machine-readable source of truth) plus `references/tokens.md` (human-readable narrative).** A codegen script reads `tokens.json` and writes `templates/constants/constants.generated.ts`. The brand-level hex values, weight numbers, sizes, radii, letter-spacings, and line-heights you see in `constants.generated.ts` are produced by that script — do not edit them by hand. When a new brand-level color, weight, or size is needed, add it to `tokens.json` and `tokens.md` first, then re-run the generator.
 
 > **Canonical tokens:** `tokens.json` (machine) and `../../eyelevel-design-standards/references/tokens.md` (narrative). When in doubt, those files win.
 
@@ -10,9 +10,9 @@ Every value in an EyeLevel UI — colors, radii, spacing, breakpoints, typograph
 
 | File | Edit by hand? | Contents |
 | --- | --- | --- |
-| `templates/constants.ts` | No (barrel — just re-exports) | `export * from "./constants.generated"; export * from "./constants.chrome";` |
-| `templates/constants.generated.ts` | **No** (auto-generated) | Every brand token (colors, typography, web size scale, radii, spacing, durations). Header declares the file AUTO-GENERATED. |
-| `templates/constants.chrome.ts` | Yes | Project-specific chrome — values that aren't part of the brand palette and don't belong in `tokens.json` because they only mean something inside one project. The dashboard's version holds `drawerWidth`, `NAV_ICON_GREY`, `DISABLED_GREY`, `ROW_SELECTED_BG`, `WARNING_AMBER`, the premium-button gradient, `TRANSPARENT`. A marketing site's version may hold different chrome (max content widths, footer column counts) — or may be empty. Each project owns its own. |
+| `templates/constants/index.ts` | No (barrel — just re-exports) | `export * from "./constants.generated"; export * from "./constants.chrome";` |
+| `templates/constants/constants.generated.ts` | **No** (auto-generated) | Every brand token (colors, typography, web size scale, radii, spacing, durations). Header declares the file AUTO-GENERATED. |
+| `templates/constants/constants.chrome.ts` | Yes | Project-specific chrome — values that aren't part of the brand palette and don't belong in `tokens.json` because they only mean something inside one project. The dashboard's version holds `drawerWidth`, `NAV_ICON_GREY`, `DISABLED_GREY`, `ROW_SELECTED_BG`, `WARNING_AMBER`, the premium-button gradient, `TRANSPARENT`. A marketing site's version may hold different chrome (max content widths, footer column counts) — or may be empty. Each project owns its own. |
 
 ## What the generated mirror includes
 

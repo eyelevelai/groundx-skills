@@ -1,5 +1,10 @@
 /**
- * GxUsageCard — the navy "Your plan allows…" card in the sidebar.
+ * GxUsageCard — composite "X of Y used" card with quota bars + upgrade CTA.
+ *
+ * Originally built as a navy "Your plan allows…" card for an app-shell
+ * sidebar, but the same composition fits any surface that needs a
+ * usage-against-quota readout: storage meters, API rate panels, plan-tier
+ * quota cards, billing-screen usage strips.
  *
  * Composes: plan-copy + two usage bars + an Upgrade button.
  *
@@ -7,13 +12,12 @@
  * (0–100) and an optional label. The upgrade button is a callback.
  */
 
-import { Box, Button, LinearProgress, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import {
   BORDER,
   BORDER_RADIUS_CARD,
   BORDER_RADIUS_PILL,
-  BORDER_RADIUS_SM,
   CORAL,
   FONT_WEIGHT_HEADLINE,
   FONT_WEIGHT_LABEL,
@@ -23,7 +27,9 @@ import {
   NAVY,
   PADDING,
   WHITE,
-} from "../constants";
+} from "../../constants";
+
+import UsageBar from "./UsageBar";
 
 export interface GxUsageCardProps {
   /** Human-readable copy, e.g. "Your plan allows 5M tokens and 500 searches/mo." */
@@ -76,38 +82,8 @@ export function GxUsageCard({
       </Typography>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 0.75 }}>
-        <Box>
-          <Typography variant="caption" sx={{ fontWeight: FONT_WEIGHT_LABEL }}>
-            {ingestLabel}
-          </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={Math.min(100, Math.max(0, ingestPercent))}
-            sx={{
-              mt: 0.25,
-              height: 6,
-              borderRadius: BORDER_RADIUS_SM,
-              backgroundColor: "rgba(255,255,255,0.15)",
-              "& .MuiLinearProgress-bar": { backgroundColor: CORAL },
-            }}
-          />
-        </Box>
-        <Box>
-          <Typography variant="caption" sx={{ fontWeight: FONT_WEIGHT_LABEL }}>
-            {searchLabel}
-          </Typography>
-          <LinearProgress
-            variant="determinate"
-            value={Math.min(100, Math.max(0, searchPercent))}
-            sx={{
-              mt: 0.25,
-              height: 6,
-              borderRadius: BORDER_RADIUS_SM,
-              backgroundColor: "rgba(255,255,255,0.15)",
-              "& .MuiLinearProgress-bar": { backgroundColor: CORAL },
-            }}
-          />
-        </Box>
+        <UsageBar percent={ingestPercent} label={ingestLabel} />
+        <UsageBar percent={searchPercent} label={searchLabel} />
       </Box>
 
       <Button
