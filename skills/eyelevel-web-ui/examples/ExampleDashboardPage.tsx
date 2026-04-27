@@ -63,13 +63,11 @@ export function ExampleDashboardPage() {
   return (
     <Box
       sx={{
-        // Responsive padding: generous on desktop, tight on mobile. Uses
-        // theme.breakpoints — never hardcode @media (max-width: Xpx).
+        // Responsive padding: generous on desktop, tight on mobile. Use sx
+        // responsive object syntax against named breakpoints — never hardcode
+        // @media (max-width: Xpx).
         marginTop: (t) => t.spacing(MAIN_CONTENT_TOP_MARGIN),
-        padding: (t) => t.spacing(MAIN_CONTENT_PADDING),
-        [(t) => t.breakpoints.down("md")]: {
-          padding: (t) => t.spacing(2),
-        },
+        padding: { xs: 2, md: MAIN_CONTENT_PADDING },
       }}
     >
       <Stack spacing={3}>

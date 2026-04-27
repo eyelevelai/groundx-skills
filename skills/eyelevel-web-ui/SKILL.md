@@ -50,8 +50,10 @@ Generating a new page or screen
 ├── Arranging cards, section headers, responsive stacking?   → references/surfaces-and-cards.md + references/responsive.md
 ├── Hero section / feature grid / pricing table / footer
    patterns for a public page?                               → references/layout.md § Public-page layout
-├── Want a worked example to pattern-match against?          → examples/ExampleDashboardPage.tsx
+├── Want a worked example to pattern-match against?
+   ├── App-shell / dashboard pages?                          → examples/ExampleDashboardPage.tsx
                                                                 examples/ExampleBucketDetailPage.tsx
+   └── Public-page / marketing surface?                      → examples/ExampleLandingPage.tsx
                                                                 (more examples land here as projects grow)
 
 Building a form or modal
@@ -183,9 +185,11 @@ eyelevel-web-ui/
 │   ├── ThemeProvider.tsx           ← GxThemeProvider wrapper
 │   └── components/                 ← Gx* / Common* wrapper layer (the canonical implementations
 │                                     every project ports into src/shared/components/)
-├── examples/                       ← worked pages — dashboard page, dashboard sub-page, form modal,
-│                                     empty state. More examples (marketing hero, public-page sections)
-│                                     will land alongside as projects produce them.
+├── examples/                       ← worked pages — app-shell / dashboard pages
+│                                     (ExampleDashboardPage, ExampleBucketDetailPage,
+│                                     ExampleFormModal, ExampleEmptyState) and a
+│                                     public-page surface (ExampleLandingPage:
+│                                     header bar + hero + feature grid + footer).
 └── evals/evals.json                ← 3 test prompts + file sanity checks
 ```
 

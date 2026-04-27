@@ -1,0 +1,63 @@
+# Build the slide deck with Puppeteer and assert that the resulting PDF has
+# one page per slide file. Catches regressions where new slides are added
+# but the build silently lags, where styles.css drifts in a way Puppeteer
+# can't render, or where a token change breaks the headless-Chrome pipeline.
+#
+# Path-filtered to slide-template / tokens changes so the heavyweight
+# Chromium download (~150MB) doesn't run on every PR. Caches Puppeteer's
+# browser binary across runs.
+name: Build slides
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "skills/eyelevel-slides/**"
+      - "skills/eyelevel-design-standards/tokens.json"
+      - ".github/workflows/build-slides.yml"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "skills/eyelevel-slides/**"
+      - "skills/eyelevel-design-standards/tokens.json"
+      - ".github/workflows/build-slides.yml"
+
+jobs:
+  build:
+    name: build deck.pdf and assert page count
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: skills/eyelevel-slides/templates
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: skills/eyelevel-slides/templates/package-lock.json
+
+      - name: Cache Puppeteer browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/puppeteer
+          key: puppeteer-${{ runner.os }}-${{ hashFiles('skills/eyelevel-slides/templates/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build deck.pdf
+        run: npm run build
+
+      - name: Assert deck.pdf page count matches slide files
+        run: npm run smoke-test
+
+      - name: Upload deck.pdf as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deck.pdf
+          path: skills/eyelevel-slides/templates/out/deck.pdf
+          retention-days: 30

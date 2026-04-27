@@ -48,6 +48,16 @@ The slides skill's templates are a self-contained Node project, so Replit (or an
 
 For brand guidance inside Replit AI (or Cursor, Continue, etc.), paste the contents of `skills/eyelevel-design-standards/SKILL.md` into the agent's context — it's the same brand tour the skills route to. The web UI skill's `templates/` folder is a self-contained drop-in for any EyeLevel-styled React+MUI project — a new marketing site, an internal tool, a demo app, or an existing product repo (the GroundX dashboard is one current consumer). Copy it into any React+MUI Replit the same way.
 
+### Troubleshooting: install fails on Replit
+
+Replit's environment ships its own globally-installed `typescript-eslint` for inline type checking, which sometimes pins older TypeScript or React peer ranges than what the skill targets. With npm 11.6.x there's also a known peer-dep resolver bug (`Cannot read properties of null (reading 'isDescendantOf')`) that surfaces when peer ranges don't perfectly line up. The skill ships `.npmrc` files with `legacy-peer-deps=true` to sidestep both issues. If you still see the error:
+
+1. **Upgrade npm.** The error typically goes away in npm 11.13+: `npm install -g npm@latest`.
+2. **Pass the flag explicitly** if upgrading is awkward: `npm install --legacy-peer-deps`.
+3. **Check the Node version.** Both skills declare `engines: { node: ">=20" }`; Replit's default container should already satisfy this, but a stale Replit may need a `.replit` / `replit.nix` bump.
+
+The error is environmental, not in the skill's package.json — running `npm install` against the same `package.json` outside Replit (a fresh Node 20 + npm 10/11 container) installs cleanly.
+
 ## Repository layout
 
 ```

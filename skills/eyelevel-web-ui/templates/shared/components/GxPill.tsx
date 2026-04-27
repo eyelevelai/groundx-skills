@@ -21,7 +21,7 @@
  */
 
 import { Box, ButtonBase } from "@mui/material";
-import { MouseEventHandler, ReactNode } from "react";
+import { ElementType, MouseEventHandler, ReactNode } from "react";
 
 import {
   BORDER_RADIUS_PILL,
@@ -66,7 +66,9 @@ export function GxPill({
   onClick,
 }: GxPillProps) {
   const { bg, fg } = STYLES[variant];
-  const Component: typeof Box | typeof ButtonBase = onClick ? ButtonBase : Box;
+  // Render as a <button>-like ButtonBase when interactive, otherwise as a
+  // <span>-like Box. ElementType lets the union type be callable as JSX.
+  const Component: ElementType = onClick ? ButtonBase : Box;
 
   return (
     <Component

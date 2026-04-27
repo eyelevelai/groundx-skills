@@ -4,9 +4,14 @@
   "private": true,
   "type": "module",
   "description": "EyeLevel slide deck scaffold — HTML slides rendered to a single PDF via headless Chrome.",
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "serve --listen 4173 --no-port-switching .",
     "build": "node build.mjs",
+    "smoke-test": "node smoke-test.mjs",
     "preview": "serve --listen 4173 --no-port-switching ./out"
   },
   "dependencies": {

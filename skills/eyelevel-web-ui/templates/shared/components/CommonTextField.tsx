@@ -17,7 +17,10 @@ import { FC } from "react";
 
 import { BORDER_RADIUS, FONT_FAMILY, WHITE } from "../../constants";
 
-export interface CommonTextFieldProps extends OutlinedTextFieldProps {
+// Omit `variant` from the props type — the wrapper hardcodes "outlined" so
+// callers don't have to pass it (and can't override it).
+export interface CommonTextFieldProps
+  extends Omit<OutlinedTextFieldProps, "variant"> {
   /** Drop the default top margin (use inside explicit-spacing layouts). */
   dense?: boolean;
 }
@@ -28,8 +31,8 @@ export const CommonTextField: FC<CommonTextFieldProps> = ({
 }) => {
   return (
     <TextField
-      variant="outlined"
       {...props}
+      variant="outlined"
       sx={{
         mt: dense ? 0 : 2,
         input: {

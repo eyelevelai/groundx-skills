@@ -1,0 +1,51 @@
+# Type-check + run component tests for eyelevel-web-ui.
+#
+# Two gates run in sequence on every web-ui change:
+#   1. tsc --noEmit on templates/ + examples/ — catches broken imports across
+#      restructures, type errors when MUI peer deps update, drift between
+#      component prop types and example call sites.
+#   2. vitest run — exercises render behaviors of the Gx* / Common* / accessory
+#      wrappers (variant rendering, stateful interactions, aria contracts).
+#
+# Triggered only when files inside skills/eyelevel-web-ui/ change. The lint
+# workflow runs on every push regardless.
+name: Type-check + test web-ui
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "skills/eyelevel-web-ui/**"
+      - ".github/workflows/typecheck-web-ui.yml"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "skills/eyelevel-web-ui/**"
+      - ".github/workflows/typecheck-web-ui.yml"
+
+jobs:
+  typecheck-and-test:
+    name: tsc + vitest
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: skills/eyelevel-web-ui
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: skills/eyelevel-web-ui/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Type-check templates and examples
+        run: npm run typecheck
+
+      - name: Run component tests
+        run: npm test

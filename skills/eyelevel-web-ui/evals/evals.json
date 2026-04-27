@@ -159,7 +159,8 @@
       "examples/ExampleDashboardPage.tsx",
       "examples/ExampleBucketDetailPage.tsx",
       "examples/ExampleFormModal.tsx",
-      "examples/ExampleEmptyState.tsx"
+      "examples/ExampleEmptyState.tsx",
+      "examples/ExampleLandingPage.tsx"
     ],
     "required_files_standards_skill": [
       "../eyelevel-design-standards/SKILL.md",
