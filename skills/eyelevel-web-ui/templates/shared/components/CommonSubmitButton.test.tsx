@@ -44,4 +44,11 @@ describe("CommonSubmitButton", () => {
     render(<CommonSubmitButton>X</CommonSubmitButton>);
     expect(screen.getByRole("button")).toHaveAttribute("type", "button");
   });
+
+  it("uses BORDER_RADIUS_PILL (200px) — pill is the brand default", () => {
+    // Regression guard: a previous version used BORDER_RADIUS_2X (12px),
+    // which contradicted the styleguide's "all buttons are pill" rule.
+    render(<CommonSubmitButton>X</CommonSubmitButton>);
+    expect(screen.getByRole("button")).toHaveStyle({ borderRadius: "200px" });
+  });
 });

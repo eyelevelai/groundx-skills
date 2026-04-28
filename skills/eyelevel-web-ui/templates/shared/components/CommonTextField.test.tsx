@@ -23,4 +23,14 @@ describe("CommonTextField", () => {
     render(<CommonTextField label="X" />);
     expect(screen.getByLabelText("X")).toBeInTheDocument();
   });
+
+  it("renders the outlined-input shell (the wrapper hardcodes outlined)", () => {
+    // The brand's input radius (6px / BORDER_RADIUS) is enforced statically
+    // by lint-skills.mjs check I — verifying the source uses BORDER_RADIUS,
+    // not BORDER_RADIUS_2X. The runtime assertion here is just that the
+    // outlined shell renders. (toHaveStyle can't reliably read nested-
+    // selector emotion styles in jsdom.)
+    const { container } = render(<CommonTextField label="X" />);
+    expect(container.querySelector(".MuiOutlinedInput-root")).not.toBeNull();
+  });
 });

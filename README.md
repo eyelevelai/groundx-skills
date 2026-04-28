@@ -50,13 +50,13 @@ For brand guidance inside Replit AI (or Cursor, Continue, etc.), paste the conte
 
 ### Troubleshooting: install fails on Replit
 
-Replit's environment ships its own globally-installed `typescript-eslint` for inline type checking, which sometimes pins older TypeScript or React peer ranges than what the skill targets. With npm 11.6.x there's also a known peer-dep resolver bug (`Cannot read properties of null (reading 'isDescendantOf')`) that surfaces when peer ranges don't perfectly line up. The skill ships `.npmrc` files with `legacy-peer-deps=true` to sidestep both issues. If you still see the error:
+If you see the error `Cannot read properties of null (reading 'isDescendantOf')` during `npm install`, that's a known peer-dependency resolver bug in npm 11.6.x. It surfaces whenever something in the install graph has a peer-dep range that doesn't perfectly line up. In Replit specifically, the conflict is most often between the skill's TypeScript / React versions and *something else in the workspace* — frequently a globally-installed `@typescript-eslint/*` package (the error names them) pinned to an older TypeScript range. The conflict isn't in the skill's `package.json` — running `npm install` against the same files outside Replit, in a fresh Node 20 + npm 10/11 container, installs cleanly.
+
+The skill ships `.npmrc` files with `legacy-peer-deps=true` to make installs forgiving in this exact scenario. If you still see the error:
 
 1. **Upgrade npm.** The error typically goes away in npm 11.13+: `npm install -g npm@latest`.
 2. **Pass the flag explicitly** if upgrading is awkward: `npm install --legacy-peer-deps`.
 3. **Check the Node version.** Both skills declare `engines: { node: ">=20" }`; Replit's default container should already satisfy this, but a stale Replit may need a `.replit` / `replit.nix` bump.
-
-The error is environmental, not in the skill's package.json — running `npm install` against the same `package.json` outside Replit (a fresh Node 20 + npm 10/11 container) installs cleanly.
 
 ## Repository layout
 

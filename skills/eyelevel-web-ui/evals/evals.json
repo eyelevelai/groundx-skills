@@ -10,7 +10,7 @@
         "must_use": [
           "GxCard as the outer surface (not MUI Card or inline Box with border sx)",
           "GxSectionHeader for the 'API KEYS' row with the + NEW KEY action on the right",
-          "CommonSubmitButton with startIcon={<AddIcon />} and borderRadius: BORDER_RADIUS_PILL for the pill CTA",
+          "CommonSubmitButton with startIcon={<AddIcon />} for the pill CTA. The pill shape is the wrapper's default — only `sx={{ px: 2.5 }}` is needed for the wider create-entity affordance; do NOT also pass `borderRadius: BORDER_RADIUS_PILL` (redundant after the radius default became PILL).",
           "Named constants from '@/constants' — CORAL, BORDER, BORDER_RADIUS_CARD, PADDING — no hex literals",
           "MUI IconButton with aria-label for copy and delete actions",
           "fontSize='small' on icons inside table rows",
@@ -94,7 +94,7 @@
           "Composes four section components (HeaderBar, HeroSection, FeatureGrid, SiteFooter) — the public-page layout vocabulary from references/layout.md § Public-page layout",
           "GxCard for each card-shaped surface (the three feature tiles)",
           "CommonSubmitButton for the 'BOOK A DEMO' CTA",
-          "Two logo variants used per surface luminance — eyelevel-logo-color.png on the white header bar, eyelevel-logo-white.png on the navy footer (literal paths to ../eyelevel-design-standards/assets/logos/)",
+          "Two logo variants used per surface luminance — eyelevel-logo-color.png on the white header bar, eyelevel-logo-white.png on the navy footer. Reference at runtime as `/assets/logos/<name>.png` (the consumer is expected to have copied the source PNGs from eyelevel-design-standards/assets/logos/ into their project's public/assets/logos/ at setup; see logos.md).",
           "Eyebrow color swap per surface: coral on light surfaces (the feature-grid eyebrows), green on dark surfaces (the footer column eyebrows). Use surface-aware tokens or correct named colors from @/constants",
           "Named tokens from '@/constants' only — NAVY, GREEN, CORAL, TINT, BORDER, BORDER_RADIUS_CARD, etc.",
           "Sections are full-bleed with inner content constrained to a maxWidth (~1280–1440px) and centered horizontally",

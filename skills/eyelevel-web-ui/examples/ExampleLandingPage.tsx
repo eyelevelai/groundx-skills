@@ -96,6 +96,14 @@ function Section({ background, textColor, paddingY = 10, children }: SectionProp
 
 const NAV_LINKS = ["PRODUCT", "DOCS", "PRICING"];
 
+// Logo paths assume the consumer has copied the brand PNGs into their
+// project's `public/assets/logos/` (the convention from
+// `../../eyelevel-design-standards/references/logos.md`). The source PNGs
+// live in `eyelevel-design-standards/assets/logos/`; copy them once at
+// project setup, then reference at runtime as `/assets/logos/<name>.png`.
+const LOGO_LIGHT_SURFACE = "/assets/logos/eyelevel-logo-color.png";
+const LOGO_DARK_SURFACE  = "/assets/logos/eyelevel-logo-white.png";
+
 function HeaderBar() {
   return (
     <Box
@@ -119,7 +127,7 @@ function HeaderBar() {
       >
         <Box
           component="img"
-          src="../eyelevel-design-standards/assets/logos/eyelevel-logo-color.png"
+          src={LOGO_LIGHT_SURFACE}
           alt="EyeLevel, a Valantor company"
           sx={{ height: 28, display: { xs: "none", sm: "block" } }}
         />
@@ -350,7 +358,7 @@ function SiteFooter() {
         >
           <Box
             component="img"
-            src="../eyelevel-design-standards/assets/logos/eyelevel-logo-white.png"
+            src={LOGO_DARK_SURFACE}
             alt="EyeLevel, a Valantor company"
             sx={{ height: 28, flexShrink: 0 }}
           />
